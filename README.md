@@ -192,11 +192,25 @@ Ce projet est sous licence **MIT**.
  Voir le fichier [LICENSE](./LICENSE) pour plus de détails.
 
 ---
+##  Remerciements
 
-##  Remarque
-
-Projet académique réalisé à **Esprit School of Engineering**.
+- **Esprit School of Engineering** pour l'encadrement pédagogique  
+- Les enseignants du module PW  
+- Toute personne ayant contribué ou inspiré ce projet
 
 ---
+### 4. Improve Academic Context
+
+
+```md
+##  Academic Context
+
+Ce projet est réalisé dans le cadre du module **Programmation Web (PW)** à  
+**Esprit School of Engineering** pour l’année universitaire **2025–2026**.
+
+Il vise à appliquer les concepts fondamentaux du développement web :
+- Architecture client/serveur
+- Gestion de base de données
+- Développement d’interfaces interactives
 
 
