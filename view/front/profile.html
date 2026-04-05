@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NutriVerse – Mon profil utilisateur." />
+    <title>Mon Profil – NutriVerse</title>
+
+    <!-- Shared stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+
+    <!-- ════════════════════════════════════════════════════════════
+       APP SHELL – sidebar + main content
+  ════════════════════════════════════════════════════════════ -->
+    <div class="app-shell">
+
+        <!-- ── SIDEBAR ──────────────────────────────────────────── -->
+        <aside class="sidebar" id="sidebar">
+
+            <!-- Logo -->
+            <a href="front.html" class="sidebar-logo" style="text-decoration:none;">
+                <img src="images/logo.png" alt="NutriVerse Logo"
+                    style="width:38px;height:38px;object-fit:contain;border-radius:8px;" />
+                <span class="sidebar-logo-text">NutriVerse</span>
+            </a>
+
+            <!-- Navigation -->
+            <nav class="sidebar-nav" aria-label="Navigation principale">
+
+                <span class="sidebar-section-label">Menu</span>
+
+                <!-- PHP MVC: href="<?= BASE_URL ?>/dashboard" -->
+                <a href="#" class="nav-item" id="nav-dashboard">
+                    <span class="nav-item-icon">🏠</span>
+                    Tableau de bord
+                </a>
+
+                <!-- Active: current page -->
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/profile" -->
+                <a href="profile.html" class="nav-item active" id="nav-profile" aria-current="page">
+                    <span class="nav-item-icon">👤</span>
+                    Mon profil
+                </a>
+
+                <!-- PHP MVC: href="<?= BASE_URL ?>/repas" -->
+                <a href="#" class="nav-item" id="nav-repas">
+                    <span class="nav-item-icon">🍽️</span>
+                    Mes repas
+                </a>
+
+                <!-- PHP MVC: href="<?= BASE_URL ?>/recettes" -->
+                <a href="#" class="nav-item" id="nav-recettes">
+                    <span class="nav-item-icon">📋</span>
+                    Recettes
+                </a>
+
+                <!-- PHP MVC: href="<?= BASE_URL ?>/analyses" -->
+                <a href="#" class="nav-item" id="nav-analyses">
+                    <span class="nav-item-icon">📊</span>
+                    Analyses
+                </a>
+
+                <span class="sidebar-section-label">Paramètres</span>
+
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/edit-profile" -->
+                <a href="edit-profile.html" class="nav-item" id="nav-edit">
+                    <span class="nav-item-icon">⚙️</span>
+                    Modifier le profil
+                </a>
+
+            </nav>
+
+            <!-- Logout -->
+            <footer class="sidebar-footer">
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/logout" -->
+                <a href="login.html" class="sidebar-logout" id="btn-logout">
+                    <span class="nav-item-icon">🚪</span>
+                    Déconnexion
+                </a>
+            </footer>
+
+        </aside><!-- /.sidebar -->
+
+        <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+        <main class="main-content">
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Fil d'ariane">
+                <a href="#">Accueil</a>
+                <span>›</span>
+                <span>Mon profil</span>
+            </nav>
+
+            <!-- Page header -->
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h1>Mon Profil</h1>
+                    <p>Consultez et gérez vos informations personnelles.</p>
+                </div>
+                <div class="page-header-actions">
+                    <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/edit-profile" -->
+                    <a href="edit-profile.html" class="btn btn-primary" id="btn-edit-header">
+                        ✏️ Modifier le profil
+                    </a>
+                </div>
+            </div>
+
+            <!-- ── PROFILE HERO ─────────────────────────────────── -->
+            <section class="profile-hero" aria-label="Résumé du profil">
+                <!-- Avatar placeholder (PHP MVC: src="<?= BASE_URL ?>/uploads/<?= $profile->photo ?>") -->
+                <div class="profile-avatar-wrap">
+                    <div class="avatar-placeholder" aria-label="Photo de profil">👤</div>
+                    <span class="avatar-badge">✔</span>
+                </div>
+
+                <!-- Name / email -->
+                <div class="profile-hero-info">
+                    <!-- PHP MVC: <?= htmlspecialchars($user->prenom . ' ' . $user->nom) ?> -->
+                    <h2 class="profile-hero-name">Jean Dupont</h2>
+                    <p class="profile-hero-email">jean.dupont@email.com</p>
+
+                    <!-- Quick meta tags -->
+                    <div class="profile-hero-meta">
+                        <span class="hero-tag">🟢 Compte actif</span>
+                        <!-- PHP MVC: <?= date('d M Y', strtotime($user->date_inscription)) ?> -->
+                        <span class="hero-tag">📅 Inscrit le 15 Jan 2025</span>
+                        <span class="hero-tag">👤 Utilisateur</span>
+                    </div>
+                </div>
+            </section><!-- /.profile-hero -->
+
+            <!-- ── STATS ROW ──────────────────────────────────────── -->
+            <div class="stats-row" aria-label="Statistiques rapides">
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-green">⚖️</div>
+                    <div>
+                        <div class="stat-label">Poids</div>
+                        <!-- PHP MVC: <?= $profile->poids ?> kg -->
+                        <div class="stat-value">72 kg</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-blue">📏</div>
+                    <div>
+                        <div class="stat-label">Taille</div>
+                        <!-- PHP MVC: <?= $profile->taille ?> cm -->
+                        <div class="stat-value">178 cm</div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon stat-icon-orange">🎂</div>
+                    <div>
+                        <div class="stat-label">Âge</div>
+                        <!-- PHP MVC: Calculated from $profile->date_naissance -->
+                        <div class="stat-value">27 ans</div>
+                    </div>
+                </div>
+
+            </div><!-- /.stats-row -->
+
+            <!-- ── PERSONAL INFO CARD ─────────────────────────────── -->
+            <section class="card" aria-label="Informations personnelles">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        <div class="card-header-icon">👤</div>
+                        Informations personnelles
+                    </div>
+                    <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/edit-profile" -->
+                    <a href="edit-profile.html" class="btn btn-outline btn-sm" id="btn-edit-personal">Modifier</a>
+                </div>
+                <div class="card-body">
+                    <dl class="info-grid">
+
+                        <div class="info-item">
+                            <dt class="info-label">Prénom</dt>
+                            <!-- PHP MVC: <?= htmlspecialchars($user->prenom) ?> -->
+                            <dd class="info-value">Jean</dd>
+                        </div>
+
+                        <div class="info-item">
+                            <dt class="info-label">Nom</dt>
+                            <!-- PHP MVC: <?= htmlspecialchars($user->nom) ?> -->
+                            <dd class="info-value">Dupont</dd>
+                        </div>
+
+                        <div class="info-item">
+                            <dt class="info-label">Adresse e-mail</dt>
+                            <!-- PHP MVC: <?= htmlspecialchars($user->email) ?> -->
+                            <dd class="info-value">jean.dupont@email.com</dd>
+                        </div>
+
+                        <div class="info-item">
+                            <dt class="info-label">Téléphone</dt>
+                            <!-- PHP MVC: <?= htmlspecialchars($profile->telephone) ?> -->
+                            <dd class="info-value">+216 98 765 432</dd>
+                        </div>
+
+                        <div class="info-item">
+                            <dt class="info-label">Date de naissance</dt>
+                            <!-- PHP MVC: <?= date('d/m/Y', strtotime($profile->date_naissance)) ?> -->
+                            <dd class="info-value">12/03/1997</dd>
+                        </div>
+
+                        <div class="info-item">
+                            <dt class="info-label">Sexe</dt>
+                            <!-- PHP MVC: <?= $profile->sexe ?> -->
+                            <dd class="info-value">
+                                <span class="pill pill-blue">Homme</span>
+                            </dd>
+                        </div>
+
+                    </dl>
+                </div>
+            </section><!-- /.card -->
+
+            <!-- ── NUTRITION INFO CARD ────────────────────────────── -->
+            <section class="card" aria-label="Informations nutritionnelles">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        <div class="card-header-icon">🥗</div>
+                        Profil nutritionnel
+                    </div>
+                    <a href="edit-profile.html" class="btn btn-outline btn-sm" id="btn-edit-nutrition">Modifier</a>
+                </div>
+                <div class="card-body">
+                    <dl class="info-grid">
+
+                        <div class="info-item">
+                            <dt class="info-label">Objectif nutritionnel</dt>
+                            <!-- PHP MVC: <?= htmlspecialchars($profile->objectif_nutritionnel) ?> -->
+                            <dd class="info-value">
+                                <span class="pill pill-green">🎯 Perte de poids</span>
+                            </dd>
+                        </div>
+
+                        <div class="info-item">
+                            <dt class="info-label">Préférence alimentaire</dt>
+                            <!-- PHP MVC: <?= htmlspecialchars($profile->preference_alimentaire) ?> -->
+                            <dd class="info-value">
+                                <span class="pill pill-green">🌿 Végétarien</span>
+                            </dd>
+                        </div>
+
+                        <div class="info-item" style="grid-column: 1 / -1;">
+                            <dt class="info-label">Allergies alimentaires</dt>
+                            <!-- PHP MVC: explode(',', $profile->allergies) and foreach -->
+                            <dd class="info-value">
+                                <div class="tag-list" style="margin-top:6px;">
+                                    <span class="tag">🚫 Gluten</span>
+                                    <span class="tag">🚫 Lactose</span>
+                                    <span class="tag">🚫 Arachides</span>
+                                </div>
+                            </dd>
+                        </div>
+
+                    </dl>
+                </div>
+            </section><!-- /.card -->
+
+            <!-- ── ACTIONS ROW ────────────────────────────────────── -->
+            <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/edit-profile" -->
+                <a href="edit-profile.html" class="btn btn-primary" id="btn-edit-bottom">
+                    ✏️ Modifier le profil
+                </a>
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/logout" -->
+                <a href="login.html" class="btn btn-danger" id="btn-logout-bottom">
+                    🚪 Déconnexion
+                </a>
+            </div>
+
+        </main><!-- /.main-content -->
+
+    </div><!-- /.app-shell -->
+
+</body>
+
+</html>

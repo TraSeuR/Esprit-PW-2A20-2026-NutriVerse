@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,10 +12,8 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,6 +21,7 @@
   <!-- Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
 </head>
+
 <body>
 
   <!-- =========================
@@ -41,42 +41,42 @@
     </div>
 
     <nav class="sidebar-menu">
-      <a href="#" class="menu-item active">
+      <a href="#" class="menu-item active" data-section="dashboard">
         <i data-feather="grid"></i>
         <span>Dashboard</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" data-section="other">
         <i data-feather="book-open"></i>
         <span>Recettes</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" data-section="utilisateurs" id="nav-utilisateurs">
         <i data-feather="users"></i>
         <span>Utilisateurs</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" data-section="other">
         <i data-feather="package"></i>
         <span>Produits</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" data-section="other">
         <i data-feather="shopping-cart"></i>
         <span>Commandes</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" data-section="other">
         <i data-feather="activity"></i>
         <span>Suivi Santé</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" data-section="other">
         <i data-feather="heart"></i>
         <span>Programmes</span>
       </a>
 
-      <a href="#" class="menu-item">
+      <a href="#" class="menu-item" data-section="other">
         <i data-feather="settings"></i>
         <span>Paramètres</span>
       </a>
@@ -122,7 +122,10 @@
     </header>
 
     <!-- DASHBOARD CONTENT -->
-    <main class="dashboard-content">
+    <!-- ═══════════════════════════════════════════
+         SECTION: DASHBOARD (section par défaut)
+    ════════════════════════════════════════════ -->
+    <main class="dashboard-content" id="section-dashboard">
 
       <!-- PAGE HEADER -->
       <section class="page-header fade-up">
@@ -284,10 +287,516 @@
 
       </section>
 
-    </main>
-  </div>
+    </main><!-- /#section-dashboard -->
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECTION: UTILISATEURS – Gestion des comptes utilisateurs
+         Inséré par extension du Back Office NutriVerse
+    ════════════════════════════════════════════════════════════════ -->
+    <main class="dashboard-content u-section" id="section-utilisateurs" style="display:none;">
+
+      <!-- ── PAGE HEADER ──────────────────────────────────────── -->
+      <section class="page-header fade-up">
+        <div>
+          <span class="section-badge">Gestion utilisateurs</span>
+          <h1>Utilisateurs</h1>
+          <p>Gérez les comptes utilisateurs de la plateforme NutriVerse.</p>
+        </div>
+        <button class="export-btn" id="btn-add-user">
+          <i data-feather="user-plus"></i>
+          Ajouter un utilisateur
+        </button>
+      </section>
+
+      <!-- ── STAT CARDS ───────────────────────────────────────── -->
+      <section class="stats-grid fade-up delay-1">
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Total utilisateurs</p>
+            <h2>24</h2>
+            <span class="positive">↑ +3 ce mois</span>
+          </div>
+          <div class="stat-icon green">
+            <i data-feather="users" style="width:28px;height:28px;"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Comptes actifs</p>
+            <h2>20</h2>
+            <span class="positive">83% du total</span>
+          </div>
+          <div class="stat-icon blue">
+            <i data-feather="user-check" style="width:28px;height:28px;"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Comptes désactivés</p>
+            <h2>4</h2>
+            <span style="color:var(--orange);font-weight:500;font-size:.9rem;">↓ -1 ce mois</span>
+          </div>
+          <div class="stat-icon orange">
+            <i data-feather="user-x" style="width:28px;height:28px;"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-info">
+            <p>Administrateurs</p>
+            <h2>2</h2>
+            <span class="positive">Accès complet</span>
+          </div>
+          <div class="stat-icon purple">
+            <i data-feather="shield" style="width:28px;height:28px;"></i>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ── SEARCH & FILTERS ─────────────────────────────────── -->
+      <section class="u-toolbar fade-up" style="margin-bottom:24px;">
+        <div class="u-search-wrap">
+          <i data-feather="search" class="u-search-icon"></i>
+          <input type="text" id="u-search-input" class="u-search-input"
+            placeholder="Rechercher par nom, prénom ou email…" />
+        </div>
+
+        <div class="u-filters">
+          <select id="u-filter-role" class="u-select">
+            <option value="">Tous les rôles</option>
+            <option value="admin">Administrateur</option>
+            <option value="utilisateur">Utilisateur</option>
+          </select>
+
+          <select id="u-filter-status" class="u-select">
+            <option value="">Tous les statuts</option>
+            <option value="actif">Actif</option>
+            <option value="desactive">Désactivé</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ── USERS TABLE ──────────────────────────────────────── -->
+      <section class="table-card fade-up">
+        <div class="card-header">
+          <div>
+            <h3>Liste des utilisateurs</h3>
+            <p id="u-count-label">24 utilisateurs trouvés</p>
+          </div>
+          <button class="mini-btn" id="btn-refresh-table">
+            <i data-feather="refresh-cw" style="width:15px;height:15px;vertical-align:middle;"></i>
+            Actualiser
+          </button>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="users-table">
+            <thead>
+              <tr>
+                <th>Utilisateur</th>
+                <th>Email</th>
+                <th>Rôle</th>
+                <th>Statut</th>
+                <th>Inscrit le</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+
+              <!-- ── ROW 1 ── -->
+              <tr data-role="admin" data-status="actif">
+                <td>
+                  <div class="u-avatar-cell">
+                    <div class="u-avatar u-avatar-green">A</div>
+                    <div>
+                      <div class="u-name">Ali Ben Salah</div>
+                      <div class="u-sub">Administrateur</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="u-email">ali.bensalah@nutriverse.tn</td>
+                <td><span class="u-role-badge role-admin">Admin</span></td>
+                <td><span class="status delivered">Actif</span></td>
+                <td class="u-date">12 Jan 2025</td>
+                <td>
+                  <div class="u-actions">
+                    <button class="u-btn u-btn-view" title="Voir" onclick="openViewModal(0)"><i
+                        data-feather="eye"></i></button>
+                    <button class="u-btn u-btn-edit" title="Modifier" onclick="openEditModal(0)"><i
+                        data-feather="edit-2"></i></button>
+                    <button class="u-btn u-btn-toggle" title="Désactiver"><i data-feather="toggle-right"></i></button>
+                    <button class="u-btn u-btn-delete" title="Supprimer"><i data-feather="trash-2"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── ROW 2 ── -->
+              <tr data-role="utilisateur" data-status="actif">
+                <td>
+                  <div class="u-avatar-cell">
+                    <div class="u-avatar u-avatar-blue">S</div>
+                    <div>
+                      <div class="u-name">Sara Mejri</div>
+                      <div class="u-sub">Utilisatrice</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="u-email">sara.mejri@email.com</td>
+                <td><span class="u-role-badge role-user">Utilisateur</span></td>
+                <td><span class="status delivered">Actif</span></td>
+                <td class="u-date">03 Fév 2025</td>
+                <td>
+                  <div class="u-actions">
+                    <button class="u-btn u-btn-view" title="Voir" onclick="openViewModal(1)"><i
+                        data-feather="eye"></i></button>
+                    <button class="u-btn u-btn-edit" title="Modifier" onclick="openEditModal(1)"><i
+                        data-feather="edit-2"></i></button>
+                    <button class="u-btn u-btn-toggle" title="Désactiver"><i data-feather="toggle-right"></i></button>
+                    <button class="u-btn u-btn-delete" title="Supprimer"><i data-feather="trash-2"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── ROW 3 ── -->
+              <tr data-role="utilisateur" data-status="actif">
+                <td>
+                  <div class="u-avatar-cell">
+                    <div class="u-avatar u-avatar-orange">M</div>
+                    <div>
+                      <div class="u-name">Mohamed Trabelsi</div>
+                      <div class="u-sub">Utilisateur</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="u-email">m.trabelsi@gmail.com</td>
+                <td><span class="u-role-badge role-user">Utilisateur</span></td>
+                <td><span class="status delivered">Actif</span></td>
+                <td class="u-date">18 Fév 2025</td>
+                <td>
+                  <div class="u-actions">
+                    <button class="u-btn u-btn-view" title="Voir" onclick="openViewModal(2)"><i
+                        data-feather="eye"></i></button>
+                    <button class="u-btn u-btn-edit" title="Modifier" onclick="openEditModal(2)"><i
+                        data-feather="edit-2"></i></button>
+                    <button class="u-btn u-btn-toggle" title="Désactiver"><i data-feather="toggle-right"></i></button>
+                    <button class="u-btn u-btn-delete" title="Supprimer"><i data-feather="trash-2"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── ROW 4 ── -->
+              <tr data-role="utilisateur" data-status="desactive">
+                <td>
+                  <div class="u-avatar-cell">
+                    <div class="u-avatar u-avatar-purple">L</div>
+                    <div>
+                      <div class="u-name">Leila Chaabane</div>
+                      <div class="u-sub">Utilisatrice</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="u-email">leila.chaabane@outlook.com</td>
+                <td><span class="u-role-badge role-user">Utilisateur</span></td>
+                <td><span class="status pending">Désactivé</span></td>
+                <td class="u-date">25 Mars 2025</td>
+                <td>
+                  <div class="u-actions">
+                    <button class="u-btn u-btn-view" title="Voir" onclick="openViewModal(3)"><i
+                        data-feather="eye"></i></button>
+                    <button class="u-btn u-btn-edit" title="Modifier" onclick="openEditModal(3)"><i
+                        data-feather="edit-2"></i></button>
+                    <button class="u-btn u-btn-toggle u-btn-activate" title="Activer"><i
+                        data-feather="toggle-left"></i></button>
+                    <button class="u-btn u-btn-delete" title="Supprimer"><i data-feather="trash-2"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── ROW 5 ── -->
+              <tr data-role="admin" data-status="actif">
+                <td>
+                  <div class="u-avatar-cell">
+                    <div class="u-avatar u-avatar-green">R</div>
+                    <div>
+                      <div class="u-name">Rania Gharbi</div>
+                      <div class="u-sub">Administratrice</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="u-email">rania.gharbi@nutriverse.tn</td>
+                <td><span class="u-role-badge role-admin">Admin</span></td>
+                <td><span class="status delivered">Actif</span></td>
+                <td class="u-date">01 Jan 2025</td>
+                <td>
+                  <div class="u-actions">
+                    <button class="u-btn u-btn-view" title="Voir" onclick="openViewModal(4)"><i
+                        data-feather="eye"></i></button>
+                    <button class="u-btn u-btn-edit" title="Modifier" onclick="openEditModal(4)"><i
+                        data-feather="edit-2"></i></button>
+                    <button class="u-btn u-btn-toggle" title="Désactiver"><i data-feather="toggle-right"></i></button>
+                    <button class="u-btn u-btn-delete" title="Supprimer"><i data-feather="trash-2"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- ── ROW 6 ── -->
+              <tr data-role="utilisateur" data-status="desactive">
+                <td>
+                  <div class="u-avatar-cell">
+                    <div class="u-avatar u-avatar-blue">K</div>
+                    <div>
+                      <div class="u-name">Karim Nasri</div>
+                      <div class="u-sub">Utilisateur</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="u-email">k.nasri@hotmail.com</td>
+                <td><span class="u-role-badge role-user">Utilisateur</span></td>
+                <td><span class="status pending">Désactivé</span></td>
+                <td class="u-date">10 Avr 2025</td>
+                <td>
+                  <div class="u-actions">
+                    <button class="u-btn u-btn-view" title="Voir" onclick="openViewModal(5)"><i
+                        data-feather="eye"></i></button>
+                    <button class="u-btn u-btn-edit" title="Modifier" onclick="openEditModal(5)"><i
+                        data-feather="edit-2"></i></button>
+                    <button class="u-btn u-btn-toggle u-btn-activate" title="Activer"><i
+                        data-feather="toggle-left"></i></button>
+                    <button class="u-btn u-btn-delete" title="Supprimer"><i data-feather="trash-2"></i></button>
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div><!-- /.table-wrapper -->
+
+        <!-- Empty state (hidden by default, shown via JS when no results) -->
+        <div class="u-empty-state" id="u-empty-state" style="display:none;">
+          <div class="placeholder-icon">👤</div>
+          <h4>Aucun utilisateur trouvé</h4>
+          <p>Modifiez vos critères de recherche ou ajoutez un nouvel utilisateur.</p>
+          <button class="export-btn" style="margin-top:18px;" onclick="document.getElementById('btn-add-user').click()">
+            <i data-feather="user-plus"></i> Ajouter un utilisateur
+          </button>
+        </div>
+
+      </section><!-- /.table-card -->
+
+    </main><!-- /#section-utilisateurs -->
+
+  </div><!-- /.main-content -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODAL: VOIR UN UTILISATEUR
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="u-modal-overlay" id="modal-view" onclick="closeModal('modal-view')">
+    <div class="u-modal" onclick="event.stopPropagation()">
+      <button class="u-modal-close" onclick="closeModal('modal-view')">✕</button>
+
+      <!-- MODAL HEADER -->
+      <div class="u-modal-hero">
+        <div class="u-modal-avatar" id="mv-avatar">J</div>
+        <div>
+          <h2 class="u-modal-name" id="mv-name">Jean Dupont</h2>
+          <span class="u-role-badge role-user" id="mv-role">Utilisateur</span>
+          <span class="status delivered" id="mv-status" style="margin-left:8px;">Actif</span>
+        </div>
+      </div>
+
+      <!-- MODAL BODY: two columns -->
+      <div class="u-modal-grid">
+
+        <div class="u-detail-group">
+          <span class="u-detail-label">Prénom</span>
+          <span class="u-detail-value" id="mv-prenom">Jean</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Nom</span>
+          <span class="u-detail-value" id="mv-nom">Dupont</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Email</span>
+          <span class="u-detail-value" id="mv-email">jean@email.com</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Téléphone</span>
+          <span class="u-detail-value" id="mv-tel">+216 98 000 000</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Date de naissance</span>
+          <span class="u-detail-value" id="mv-dob">12/03/1997</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Sexe</span>
+          <span class="u-detail-value" id="mv-sexe">Homme</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Poids</span>
+          <span class="u-detail-value" id="mv-poids">72 kg</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Taille</span>
+          <span class="u-detail-value" id="mv-taille">178 cm</span>
+        </div>
+        <div class="u-detail-group" style="grid-column:1/-1;">
+          <span class="u-detail-label">Objectif nutritionnel</span>
+          <span class="u-detail-value" id="mv-objectif">Perte de poids</span>
+        </div>
+        <div class="u-detail-group" style="grid-column:1/-1;">
+          <span class="u-detail-label">Préférence alimentaire</span>
+          <span class="u-detail-value" id="mv-pref">Végétarien</span>
+        </div>
+        <div class="u-detail-group" style="grid-column:1/-1;">
+          <span class="u-detail-label">Allergies</span>
+          <span class="u-detail-value" id="mv-allergies">Gluten, Lactose</span>
+        </div>
+        <div class="u-detail-group">
+          <span class="u-detail-label">Date d'inscription</span>
+          <span class="u-detail-value" id="mv-inscription">12 Jan 2025</span>
+        </div>
+
+      </div><!-- /.u-modal-grid -->
+
+      <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:24px;">
+        <button class="mini-btn" onclick="closeModal('modal-view')">Fermer</button>
+        <button class="export-btn" style="padding:12px 20px;"
+          onclick="closeModal('modal-view');openEditModal(currentModalIndex)">
+          <i data-feather="edit-2"></i> Modifier
+        </button>
+      </div>
+
+    </div>
+  </div><!-- /#modal-view -->
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       MODAL: AJOUTER / MODIFIER UN UTILISATEUR
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="u-modal-overlay" id="modal-edit" onclick="closeModal('modal-edit')">
+    <div class="u-modal u-modal-wide" onclick="event.stopPropagation()">
+      <button class="u-modal-close" onclick="closeModal('modal-edit')">✕</button>
+
+      <h2 class="u-modal-title" id="me-title">Ajouter un utilisateur</h2>
+      <p style="color:var(--muted);margin-bottom:24px;font-size:.9rem;">Remplissez tous les champs requis.</p>
+
+      <!-- PHP MVC: action="<?= BASE_URL ?>/admin/utilisateur/save" method="POST" -->
+      <form id="form-edit-user" onsubmit="event.preventDefault(); closeModal('modal-edit');">
+
+        <div class="u-form-section">Identité</div>
+        <div class="u-form-grid">
+          <div class="u-form-group">
+            <label class="u-form-label">Prénom</label>
+            <input type="text" id="me-prenom" class="u-form-input" placeholder="Prénom" required />
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Nom</label>
+            <input type="text" id="me-nom" class="u-form-input" placeholder="Nom" required />
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Email</label>
+            <input type="email" id="me-email" class="u-form-input" placeholder="email@example.com" required />
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Mot de passe</label>
+            <input type="password" id="me-password" class="u-form-input" placeholder="Laisser vide = inchangé" />
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Rôle</label>
+            <select id="me-role" class="u-form-input">
+              <option value="utilisateur">Utilisateur</option>
+              <option value="admin">Administrateur</option>
+            </select>
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">État du compte</label>
+            <select id="me-etat" class="u-form-input">
+              <option value="actif">Actif</option>
+              <option value="desactive">Désactivé</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="u-form-section">Informations personnelles</div>
+        <div class="u-form-grid">
+          <div class="u-form-group">
+            <label class="u-form-label">Téléphone</label>
+            <input type="tel" id="me-tel" class="u-form-input" placeholder="+216 XX XXX XXX" />
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Date de naissance</label>
+            <input type="date" id="me-dob" class="u-form-input" />
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Sexe</label>
+            <select id="me-sexe" class="u-form-input">
+              <option value="">Choisir…</option>
+              <option value="Homme">Homme</option>
+              <option value="Femme">Femme</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Poids (kg)</label>
+            <input type="number" id="me-poids" class="u-form-input" placeholder="Ex: 70" min="20" max="300"
+              step="0.1" />
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Taille (cm)</label>
+            <input type="number" id="me-taille" class="u-form-input" placeholder="Ex: 175" min="50" max="250" />
+          </div>
+        </div>
+
+        <div class="u-form-section">Profil nutritionnel</div>
+        <div class="u-form-grid">
+          <div class="u-form-group">
+            <label class="u-form-label">Objectif nutritionnel</label>
+            <select id="me-objectif" class="u-form-input">
+              <option value="">Choisir…</option>
+              <option>Perte de poids</option>
+              <option>Prise de masse</option>
+              <option>Maintien</option>
+              <option>Amélioration santé</option>
+              <option>Augmenter l'énergie</option>
+            </select>
+          </div>
+          <div class="u-form-group">
+            <label class="u-form-label">Préférence alimentaire</label>
+            <select id="me-pref" class="u-form-input">
+              <option value="">Choisir…</option>
+              <option>Omnivore</option>
+              <option>Végétarien</option>
+              <option>Vegan</option>
+              <option>Pescétarien</option>
+              <option>Sans gluten</option>
+              <option>Halal</option>
+            </select>
+          </div>
+          <div class="u-form-group" style="grid-column:1/-1;">
+            <label class="u-form-label">Allergies <span style="font-weight:400;color:var(--muted);">(séparer par
+                virgules)</span></label>
+            <input type="text" id="me-allergies" class="u-form-input" placeholder="Ex: Gluten, Lactose" />
+          </div>
+        </div>
+
+        <!-- Form actions -->
+        <div style="display:flex;gap:12px;justify-content:flex-end;margin-top:28px;">
+          <button type="button" class="mini-btn" onclick="closeModal('modal-edit')">Annuler</button>
+          <button type="submit" class="export-btn" style="padding:12px 24px;">
+            <i data-feather="save"></i>
+            <span id="me-submit-label">Enregistrer</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div><!-- /#modal-edit -->
 
   <!-- JS -->
   <script src="back.js"></script>
 </body>
+
 </html>

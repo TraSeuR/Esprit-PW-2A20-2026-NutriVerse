@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,8 +12,10 @@
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -23,9 +26,7 @@
         <img src="images/logo.png" alt="Logo NutriVerse" class="logo-img">
       </div>
 
-      <input type="checkbox" id="nav-toggle" hidden aria-hidden="true" />
-      <label for="nav-toggle" class="menu-toggle" aria-label="Ouvrir le menu">☰</label>
-      <nav class="navbar">
+      <nav class="navbar" id="navbar">
         <a href="#hero">Accueil</a>
         <a href="#categories">Marketplace</a>
         <a href="#recipes">Recettes</a>
@@ -35,9 +36,11 @@
 
         <a href="#" class="cart-icon" title="Commandes">🛒</a>
 
-        <a href="#" class="btn-outline">Se connecter</a>
-        <a href="#" class="btn-primary">S'inscrire</a>
+        <a href="login.html" class="btn-outline">Se connecter</a>
+        <a href="register.html" class="btn-primary">S'inscrire</a>
       </nav>
+
+      <div class="menu-toggle" id="menuToggle">☰</div>
     </div>
   </header>
 
@@ -296,5 +299,8 @@
     </div>
   </footer>
 
+  <!-- JS -->
+  <script src="front.js"></script>
 </body>
+
 </html>

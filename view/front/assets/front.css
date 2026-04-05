@@ -544,8 +544,14 @@ a {
     color: #cbd5cb;
 }
 
-/* ANIMATION — visible without JS (same final appearance as before) */
+/* ANIMATION */
 .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.fade-up.show {
     opacity: 1;
     transform: translateY(0);
 }
@@ -595,7 +601,7 @@ a {
         display: none;
     }
 
-    #nav-toggle:checked ~ .navbar {
+    .navbar.active {
         display: flex;
     }
 

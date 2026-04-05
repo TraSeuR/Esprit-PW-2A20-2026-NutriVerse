@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NutriVerse – Modifier mon profil utilisateur." />
+    <title>Modifier le profil – NutriVerse</title>
+
+    <!-- Shared stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+
+    <!-- ════════════════════════════════════════════════════════════
+       APP SHELL – sidebar + main content
+  ════════════════════════════════════════════════════════════ -->
+    <div class="app-shell">
+
+        <!-- ── SIDEBAR (same as profile.html) ───────────────────── -->
+        <aside class="sidebar" id="sidebar">
+            <a href="front.html" class="sidebar-logo" style="text-decoration:none;">
+                <img src="images/logo.png" alt="NutriVerse Logo"
+                    style="width:38px;height:38px;object-fit:contain;border-radius:8px;" />
+                <span class="sidebar-logo-text">NutriVerse</span>
+            </a>
+
+            <nav class="sidebar-nav" aria-label="Navigation principale">
+                <span class="sidebar-section-label">Menu</span>
+
+                <a href="#" class="nav-item" id="nav-dashboard">
+                    <span class="nav-item-icon">🏠</span>
+                    Tableau de bord
+                </a>
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/profile" -->
+                <a href="profile.html" class="nav-item" id="nav-profile">
+                    <span class="nav-item-icon">👤</span>
+                    Mon profil
+                </a>
+                <a href="#" class="nav-item" id="nav-repas">
+                    <span class="nav-item-icon">🍽️</span>
+                    Mes repas
+                </a>
+                <a href="#" class="nav-item" id="nav-recettes">
+                    <span class="nav-item-icon">📋</span>
+                    Recettes
+                </a>
+                <a href="#" class="nav-item" id="nav-analyses">
+                    <span class="nav-item-icon">📊</span>
+                    Analyses
+                </a>
+
+                <span class="sidebar-section-label">Paramètres</span>
+
+                <!-- Active: current page -->
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/edit-profile" -->
+                <a href="edit-profile.html" class="nav-item active" id="nav-edit" aria-current="page">
+                    <span class="nav-item-icon">⚙️</span>
+                    Modifier le profil
+                </a>
+            </nav>
+
+            <footer class="sidebar-footer">
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/logout" -->
+                <a href="login.html" class="sidebar-logout" id="btn-logout">
+                    <span class="nav-item-icon">🚪</span>
+                    Déconnexion
+                </a>
+            </footer>
+        </aside><!-- /.sidebar -->
+
+        <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+        <main class="main-content">
+
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Fil d'ariane">
+                <a href="#">Accueil</a>
+                <span>›</span>
+                <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/profile" -->
+                <a href="profile.html">Mon profil</a>
+                <span>›</span>
+                <span>Modifier</span>
+            </nav>
+
+            <!-- Page header -->
+            <div class="page-header">
+                <div class="page-header-left">
+                    <h1>Modifier le profil</h1>
+                    <p>Mettez à jour vos informations personnelles et nutritionnelles.</p>
+                </div>
+                <div class="page-header-actions">
+                    <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/profile" -->
+                    <a href="profile.html" class="btn btn-outline" id="btn-cancel-top">
+                        ✕ Annuler
+                    </a>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════════════
+           EDIT PROFILE FORM
+           PHP MVC:
+             action="<?= BASE_URL ?>/utilisateur/update-profile"
+             method="POST"
+             enctype="multipart/form-data" (for photo upload)
+      ════════════════════════════════════════════════════ -->
+            <form id="form-edit-profile" action="#" method="POST" enctype="multipart/form-data" novalidate>
+
+                <!-- ── PHOTO UPLOAD CARD ──────────────────────────── -->
+                <div class="card" style="margin-bottom: 20px;">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            <div class="card-header-icon">📷</div>
+                            Photo de profil
+                        </div>
+                    </div>
+                    <div class="card-body" style="padding-top: 20px; padding-bottom: 20px;">
+                        <div class="photo-upload-area">
+
+                            <!-- Current photo preview placeholder -->
+                            <!-- PHP MVC: if ($profile->photo): src="<?= BASE_URL ?>/uploads/<?= $profile->photo ?>" -->
+                            <div class="photo-preview" id="photo-preview" aria-label="Aperçu photo">👤</div>
+
+                            <div class="photo-upload-info">
+                                <h4>Changer la photo de profil</h4>
+                                <p>Formats acceptés : JPG, PNG, GIF · Taille max : 2 Mo</p>
+                                <!-- Hidden real file input -->
+                                <input type="file" id="photo-file" name="photo" accept="image/jpeg,image/png,image/gif"
+                                    style="display:none;" />
+                                <!-- Styled button triggers the file input (UI only JS) -->
+                                <label for="photo-file" class="photo-upload-btn" role="button" id="photo-upload-label">
+                                    📁 Choisir une photo
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── PERSONAL INFO CARD ─────────────────────────── -->
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            <div class="card-header-icon">👤</div>
+                            Informations personnelles
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <!-- Section: Identity -->
+                        <h2 class="form-section-title">Identité</h2>
+                        <div class="form-grid-2">
+
+                            <div class="form-group">
+                                <label for="prenom" class="form-label">Prénom</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">👤</span>
+                                    <!-- PHP MVC: value="<?= htmlspecialchars($user->prenom) ?>" -->
+                                    <input class="form-input" type="text" id="prenom" name="prenom" placeholder="Jean"
+                                        value="Jean" required />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="nom" class="form-label">Nom</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">👤</span>
+                                    <!-- PHP MVC: value="<?= htmlspecialchars($user->nom) ?>" -->
+                                    <input class="form-input" type="text" id="nom" name="nom" placeholder="Dupont"
+                                        value="Dupont" required />
+                                </div>
+                            </div>
+
+                        </div><!-- /.form-grid-2 -->
+
+                        <!-- Section: Contact -->
+                        <h2 class="form-section-title">Contact</h2>
+                        <div class="form-group">
+                            <label for="telephone" class="form-label">Téléphone</label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">📞</span>
+                                <!-- PHP MVC: value="<?= htmlspecialchars($profile->telephone) ?>" -->
+                                <input class="form-input" type="tel" id="telephone" name="telephone"
+                                    placeholder="+216 XX XXX XXX" value="+216 98 765 432" />
+                            </div>
+                        </div>
+
+                        <!-- Section: Physical info -->
+                        <h2 class="form-section-title">Informations physiques</h2>
+                        <div class="form-grid-2">
+
+                            <div class="form-group">
+                                <label for="date_naissance" class="form-label">Date de naissance</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">🎂</span>
+                                    <!-- PHP MVC: value="<?= $profile->date_naissance ?>" -->
+                                    <input class="form-input" type="date" id="date_naissance" name="date_naissance"
+                                        value="1997-03-12" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sexe" class="form-label">Sexe</label>
+                                <!-- PHP MVC: selected based on $profile->sexe -->
+                                <select class="form-select" id="sexe" name="sexe">
+                                    <option value="">Sélectionner…</option>
+                                    <option value="Homme" selected>Homme</option>
+                                    <option value="Femme">Femme</option>
+                                    <option value="Autre">Autre / Ne pas préciser</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="poids" class="form-label">Poids (kg)</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">⚖️</span>
+                                    <!-- PHP MVC: value="<?= $profile->poids ?>" -->
+                                    <input class="form-input" type="number" id="poids" name="poids" placeholder="Ex: 70"
+                                        value="72" min="20" max="300" step="0.1" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="taille" class="form-label">Taille (cm)</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">📏</span>
+                                    <!-- PHP MVC: value="<?= $profile->taille ?>" -->
+                                    <input class="form-input" type="number" id="taille" name="taille"
+                                        placeholder="Ex: 175" value="178" min="50" max="250" />
+                                </div>
+                            </div>
+
+                        </div><!-- /.form-grid-2 -->
+
+                    </div><!-- /.card-body -->
+                </div><!-- /.card -->
+
+                <!-- ── NUTRITION CARD ───────────────────────────────── -->
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-header">
+                        <div class="card-header-title">
+                            <div class="card-header-icon">🥗</div>
+                            Profil nutritionnel
+                        </div>
+                    </div>
+                    <div class="card-body">
+
+                        <h2 class="form-section-title">Objectifs & préférences</h2>
+
+                        <div class="form-group">
+                            <label for="objectif_nutritionnel" class="form-label">Objectif nutritionnel</label>
+                            <!-- PHP MVC: selected based on $profile->objectif_nutritionnel -->
+                            <select class="form-select" id="objectif_nutritionnel" name="objectif_nutritionnel">
+                                <option value="">Choisir un objectif…</option>
+                                <option value="Perte de poids" selected>🎯 Perte de poids</option>
+                                <option value="Prise de masse">💪 Prise de masse musculaire</option>
+                                <option value="Maintien">⚖️ Maintien du poids</option>
+                                <option value="Amélioration santé">❤️ Amélioration de la santé générale</option>
+                                <option value="Énergie">⚡ Augmenter l'énergie</option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="preference_alimentaire" class="form-label">Préférence alimentaire</label>
+                            <!-- PHP MVC: selected based on $profile->preference_alimentaire -->
+                            <select class="form-select" id="preference_alimentaire" name="preference_alimentaire">
+                                <option value="">Choisir une préférence…</option>
+                                <option value="Omnivore">🍗 Omnivore</option>
+                                <option value="Végétarien" selected>🌿 Végétarien</option>
+                                <option value="Végétalien">🌱 Végétalien / Vegan</option>
+                                <option value="Pescétarien">🐟 Pescétarien</option>
+                                <option value="Sans gluten">🌾 Sans gluten</option>
+                                <option value="Halal">☪️ Halal</option>
+                                <option value="Casher">✡️ Casher</option>
+                                <option value="Paléo">🥩 Paléo</option>
+                                <option value="Autre">Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="allergies" class="form-label">Allergies alimentaires</label>
+                            <textarea class="form-textarea" id="allergies" name="allergies"
+                                placeholder="Ex: Gluten, Lactose, Arachides… (séparer par des virgules)"
+                                rows="3">Gluten, Lactose, Arachides</textarea>
+                            <!-- PHP MVC: <?= htmlspecialchars($profile->allergies) ?> -->
+                            <p class="text-xs text-muted mt-1">
+                                💡 Séparez vos allergies par des virgules.
+                            </p>
+                        </div>
+
+                    </div><!-- /.card-body -->
+                </div><!-- /.card -->
+
+                <!-- ── FORM ACTIONS ─────────────────────────────────── -->
+                <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap; align-items:center;">
+
+                    <button type="submit" class="btn btn-primary btn-lg" id="btn-save">
+                        💾 Enregistrer les modifications
+                    </button>
+
+                    <!-- PHP MVC: href="<?= BASE_URL ?>/utilisateur/profile" -->
+                    <a href="profile.html" class="btn btn-outline" id="btn-cancel-bottom">
+                        ✕ Annuler
+                    </a>
+
+                </div>
+
+            </form><!-- /#form-edit-profile -->
+
+        </main><!-- /.main-content -->
+
+    </div><!-- /.app-shell -->
+
+    <!-- ── Minimal JS: photo preview on file select ───────────── -->
+    <script>
+        /* UI-only: Show a preview of selected photo before form submission */
+        const photoFile = document.getElementById('photo-file');
+        const photoPreview = document.getElementById('photo-preview');
+
+        photoFile.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                photoPreview.innerHTML = '';
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Aperçu photo de profil';
+                img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%;';
+                photoPreview.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+        });
+    </script>
+
+</body>
+
+</html>
