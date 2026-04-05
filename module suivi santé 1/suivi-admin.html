@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriVerse — Suivi santé (administration)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/suivi-admin.css" />
+</head>
+<body>
+  <input type="checkbox" id="ssa-sidebar-toggle" />
+  <label for="ssa-sidebar-toggle" class="ssa-scrim" aria-label="Fermer le menu de navigation"></label>
+
+  <aside class="sidebar" id="sidebar" aria-label="Navigation administration">
+    <div class="sidebar-top">
+      <div class="brand">
+        <img src="images/logo-admin.png" alt="Logo NutriVerse" class="brand-logo" width="58" height="58" />
+        <div>
+          <h2>NutriVerse</h2>
+          <p>Back Office</p>
+        </div>
+      </div>
+      <label for="ssa-sidebar-toggle" class="close-sidebar" aria-label="Fermer le menu">✕</label>
+    </div>
+
+    <nav class="sidebar-menu" aria-label="Menu principal">
+      <a href="#" class="menu-item">
+        <span class="menu-item-icon" aria-hidden="true">▦</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="#" class="menu-item">
+        <span class="menu-item-icon" aria-hidden="true">📖</span>
+        <span>Recettes</span>
+      </a>
+      <a href="#" class="menu-item">
+        <span class="menu-item-icon" aria-hidden="true">👥</span>
+        <span>Utilisateurs</span>
+      </a>
+      <a href="#" class="menu-item">
+        <span class="menu-item-icon" aria-hidden="true">📦</span>
+        <span>Produits</span>
+      </a>
+      <a href="#" class="menu-item">
+        <span class="menu-item-icon" aria-hidden="true">🛒</span>
+        <span>Commandes</span>
+      </a>
+      <a href="suivi-admin.html" class="menu-item active">
+        <span class="menu-item-icon" aria-hidden="true">📈</span>
+        <span>Suivi Santé</span>
+      </a>
+      <a href="#" class="menu-item">
+        <span class="menu-item-icon" aria-hidden="true">❤️</span>
+        <span>Programmes</span>
+      </a>
+      <a href="#" class="menu-item">
+        <span class="menu-item-icon" aria-hidden="true">⚙️</span>
+        <span>Paramètres</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>© 2026 NutriVerse</p>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <label for="ssa-sidebar-toggle" class="menu-btn" aria-label="Ouvrir le menu">☰</label>
+        <div class="search-box">
+          <span aria-hidden="true" style="opacity: 0.55; font-size: 1.1rem">⌕</span>
+          <input type="search" placeholder="Rechercher…" autocomplete="off" />
+        </div>
+      </div>
+      <div class="topbar-right">
+        <form method="post" action="php/admin_deconnexion.php">
+          <button type="submit" class="ssa-btn ssa-btn-outline">Déconnexion</button>
+        </form>
+        <div class="admin-box">
+          <div class="admin-avatar" aria-hidden="true">A</div>
+          <div>
+            <h4>Admin</h4>
+            <p>Administrateur</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content" id="contenu-principal">
+      <div>
+        <span class="ssa-badge">Module Suivi</span>
+        <p style="color: var(--muted); margin-top: 8px; max-width: 720px">
+          Sidebar et barre supérieure alignées sur le back-office NutriVerse (<code>view/back</code>). Données statiques.
+        </p>
+      </div>
+
+      <section class="ssa-stats" aria-labelledby="stats-admin-title">
+        <h2 id="stats-admin-title" class="visually-hidden">Indicateurs clés</h2>
+        <article class="ssa-stat-card">
+          <div>
+            <p>Utilisateurs avec suivi actif</p>
+            <h2>128</h2>
+            <p style="color: var(--success); font-size: 0.88rem; margin-top: 6px">+12 cette semaine</p>
+          </div>
+          <div class="ssa-stat-icon green" role="presentation"></div>
+        </article>
+        <article class="ssa-stat-card">
+          <div>
+            <p>Moy. calories / jour (tous)</p>
+            <h2>1&nbsp;940</h2>
+            <p style="color: var(--muted); font-size: 0.88rem; margin-top: 6px">kcal</p>
+          </div>
+          <div class="ssa-stat-icon orange" role="presentation"></div>
+        </article>
+        <article class="ssa-stat-card">
+          <div>
+            <p>Moy. hydratation / jour</p>
+            <h2>1&nbsp;870</h2>
+            <p style="color: var(--muted); font-size: 0.88rem; margin-top: 6px">ml</p>
+          </div>
+          <div class="ssa-stat-icon blue" role="presentation"></div>
+        </article>
+        <article class="ssa-stat-card">
+          <div>
+            <p>Alertes non lues</p>
+            <h2>24</h2>
+            <p style="color: var(--orange); font-size: 0.88rem; margin-top: 6px">À traiter</p>
+          </div>
+          <div class="ssa-stat-icon purple" role="presentation"></div>
+        </article>
+      </section>
+
+      <div class="ssa-grid-2">
+        <section class="ssa-card" aria-labelledby="chart-cal-title">
+          <div class="ssa-card-header">
+            <div>
+              <h3 id="chart-cal-title">Volume d’enregistrements (calories)</h3>
+              <p>Entrées <strong>Suivi</strong> sur les 6 derniers jours — graphique en barres CSS.</p>
+            </div>
+          </div>
+          <div class="ssa-bars" role="img" aria-label="Barres du nombre d’entrées calories par jour">
+            <div class="ssa-bar" style="height: 45%" data-label="Lun"></div>
+            <div class="ssa-bar" style="height: 62%" data-label="Mar"></div>
+            <div class="ssa-bar" style="height: 88%" data-label="Mer"></div>
+            <div class="ssa-bar" style="height: 55%" data-label="Jeu"></div>
+            <div class="ssa-bar" style="height: 70%" data-label="Ven"></div>
+            <div class="ssa-bar" style="height: 52%" data-label="Sam"></div>
+          </div>
+        </section>
+
+        <section class="ssa-card" aria-labelledby="chart-eau-title">
+          <div class="ssa-card-header">
+            <div>
+              <h3 id="chart-eau-title">Volume d’enregistrements (eau)</h3>
+              <p>Même échelle pour comparer l’activité d’hydratation.</p>
+            </div>
+          </div>
+          <div class="ssa-bars" role="img" aria-label="Barres du nombre d’entrées eau par jour">
+            <div class="ssa-bar alt" style="height: 38%" data-label="Lun"></div>
+            <div class="ssa-bar alt" style="height: 72%" data-label="Mar"></div>
+            <div class="ssa-bar alt" style="height: 90%" data-label="Mer"></div>
+            <div class="ssa-bar alt" style="height: 48%" data-label="Jeu"></div>
+            <div class="ssa-bar alt" style="height: 66%" data-label="Ven"></div>
+            <div class="ssa-bar alt" style="height: 58%" data-label="Sam"></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="ssa-card" id="utilisateurs" aria-labelledby="users-title">
+        <div class="ssa-card-header">
+          <div>
+            <h3 id="users-title">Utilisateurs — suivi santé</h3>
+            <p>Extrait statique : objectifs, derniers totaux et statut (Alice Martin incluse).</p>
+          </div>
+          <form method="get" action="php/admin_utilisateurs.php" style="display: flex; gap: 10px; flex-wrap: wrap">
+            <label for="q-user" class="visually-hidden">Recherche</label>
+            <input type="search" id="q-user" name="q" placeholder="Rechercher…" style="padding: 10px 14px; border-radius: 14px; border: 1px solid var(--border); min-width: 200px; font-family: inherit" />
+            <button type="submit" class="ssa-btn">Filtrer</button>
+          </form>
+        </div>
+        <div class="ssa-table-wrap">
+          <table class="ssa-table">
+            <caption class="visually-hidden">Liste des utilisateurs du module suivi</caption>
+            <thead>
+              <tr>
+                <th scope="col">Utilisateur</th>
+                <th scope="col">Objectifs (kcal / ml)</th>
+                <th scope="col">Hier — calories</th>
+                <th scope="col">Hier — eau</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Alice Martin</td>
+                <td>2&nbsp;000 / 2&nbsp;000</td>
+                <td>2&nbsp;050 kcal</td>
+                <td>2&nbsp;100 ml</td>
+                <td><span class="ssa-status warn">Dépassement kcal</span></td>
+                <td><a class="ssa-link" href="suivi-utilisateur.html">Voir le dossier</a></td>
+              </tr>
+              <tr>
+                <td>Luc Bernard</td>
+                <td>1&nbsp;800 / 1&nbsp;800</td>
+                <td>1&nbsp;720 kcal</td>
+                <td>1&nbsp;650 ml</td>
+                <td><span class="ssa-status warn">Eau basse</span></td>
+                <td><a class="ssa-link" href="#">Voir le dossier</a></td>
+              </tr>
+              <tr>
+                <td>Sofia Benali</td>
+                <td>2&nbsp;200 / 2&nbsp;500</td>
+                <td>2&nbsp;050 kcal</td>
+                <td>2&nbsp;400 ml</td>
+                <td><span class="ssa-status ok">Dans les cibles</span></td>
+                <td><a class="ssa-link" href="#">Voir le dossier</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <form method="post" action="php/admin_utilisateur_desactiver.php" style="margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end">
+          <div>
+            <label for="uid" style="display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 6px">ID utilisateur</label>
+            <input type="text" id="uid" name="user_id" value="USR-8821" style="padding: 10px 14px; border-radius: 14px; border: 1px solid var(--border); font-family: inherit" />
+          </div>
+          <button type="submit" class="ssa-btn ssa-btn-outline">Désactiver le suivi (fictif)</button>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</body>
+</html>

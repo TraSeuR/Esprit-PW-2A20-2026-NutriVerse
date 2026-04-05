@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriVerse — Suivi santé (utilisateur)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/suivi-utilisateur.css" />
+</head>
+<body class="suivi-user-app">
+  <header class="header">
+    <div class="container nav">
+      <a class="logo" href="#">
+        <img src="images/logo.png" alt="Logo NutriVerse" class="logo-img" />
+      </a>
+
+      <input type="checkbox" id="nav-toggle" hidden aria-hidden="true" />
+      <label for="nav-toggle" class="menu-toggle" aria-label="Ouvrir le menu">☰</label>
+      <nav class="navbar" aria-label="Navigation principale">
+        <a href="#">Accueil</a>
+        <a href="#">Marketplace</a>
+        <a href="#">Recettes</a>
+        <a href="#">Programmes</a>
+        <a href="suivi-utilisateur.html" aria-current="page">Suivi</a>
+        <a href="#">Produits</a>
+
+        <a href="#" class="cart-icon" title="Commandes">🛒</a>
+
+        <a href="#" class="btn-outline">Se connecter</a>
+        <a href="#" class="btn-primary">S'inscrire</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="suivi-main-content">
+    <!-- Connexion -->
+    <section class="sss-section ss-section" id="connexion" aria-labelledby="connexion-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Authentification</span>
+          <h1 id="connexion-title">Connexion</h1>
+          <p>Accédez à votre espace de suivi. Maquette sans JavaScript — actions PHP fictives.</p>
+        </header>
+        <div class="sss-login-card ss-card ss-login-card">
+          <h2 class="visually-hidden">Formulaire de connexion</h2>
+          <form method="post" action="php/connexion.php" class="sss-form-grid ss-form-grid">
+            <div class="sss-field ss-field">
+              <label for="email">Adresse e-mail</label>
+              <input type="email" id="email" name="email" autocomplete="username" required placeholder="vous@exemple.com" />
+            </div>
+            <div class="sss-field ss-field">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" autocomplete="current-password" required />
+            </div>
+            <div class="sss-form-actions ss-form-actions">
+              <button type="submit" class="sss-submit ss-btn ss-btn-primary">Se connecter</button>
+              <a class="sss-register ss-btn ss-btn-outline" href="#">Créer un compte sur NutriVerse</a>
+            </div>
+            <p class="sss-muted ss-muted"><a href="#objectifs">Mot de passe oublié (fictif)</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tableau de bord -->
+    <section class="sss-section ss-section ss-section--alt" id="tableau-de-bord" aria-labelledby="dash-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Résumé du jour</span>
+          <h2 id="dash-title">Tableau de bord</h2>
+          <p>Totaux du jour pour Alice Martin — comparaison rapide aux objectifs (2000 kcal, 2000 ml).</p>
+        </header>
+        <div class="sss-dash-grid ss-grid-3">
+          <article class="sss-card ss-card">
+            <h3>Calories consommées</h3>
+            <p class="sss-big"><strong>1&nbsp;650</strong> kcal / 2&nbsp;000 kcal</p>
+            <div class="sss-progress ss-progress-label">
+              <span>Progression</span>
+              <span>82&nbsp;%</span>
+            </div>
+            <div class="sss-track ss-progress-track" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="Calories du jour">
+              <div class="sss-fill ss-progress-fill" style="width: 82%"></div>
+            </div>
+          </article>
+          <article class="sss-card ss-card">
+            <h3>Hydratation</h3>
+            <p class="sss-big"><strong>1&nbsp;400</strong> ml / 2&nbsp;000 ml</p>
+            <div class="sss-progress ss-progress-label">
+              <span>Progression</span>
+              <span>70&nbsp;%</span>
+            </div>
+            <div class="sss-track ss-progress-track" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" aria-label="Eau du jour">
+              <div class="sss-fill ss-progress-fill water" style="width: 70%"></div>
+            </div>
+          </article>
+          <article class="sss-card ss-card">
+            <h3>État des objectifs</h3>
+            <p class="sss-muted ss-muted">Jour en cours : calories sous l’objectif, eau à compléter avant ce soir.</p>
+            <p><span class="sss-badge ss-badge ok">Calories : dans la cible</span></p>
+            <p style="margin-top: 8px"><span class="sss-badge ss-badge warn">Eau : objectif non atteint</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enregistrer consommation (Suivi — ajouterSuivi) -->
+    <section class="sss-section ss-section" id="enregistrer" aria-labelledby="enr-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Enregistrer la consommation</span>
+          <h2 id="enr-title">Nouveau suivi</h2>
+          <p>Deux formulaires distincts : entrées gérées côté entité <strong>Suivi</strong> (<code>ajouterSuivi</code>).</p>
+        </header>
+        <div class="sss-grid-2 ss-grid-2">
+          <article class="sss-card ss-card">
+            <h3>Calories (repas / collation)</h3>
+            <form method="post" action="php/suivi_ajouter_calories.php" class="sss-form-grid ss-form-grid">
+              <div class="sss-field ss-field">
+                <label for="type-repas">Type de repas</label>
+                <select id="type-repas" name="type_repas" required>
+                  <option value="">— Choisir —</option>
+                  <option value="petit-dejeuner">Petit-déjeuner</option>
+                  <option value="dejeuner">Déjeuner</option>
+                  <option value="diner">Dîner</option>
+                  <option value="collation">Collation</option>
+                </select>
+              </div>
+              <div class="sss-field ss-field">
+                <label for="desc-cal">Description</label>
+                <textarea id="desc-cal" name="description" required placeholder="Ex. : salade poulet quinoa"></textarea>
+              </div>
+              <div class="sss-field ss-field">
+                <label for="kcal">Énergie (kcal)</label>
+                <input type="number" id="kcal" name="valeur_kcal" min="0" step="1" required placeholder="420" />
+              </div>
+              <div class="sss-field ss-field">
+                <label for="heure-cal">Heure</label>
+                <input type="time" id="heure-cal" name="heure" value="12:30" required />
+              </div>
+              <div class="sss-form-actions ss-form-actions">
+                <button type="submit" class="sss-submit ss-btn ss-btn-primary">Ajouter le suivi calories</button>
+              </div>
+            </form>
+          </article>
+          <article class="sss-card ss-card">
+            <h3>Eau</h3>
+            <form method="post" action="php/suivi_ajouter_eau.php" class="sss-form-grid ss-form-grid">
+              <div class="sss-field ss-field">
+                <label for="desc-eau">Description</label>
+                <input type="text" id="desc-eau" name="description" placeholder="Ex. : bouteille 50 cl" required />
+              </div>
+              <div class="sss-field ss-field">
+                <label for="ml">Volume (ml)</label>
+                <input type="number" id="ml" name="valeur_ml" min="0" step="50" required placeholder="500" />
+              </div>
+              <div class="sss-field ss-field">
+                <label for="heure-eau">Heure</label>
+                <input type="time" id="heure-eau" name="heure" value="15:00" required />
+              </div>
+              <div class="sss-form-actions ss-form-actions">
+                <button type="submit" class="sss-submit ss-btn ss-btn-primary">Ajouter le suivi eau</button>
+              </div>
+            </form>
+          </article>
+        </div>
+        <p class="sss-muted ss-muted" style="margin-top: 16px">Modifier ou supprimer une entrée : actions <code>modifierSuivi</code> / <code>supprimerSuivi</code> (exemples ci-dessous).</p>
+        <div class="sss-grid-2 ss-grid-2" style="margin-top: 20px">
+          <article class="sss-card ss-card">
+            <h3>Modifier une entrée (Suivi)</h3>
+            <form method="post" action="php/suivi_modifier.php" class="sss-form-grid ss-form-grid">
+              <div class="sss-field ss-field">
+                <label for="id-suivi-mod">Identifiant suivi</label>
+                <input type="text" id="id-suivi-mod" name="id_suivi" value="SU-1042" readonly />
+              </div>
+              <div class="sss-field ss-field">
+                <label for="nouvelle-valeur">Nouvelle valeur (kcal ou ml)</label>
+                <input type="number" id="nouvelle-valeur" name="nouvelle_valeur" min="0" required value="380" />
+              </div>
+              <button type="submit" class="sss-submit ss-btn ss-btn-outline">Enregistrer les modifications</button>
+            </form>
+          </article>
+          <article class="sss-card ss-card">
+            <h3>Supprimer une entrée (Suivi)</h3>
+            <form method="post" action="php/suivi_supprimer.php" class="sss-form-grid ss-form-grid">
+              <div class="sss-field ss-field">
+                <label for="id-suivi-del">Identifiant suivi à supprimer</label>
+                <input type="text" id="id-suivi-del" name="id_suivi" value="SU-1038" required />
+              </div>
+              <button type="submit" class="sss-submit ss-btn ss-btn-ghost">Supprimer définitivement</button>
+            </form>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultation (Jour — comparerAvecObjectif, getTotalCalories, getTotalEau) -->
+    <section class="sss-section ss-section ss-section--alt" id="consultation" aria-labelledby="consult-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Consultation du jour</span>
+          <h2 id="consult-title">Calories et eau</h2>
+          <p>Totaux agrégés pour la journée — logique métier côté entité <strong>Jour</strong>.</p>
+        </header>
+        <div class="sss-grid-2 ss-grid-2">
+          <article class="sss-card ss-card">
+            <h3>Synthèse</h3>
+            <ul class="sss-list" style="list-style: none; margin: 12px 0">
+              <li><strong>getTotalCalories()</strong> → 1&nbsp;650 kcal</li>
+              <li><strong>getTotalEau()</strong> → 1&nbsp;400 ml</li>
+              <li><strong>comparerAvecObjectif()</strong> → calories OK, hydratation en retard</li>
+            </ul>
+            <div class="sss-progress ss-progress-label"><span>Calories vs objectif</span><span>82&nbsp;%</span></div>
+            <div class="sss-track ss-progress-track"><div class="sss-fill ss-progress-fill" style="width: 82%"></div></div>
+            <div class="sss-progress ss-progress-label" style="margin-top: 14px"><span>Eau vs objectif</span><span>70&nbsp;%</span></div>
+            <div class="sss-track ss-progress-track"><div class="sss-fill ss-progress-fill water warn" style="width: 70%"></div></div>
+          </article>
+          <article class="sss-card ss-card">
+            <h3>Modifier la journée (Jour — modifierJour)</h3>
+            <form method="post" action="php/jour_modifier.php" class="sss-form-grid ss-form-grid">
+              <div class="sss-field ss-field">
+                <label for="date-jour">Date du jour</label>
+                <input type="date" id="date-jour" name="date_jour" value="2026-04-05" required />
+              </div>
+              <div class="sss-field ss-field">
+                <label for="note-jour">Note / contexte</label>
+                <textarea id="note-jour" name="note" placeholder="Ex. : journée de télétravail"></textarea>
+              </div>
+              <button type="submit" class="sss-submit ss-btn ss-btn-primary">Mettre à jour le jour</button>
+            </form>
+            <form method="post" action="php/jour_supprimer.php" style="margin-top: 16px" class="sss-form-grid ss-form-grid">
+              <input type="hidden" name="date_jour" value="2026-04-05" />
+              <button type="submit" class="sss-submit ss-btn ss-btn-ghost">Supprimer le jour (fictif)</button>
+            </form>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Historique -->
+    <section class="sss-section ss-section" id="historique" aria-labelledby="hist-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Historique</span>
+          <h2 id="hist-title">Jours précédents</h2>
+          <p>Filtre de période via formulaire GET (sans script).</p>
+        </header>
+        <form method="get" action="php/historique.php" class="sss-filter ss-card" style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end">
+          <div class="sss-field ss-field" style="min-width: 160px">
+            <label for="debut">Du</label>
+            <input type="date" id="debut" name="debut" value="2026-03-30" />
+          </div>
+          <div class="sss-field ss-field" style="min-width: 160px">
+            <label for="fin">Au</label>
+            <input type="date" id="fin" name="fin" value="2026-04-05" />
+          </div>
+          <button type="submit" class="sss-submit ss-btn ss-btn-primary">Appliquer le filtre</button>
+        </form>
+        <div class="sss-table-wrap ss-table-wrap">
+          <table class="sss-table ss-table">
+            <caption class="visually-hidden">Historique des 7 derniers jours</caption>
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Calories</th>
+                <th scope="col">Eau</th>
+                <th scope="col">Objectifs</th>
+                <th scope="col">Indicateur</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>5 avr. 2026</td>
+                <td>1&nbsp;650 / 2&nbsp;000</td>
+                <td>1&nbsp;400 / 2&nbsp;000</td>
+                <td>Cal OK · Eau partiel</td>
+                <td><span class="sss-badge ss-badge warn">Eau</span></td>
+              </tr>
+              <tr>
+                <td>4 avr. 2026</td>
+                <td>2&nbsp;050 / 2&nbsp;000</td>
+                <td>2&nbsp;100 / 2&nbsp;000</td>
+                <td>Cal dépassé · Eau OK</td>
+                <td><span class="sss-badge ss-badge alert">Calories</span></td>
+              </tr>
+              <tr>
+                <td>3 avr. 2026</td>
+                <td>1&nbsp;920 / 2&nbsp;000</td>
+                <td>1&nbsp;950 / 2&nbsp;000</td>
+                <td>Les deux proches</td>
+                <td><span class="sss-badge ss-badge ok">OK</span></td>
+              </tr>
+              <tr>
+                <td>2 avr. 2026</td>
+                <td>1&nbsp;480 / 2&nbsp;000</td>
+                <td>1&nbsp;200 / 2&nbsp;000</td>
+                <td>Sous les deux</td>
+                <td><span class="sss-badge ss-badge warn">À compléter</span></td>
+              </tr>
+              <tr>
+                <td>1 avr. 2026</td>
+                <td>2&nbsp;000 / 2&nbsp;000</td>
+                <td>2&nbsp;000 / 2&nbsp;000</td>
+                <td>Atteints</td>
+                <td><span class="sss-badge ss-badge ok">OK</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Objectifs -->
+    <section class="sss-section ss-section ss-section--alt" id="objectifs" aria-labelledby="obj-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Objectifs journaliers</span>
+          <h2 id="obj-title">Définir les cibles</h2>
+          <p>Alice Martin : 2&nbsp;000 kcal et 2&nbsp;000 ml par jour (données statiques de maquette).</p>
+        </header>
+        <article class="sss-card ss-card" style="max-width: 520px">
+          <form method="post" action="php/objectifs_jour.php" class="sss-form-grid ss-form-grid">
+            <div class="sss-field ss-field">
+              <label for="obj-kcal">Objectif calories (kcal / jour)</label>
+              <input type="number" id="obj-kcal" name="objectif_kcal" min="800" step="50" value="2000" required />
+            </div>
+            <div class="sss-field ss-field">
+              <label for="obj-eau">Objectif eau (ml / jour)</label>
+              <input type="number" id="obj-eau" name="objectif_eau" min="500" step="100" value="2000" required />
+            </div>
+            <button type="submit" class="sss-submit ss-btn ss-btn-primary">Enregistrer les objectifs</button>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <!-- Alertes (genererAlerte) -->
+    <section class="sss-section ss-section" id="alertes" aria-labelledby="alert-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Notifications</span>
+          <h2 id="alert-title">Alertes</h2>
+          <p>Messages issus de <strong>genererAlerte</strong> selon le dépassement ou le non-atteinte des objectifs.</p>
+        </header>
+        <div class="sss-alerts ss-alerts">
+          <article class="sss-alert-item ss-alert-item info">
+            <div>
+              <strong>Rappel hydratation</strong>
+              <p class="sss-muted ss-muted">Il vous reste environ 600 ml pour atteindre l’objectif de 2&nbsp;000 ml aujourd’hui.</p>
+            </div>
+          </article>
+          <article class="sss-alert-item ss-alert-item warning">
+            <div>
+              <strong>Objectif eau non atteint (hier)</strong>
+              <p class="sss-muted ss-muted">Le 4 avril, volume total 1&nbsp;650 ml — en dessous de la cible.</p>
+            </div>
+          </article>
+          <article class="sss-alert-item ss-alert-item critical">
+            <div>
+              <strong>Dépassement calories (4 avr.)</strong>
+              <p class="sss-muted ss-muted">Total 2&nbsp;050 kcal pour un objectif de 2&nbsp;000 kcal.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Statistiques -->
+    <section class="sss-section ss-section ss-section--alt" id="statistiques" aria-labelledby="stats-title">
+      <div class="container">
+        <header class="sss-section-header ss-section-header">
+          <span class="sss-tag ss-tag">Progression</span>
+          <h2 id="stats-title">Statistiques</h2>
+          <p>Graphiques en barres CSS et tableau récapitulatif (données fictives).</p>
+        </header>
+        <div class="sss-grid-2 ss-grid-2">
+          <article class="sss-card ss-card">
+            <h3>Calories sur 7 jours (kcal)</h3>
+            <div class="sss-barchart ss-barchart" role="img" aria-label="Barres des calories sur une semaine">
+              <div class="sss-bar ss-bar" style="height: 62%" data-pct="1 480"></div>
+              <div class="sss-bar ss-bar" style="height: 84%" data-pct="1 920"></div>
+              <div class="sss-bar ss-bar" style="height: 96%" data-pct="2 000"></div>
+              <div class="sss-bar ss-bar" style="height: 74%" data-pct="1 480"></div>
+              <div class="sss-bar ss-bar" style="height: 90%" data-pct="2 050"></div>
+              <div class="sss-bar ss-bar" style="height: 83%" data-pct="1 650"></div>
+            </div>
+            <p class="sss-muted ss-muted" style="margin-top: 28px; text-align: center">Lun · Mar · Mer · Jeu · Ven · Sam</p>
+          </article>
+          <article class="sss-card ss-card">
+            <h3>Hydratation sur 7 jours (ml)</h3>
+            <div class="sss-barchart ss-barchart" role="img" aria-label="Barres de l eau sur une semaine">
+              <div class="sss-bar ss-bar water" style="height: 55%" data-pct="1 200"></div>
+              <div class="sss-bar ss-bar water" style="height: 78%" data-pct="1 700"></div>
+              <div class="sss-bar ss-bar water" style="height: 98%" data-pct="2 000"></div>
+              <div class="sss-bar ss-bar water" style="height: 60%" data-pct="1 300"></div>
+              <div class="sss-bar ss-bar water" style="height: 100%" data-pct="2 100"></div>
+              <div class="sss-bar ss-bar water" style="height: 70%" data-pct="1 400"></div>
+            </div>
+            <p class="sss-muted ss-muted" style="margin-top: 28px; text-align: center">Lun · Mar · Mer · Jeu · Ven · Sam</p>
+          </article>
+        </div>
+        <div class="sss-table-wrap ss-table-wrap" style="margin-top: 24px">
+          <table class="sss-table ss-table">
+            <caption class="visually-hidden">Récapitulatif hebdomadaire</caption>
+            <thead>
+              <tr>
+                <th scope="col">Semaine</th>
+                <th scope="col">Moy. calories</th>
+                <th scope="col">Moy. eau</th>
+                <th scope="col">Jours objectif OK</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>31 mars – 5 avr. 2026</td>
+                <td>1&nbsp;897 kcal</td>
+                <td>1&nbsp;783 ml</td>
+                <td>3 / 6</td>
+              </tr>
+              <tr>
+                <td>24 – 30 mars 2026</td>
+                <td>1&nbsp;945 kcal</td>
+                <td>1&nbsp;920 ml</td>
+                <td>4 / 7</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sss-footer ss-footer">
+    <div class="container">
+      <p>Module Suivi santé — NutriVerse · <a href="#">Retour au site</a> · <a href="suivi-admin.html">Espace administration (maquette)</a></p>
+    </div>
+  </footer>
+
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .sss-big { font-size: 1.35rem; margin: 10px 0 14px; }
+  </style>
+</body>
+</html>
