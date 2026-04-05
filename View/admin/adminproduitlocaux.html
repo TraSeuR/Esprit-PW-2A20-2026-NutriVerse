@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriVerse - Produits locaux (Admin)</title>
+  <link rel="stylesheet" href="assets/adminproduitlocaux.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+
+  <aside class="sidebar" id="sidebar">
+    <div>
+      <div class="sidebar-top">
+        <div class="brand">
+          <img src="images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
+          <div>
+            <h2>NutriVerse</h2>
+            <p>Back Office</p>
+          </div>
+        </div>
+
+        <button type="button" class="close-sidebar" id="closeSidebar" aria-label="Fermer le menu">✕</button>
+      </div>
+
+      <nav class="sidebar-menu">
+        <a href="#" class="menu-item">
+          <i data-feather="grid"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#" class="menu-item">
+          <i data-feather="book-open"></i>
+          <span>Recettes</span>
+        </a>
+
+        <a href="#" class="menu-item">
+          <i data-feather="users"></i>
+          <span>Utilisateurs</span>
+        </a>
+
+        <a href="adminproduitlocaux.html" class="menu-item active">
+          <i data-feather="package"></i>
+          <span>Produits</span>
+        </a>
+
+        <a href="#" class="menu-item">
+          <i data-feather="shopping-cart"></i>
+          <span>Commandes</span>
+        </a>
+
+        <a href="#" class="menu-item">
+          <i data-feather="activity"></i>
+          <span>Suivi Santé</span>
+        </a>
+
+        <a href="#" class="menu-item">
+          <i data-feather="heart"></i>
+          <span>Programmes</span>
+        </a>
+
+        <a href="#" class="menu-item">
+          <i data-feather="settings"></i>
+          <span>Paramètres</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <p>© 2026 NutriVerse</p>
+      <p class="pl-sidebar-foot-link"><a href="../utilisateur/utilisateurproduitlocaux.html">Interface utilisateur →</a></p>
+    </div>
+  </aside>
+
+  <div class="main-content">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button type="button" class="menu-btn" id="menuBtn" aria-label="Ouvrir le menu">
+          <i data-feather="menu"></i>
+        </button>
+
+        <div class="search-box">
+          <i data-feather="search"></i>
+          <input type="text" placeholder="Rechercher..." />
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button type="button" class="icon-btn notification-btn" aria-label="Notifications">
+          <i data-feather="bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+
+        <div class="admin-box">
+          <div class="admin-avatar">A</div>
+          <div>
+            <h4>Admin</h4>
+            <p>Administrateur</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+      <section class="page-header">
+        <div>
+          <span class="section-badge">Marketplace locale</span>
+          <h1>Produits locaux</h1>
+          <p>
+            Gestion des fiches produit et du stock en temps réel (1 produit ↔ 1 ligne de stock).
+            Dates d’expiration et seuils d’alerte pour limiter le gaspillage.
+          </p>
+        </div>
+
+        <a class="export-btn" href="#formulaire-ajout">
+          <i data-feather="plus"></i>
+          Ajouter un produit
+        </a>
+      </section>
+
+      <section class="pl-stats-grid" aria-label="Indicateurs">
+        <article class="pl-stat-card">
+          <h3>Produits référencés</h3>
+          <p class="pl-value">5</p>
+        </article>
+        <article class="pl-stat-card">
+          <h3>Unités en stock (total)</h3>
+          <p class="pl-value">214</p>
+        </article>
+        <article class="pl-stat-card">
+          <h3>Sous le seuil d’alerte</h3>
+          <p class="pl-value pl-value-warning">2</p>
+        </article>
+        <article class="pl-stat-card">
+          <h3>Expiration &lt; 7 jours</h3>
+          <p class="pl-value pl-value-danger">1</p>
+        </article>
+      </section>
+
+      <div class="pl-alert-banner" role="status">
+        <span aria-hidden="true">⚠️</span>
+        <div>
+          <strong>Alertes stock</strong>
+          <p>
+            <strong>Miel de montagne</strong> et <strong>Yaourt fermier nature</strong> sont sous le seuil défini.
+            Pensez à réapprovisionner ou à mettre en avant ces produits côté utilisateur.
+          </p>
+        </div>
+      </div>
+
+      <section class="pl-panel" id="formulaire-ajout">
+        <div class="pl-panel-header">
+          <h3>Ajouter un produit local</h3>
+          <p>
+            Correspond aux classes <strong>Produit locaux</strong> et <strong>Stock</strong> (association 1 — 1).
+            Branchez ce formulaire sur votre API : <code>ajouterProduit()</code> côté serveur.
+          </p>
+        </div>
+        <form action="#" method="post">
+          <div class="pl-form-grid">
+            <div class="pl-form-group">
+              <label for="nom">Nom du produit</label>
+              <input id="nom" name="nom" type="text" placeholder="Ex. Tomates cerises bio" required />
+            </div>
+            <div class="pl-form-group">
+              <label for="prix">Prix (€)</label>
+              <input id="prix" name="prix" type="number" step="0.01" min="0" placeholder="3.90" required />
+            </div>
+            <div class="pl-form-group">
+              <label for="date_expiration">Date d’expiration</label>
+              <input id="date_expiration" name="date_expiration" type="date" required />
+            </div>
+            <div class="pl-form-group">
+              <label for="quantite">Quantité en stock</label>
+              <input id="quantite" name="quantite" type="number" min="0" placeholder="48" required />
+            </div>
+            <div class="pl-form-group">
+              <label for="seuil_alerte">Seuil d’alerte</label>
+              <input id="seuil_alerte" name="seuil_alerte" type="number" min="0" placeholder="10" required />
+              <span class="pl-hint">Notification admin lorsque la quantité ≤ ce seuil.</span>
+            </div>
+            <div class="pl-form-group">
+              <label for="date_maj">Date de mise à jour du stock</label>
+              <input id="date_maj" name="date_maj" type="datetime-local" />
+              <span class="pl-hint">Peut être renseignée automatiquement à l’enregistrement.</span>
+            </div>
+            <div class="pl-form-actions">
+              <button type="submit" class="export-btn">Enregistrer le produit et le stock</button>
+              <button type="reset" class="mini-btn">Réinitialiser</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <section class="pl-panel">
+        <div class="pl-panel-header">
+          <h3>Catalogue &amp; stock</h3>
+          <p>
+            Colonnes alignées sur le modèle : identifiants, prix, péremption, quantité, seuil,
+            dernière MAJ. Actions <strong>modifier</strong> / <strong>supprimer</strong> à relier à vos endpoints.
+          </p>
+        </div>
+        <div class="pl-table-wrap">
+          <table class="pl-table">
+            <thead>
+              <tr>
+                <th>idProduit</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>date_expiration</th>
+                <th>idStock</th>
+                <th>Quantité</th>
+                <th>Seuil alerte</th>
+                <th>Date MAJ stock</th>
+                <th>État</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="pl-row-low-stock">
+                <td class="pl-mono">P-104</td>
+                <td>Miel de montagne</td>
+                <td>8,50 €</td>
+                <td>2026-06-12</td>
+                <td class="pl-mono">S-204</td>
+                <td>6</td>
+                <td>10</td>
+                <td class="pl-mono">2026-04-04 09:12</td>
+                <td><span class="pl-badge pl-badge-low">Sous seuil</span></td>
+                <td class="pl-actions-cell">
+                  <button type="button" class="pl-btn-icon pl-btn-edit" title="modifierProduit()">Modifier</button>
+                  <button type="button" class="pl-btn-icon pl-btn-danger" title="supprimerProduit()">Supprimer</button>
+                </td>
+              </tr>
+              <tr class="pl-row-low-stock">
+                <td class="pl-mono">P-102</td>
+                <td>Yaourt fermier nature</td>
+                <td>1,20 €</td>
+                <td>2026-04-09</td>
+                <td class="pl-mono">S-202</td>
+                <td>8</td>
+                <td>12</td>
+                <td class="pl-mono">2026-04-05 07:40</td>
+                <td><span class="pl-badge pl-badge-low">Sous seuil</span></td>
+                <td class="pl-actions-cell">
+                  <button type="button" class="pl-btn-icon pl-btn-edit">Modifier</button>
+                  <button type="button" class="pl-btn-icon pl-btn-danger">Supprimer</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="pl-mono">P-101</td>
+                <td>Tomates cerises bio</td>
+                <td>3,90 €</td>
+                <td>2026-04-08</td>
+                <td class="pl-mono">S-201</td>
+                <td>42</td>
+                <td>15</td>
+                <td class="pl-mono">2026-04-05 11:05</td>
+                <td><span class="pl-badge pl-badge-expire">Expire bientôt</span></td>
+                <td class="pl-actions-cell">
+                  <button type="button" class="pl-btn-icon pl-btn-edit">Modifier</button>
+                  <button type="button" class="pl-btn-icon pl-btn-danger">Supprimer</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="pl-mono">P-103</td>
+                <td>Salade frisée (botte)</td>
+                <td>2,10 €</td>
+                <td>2026-04-12</td>
+                <td class="pl-mono">S-203</td>
+                <td>35</td>
+                <td>8</td>
+                <td class="pl-mono">2026-04-04 16:22</td>
+                <td><span class="pl-badge pl-badge-ok">Stock OK</span></td>
+                <td class="pl-actions-cell">
+                  <button type="button" class="pl-btn-icon pl-btn-edit">Modifier</button>
+                  <button type="button" class="pl-btn-icon pl-btn-danger">Supprimer</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="pl-mono">P-105</td>
+                <td>Pommes Golden (kg)</td>
+                <td>2,80 €</td>
+                <td>2026-04-25</td>
+                <td class="pl-mono">S-205</td>
+                <td>123</td>
+                <td>20</td>
+                <td class="pl-mono">2026-04-03 08:00</td>
+                <td><span class="pl-badge pl-badge-ok">Stock OK</span></td>
+                <td class="pl-actions-cell">
+                  <button type="button" class="pl-btn-icon pl-btn-edit">Modifier</button>
+                  <button type="button" class="pl-btn-icon pl-btn-danger">Supprimer</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    feather.replace();
+    document.getElementById("menuBtn")?.addEventListener("click", function () {
+      document.getElementById("sidebar")?.classList.add("active");
+    });
+    document.getElementById("closeSidebar")?.addEventListener("click", function () {
+      document.getElementById("sidebar")?.classList.remove("active");
+    });
+  </script>
+</body>
+</html>
