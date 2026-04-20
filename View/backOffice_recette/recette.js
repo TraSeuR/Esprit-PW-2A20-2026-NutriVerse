@@ -1,58 +1,11 @@
-
-// nverifiw el formulr lkol wkt nenzlou ajouter 
-
-function validerFormulaire() {
-
-    let errors = "";
-
-    let nom = document.getElementById("nom").value.trim();
-    let description = document.getElementById("description").value.trim();
-    let etapes = document.getElementById("etapes").value.trim();
-    let temps = document.getElementById("temps").value.trim();
-    let categorie = document.getElementById("categorie").value.trim();
-    let image = document.getElementById("image").value;
-
-    if (nom.length < 6) {
-        errors += "- Nom au moins 3 caractères\n";
-    }
-
-    if (description.length < 10) {
-        errors += "- Description trop courte\n";
-    }
-
-    if (etapes.length < 10) {
-        errors += "- Étapes insuffisantes\n";
-    }
-
-    if (!/^[0-9]+ ?(min)?$/.test(temps)) {
-        errors += "- Temps invalide (ex: 20 min)\n";
-    }
-
-    if (categorie === "") {
-        errors += "- Catégorie obligatoire\n";
-    }
-
-    if (image === "") {
-        errors += "- Image obligatoire\n";
-    }
-
-    if (errors !== "") {
-        alert("Erreurs :\n\n" + errors);
-        return false;
-    }
-
-    return true;
-}
-
-
-// nverifiw bl champ bl champ
+// Vérification champ par champ uniquement
 
 function checkNom() {
     let val = document.getElementById("nom").value.trim();
     let msg = document.getElementById("nomMsg");
 
-    if (val.length < 3) {
-        msg.textContent = " Min 3 caractères";
+    if (val.length < 6) {
+        msg.textContent = " Min 6 caractères";
         msg.className = "msg error";
         return false;
     }
@@ -108,7 +61,7 @@ function checkTemps() {
 }
 
 function checkCategorie() {
-    let val = document.getElementById("categorie").value.trim();
+    let val = document.getElementById("categorie").value;
     let msg = document.getElementById("catMsg");
 
     if (val === "") {
@@ -136,19 +89,55 @@ function checkImage() {
     msg.className = "msg success";
     return true;
 }
-//ki nenzlou ala chmps lfonct se declenche 
 
+function validerTout() {
+    let ok = true;
+
+    if (!checkNom()) ok = false;
+    if (!checkDescription()) ok = false;
+    if (!checkEtapes()) ok = false;
+    if (!checkTemps()) ok = false;
+    if (!checkCategorie()) ok = false;
+    if (!checkIngredients()) ok = false;
+
+    // ✅ détecter mode modification
+    let isEdit = document.querySelector("input[name='id']") !== null;
+
+    // ✅ image obligatoire seulement en ajout
+    if (!isEdit) {
+        if (!checkImage()) ok = false;
+    }
+
+    return ok;
+}
+
+
+// DOM chargé
 document.addEventListener("DOMContentLoaded", function () {
-
 
     let form = document.getElementById("recetteForm");
 
     if (form) {
 
         form.addEventListener("submit", function(e) {
-            if (!validerFormulaire()) {
+
+            if (!validerTout()) {
                 e.preventDefault();
+
+                // message global (optionnel mais pro)
+                let globalMsg = document.getElementById("formError");
+                if (globalMsg) {
+                    globalMsg.textContent = "Veuillez corriger les erreurs dans le formulaire";
+                }
+
+                // scroll vers le haut
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+                
             }
+
         });
 
         document.getElementById("nom").addEventListener("keyup", checkNom);
@@ -158,8 +147,53 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("categorie").addEventListener("keyup", checkCategorie);
         document.getElementById("image").addEventListener("change", checkImage);
 
-    } else {
-       
     }
 
 });
+
+let deleteId = null;
+
+function confirmDelete(id) {
+    deleteId = id;
+    document.getElementById("confirmBox").classList.remove("hidden");
+}
+
+document.getElementById("confirmYes").onclick = function () {
+    window.location.href = "delete.php?id=" + deleteId;
+};
+
+document.getElementById("confirmNo").onclick = function () {
+    document.getElementById("confirmBox").classList.add("hidden");
+};
+function showMessage(type) {
+
+    let text = "";
+
+    if (type === "ajout") {
+        text = "Recette ajoutée ✔";
+    }
+
+    if (type === "update") {
+        text = "Recette mise à jour ✔";
+    }
+
+    if (type === "delete") {
+        text = "Recette supprimée ✔";
+    }
+
+    let box = document.getElementById("successBox");
+    let msg = document.getElementById("successText");
+
+    msg.innerText = text;
+
+    box.classList.remove("hidden");
+
+    setTimeout(() => {
+        box.classList.add("hidden");
+    }, 2000);
+}
+
+
+function goHome() {
+    window.location.href = "admin.php";
+}

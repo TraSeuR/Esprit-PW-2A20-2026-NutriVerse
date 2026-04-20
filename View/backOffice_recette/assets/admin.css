@@ -1,4 +1,3 @@
-
 * {
     box-sizing: border-box;
 }
@@ -108,7 +107,6 @@ body {
     cursor: pointer;
 }
 
-
 .main {
     margin-left: 260px;
     padding: 30px;
@@ -153,7 +151,6 @@ body {
     border: 1px solid #ddd;
     outline: none;
     transition: 0.3s;
-
     resize: none; 
 }
 
@@ -192,7 +189,6 @@ body {
     box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
     outline: none;
 }
-
 
 .btn-add {
     width: 100%;
@@ -249,7 +245,6 @@ body {
     box-shadow: 0 5px 15px rgba(231,76,60,0.4);
 }
 
-
 .right-panel {
     flex: 1;
     display: flex;
@@ -285,23 +280,26 @@ body {
     top: 0;
     background: #f4f6f8;
 }
+
 /*colonne nom*/
-.recipe-table td:nth-child(2),
 .recipe-table td:nth-child(2) {
     width: 200px;
 }
+
 /*colonne action*/
 .recipe-table td:last-child {
     width: 150px;
     text-align: center;
     white-space: nowrap;
 }
+
 .recipe-table td:last-child a {
     display: block;
     padding: 4px 8px;
     margin: 2px auto;
     font-size: 12px;
 }
+
 .scroll-cell {
     max-height: 55px;
     overflow-y: auto;
@@ -315,7 +313,6 @@ body {
 }
 
 /* btns */
-
 .btn-action {
     background: linear-gradient(135deg, #ff8c00, #ff5e00);
     border: none;
@@ -336,7 +333,6 @@ body {
 .btn-action:hover {
     transform: scale(1.05);
 }
-
 
 .image-card {
     width: 400px;
@@ -378,4 +374,104 @@ body {
 /* succès */
 .msg.success {
     color: green ;
+}
+
+/* popup center */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-30%, -50%);
+    background: white;
+    padding: 25px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 9999;
+    min-width: 300px;
+    transition: 0.3s;
+}
+
+.popup.hidden {
+    display: none;
+}
+
+/* boutons popup */
+.popup-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+/* message success */
+.success-msg {
+    background: #eafaf1;
+    border: 2px solid #2ecc71;
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.ing-field {
+    width: 30%;
+}
+
+.ing-field input {
+    width: 100%;
+}
+
+/* select comme les inputs */
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: 0.3s;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M5 7l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+
+/* el x mta les lignes de ingrd */
+.btn-remove {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    font-size: 14px;
+    align-self: center;
+    transition: 0.3s;
+}
+
+.btn-remove:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 10px rgba(231,76,60,0.4);
+}
+
+.form-container {
+    position: relative;
+    width: fit-content;
+}
+
+.btn-reset {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    background: #ddd;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 10px;
+    cursor: pointer;
 }

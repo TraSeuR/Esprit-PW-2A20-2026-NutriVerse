@@ -1,10 +1,15 @@
 <?php
 
 include("../../Controller/recetteC.php");
+include("../../Controller/ingredientC.php");
+
+$ingredientC = new ingredientC();
+
+$ingredients = $ingredientC->getIngredientsByRecette($_GET['id']);
 
 $recetteC = new recetteC();
 
-// récupérer la recette
+// récupérer  recette
 if (isset($_GET['id'])) {
     $recette = $recetteC->getrecetteD($_GET['id']);
 }
@@ -44,6 +49,7 @@ if (isset($_GET['id'])) {
 
     <div class="details-grid">
 
+     
         <div class="details-info">
 
             <div class="details-section">
@@ -53,16 +59,44 @@ if (isset($_GET['id'])) {
 
             <div class="details-section">
                 <h3>Étapes</h3>
-                <ol class="details-steps">
-                    <?= $recette['etapes'] ?>
-                </ol>
+
+                <ul class="details-steps">
+                <?php
+                $etapes = explode("\n", $recette['etapes']);
+
+                foreach ($etapes as $etape) {
+                    $etape = trim($etape);
+                    if ($etape != "") {
+                        echo "<li>$etape</li>";
+                    }
+                }
+                ?>
+                </ul>
             </div>
-            
+
+         
+            <div class="details-section">
+                <h3>Ingrédients</h3>
+
+                <ul class="details-steps">
+                <?php
+                if (!empty($ingredients)) {
+                    foreach ($ingredients as $ing) {
+                        echo "<li>" . $ing['nom'] . " (" . $ing['quantite'] . " " . $ing['unite'] . ")</li>";
+                    }
+                } else {
+                    echo "<li>Aucun ingrédient</li>";
+                }
+                ?>
+                </ul>
+            </div>
+
             <div class="details-section">
                 <h3>Temps de préparation</h3>
                 <?= $recette['temps_preparation'] ?>
             </div>
 
+          
             <div class="details-section">
                 <h3>Catégorie</h3>
                 <p><?= $recette['categorie'] ?></p>
@@ -73,12 +107,11 @@ if (isset($_GET['id'])) {
             </a>
 
         </div>
-
       
         <img 
-            src="../backOffice_recette/images/<?= $recette['images'] ?>" 
-            class="details-image"
-        >
+    src="../backOffice_recette/displayImage.php?id=<?= $recette['id_recette'] ?>" 
+    class="details-image"
+>
 
     </div>
 

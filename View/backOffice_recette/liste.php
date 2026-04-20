@@ -1,12 +1,11 @@
 <?php
 
 
+$ingredientC = new ingredientC();
 $recetteC = new recetteC();
 
 $recettes = $recetteC->listeRecette();
-
 ?>
-
 
 <div class="table-card">
 
@@ -15,7 +14,7 @@ $recettes = $recetteC->listeRecette();
 <div class="table-wrapper">
 
 <table class="recipe-table">
-<!--entete du tab-->
+
 <tr>
 <th>ID</th>
 <th>Nom</th>
@@ -24,14 +23,16 @@ $recettes = $recetteC->listeRecette();
 <th>Temps</th>
 <th>Catégorie</th>
 <th>Image</th>
+<th>Ingrédients</th>
 <th>Actions</th>
 </tr>
 
+<?php $i = 1; ?>
 <?php foreach ($recettes as $r) { ?>
 
 <tr>
 
-<td><?= $r['id_recette'] ?></td> <!--affiche lid-->
+<td><?= $i++ ?></td>
 
 <td><?= $r['nom'] ?></td>
 
@@ -52,7 +53,23 @@ $recettes = $recetteC->listeRecette();
 <td><?= $r['categorie'] ?></td>
 
 <td>
-<img src="images/<?= $r['images'] ?>" width="60">
+<img src="displayImage.php?id=<?= $r['id_recette'] ?>" width="60">
+</td>
+
+<td>
+<div class="scroll-cell">
+<?php
+$ings = $ingredientC->getIngredientsByRecette($r['id_recette']);
+
+if (!empty($ings)) {
+    foreach ($ings as $ing) {
+        echo $ing['nom'] . " (" . $ing['quantite'] . " " . $ing['unite'] . ")<br>";
+    }
+} else {
+    echo "Aucun ingrédient";
+}
+?>
+</div>
 </td>
 
 <td>
@@ -62,11 +79,12 @@ href="admin.php?edit=<?= $r['id_recette'] ?>">
 Modifier
 </a>
 
-<a class="btn-action" 
-href="delete.php?id=<?= $r['id_recette'] ?>">
+<a class="btn-action"
+href="#"
+onclick="confirmDelete(<?= $r['id_recette'] ?>); return false;">
 Supprimer
 </a>
-<!--yekhou style les btn action (css)-->
+
 </td>
 
 </tr>
@@ -76,5 +94,4 @@ Supprimer
 </table>
 
 </div>
-
 </div>

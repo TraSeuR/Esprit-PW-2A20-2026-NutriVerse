@@ -15,6 +15,7 @@ $recettes = $recetteC->listes($categorie, $search);
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
   <meta charset="UTF-8">
   <title>NutriVerse - Recettes</title>
   <link rel="stylesheet" href="assets/recette.css">
@@ -67,9 +68,9 @@ $recettes = $recetteC->listes($categorie, $search);
     <div class="card">
 
       <img 
-        src="../backOffice_recette/images/<?= $r['images'] ?>" 
-        alt="<?= $r['nom'] ?>"
-      >
+    src="../backOffice_recette/displayImage.php?id=<?= $r['id_recette'] ?>" 
+    alt="<?= $r['nom'] ?>"
+>
 
       <div class="card-content">
 

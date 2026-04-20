@@ -3,7 +3,7 @@
 class recette
 {
     //private khtrr nodkhlolhom bl gettrs
-    private int $id_recette;
+    
     private string $nom;
     private string $description;
     private string $etapes;

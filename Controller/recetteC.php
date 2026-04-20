@@ -3,36 +3,36 @@ include("../../config.php");
 
 class recetteC
 {
-    public function addRecette($recette)
-    {
-        $db = config::getConnexion();
+   public function addRecette($recette)
+{
+    $db = config::getConnexion();
 
-        try {
-            $req = $db->prepare('
-                INSERT INTO recette
-                VALUES(NULL,:n,:d,:e,:t,:c,:i)
-            ');
+    try {
+        $req = $db->prepare('
+            INSERT INTO recette (nom, description, etapes, temps_preparation, categorie, images)
+            VALUES (:n,:d,:e,:t,:c,:i)
+        ');
 
-            $req->execute([
-                'n' => $recette->getNom(),
-                'd' => $recette->getDescription(),
-                'e' => $recette->getEtapes(),
-                't' => $recette->getTemps(),
-                'c' => $recette->getCategorie(),
-                'i' => $recette->getImage()
-            ]);
+        $req->execute([
+            'n' => $recette->getNom(),
+            'd' => $recette->getDescription(),
+            'e' => $recette->getEtapes(),
+            't' => $recette->getTemps(),
+            'c' => $recette->getCategorie(),
+            'i' => $recette->getImage()
+        ]);
 
-        } catch (Exception $e) {
-            die('Erreur: ' . $e->getMessage());
-        }
+    } catch (Exception $e) {
+        die('Erreur: ' . $e->getMessage());
     }
+}
 
     public function listeRecette()
     {
         $db = config::getConnexion();
 
         try {
-            $liste = $db->query('SELECT * FROM recette');
+            $liste = $db->query('SELECT * FROM recette ORDER BY id_recette ASC');
             return $liste;
 
         } catch (Exception $e) {
@@ -45,13 +45,14 @@ class recetteC
         $db = config::getConnexion();
 
         try {
-            $req = $db->prepare('
-                DELETE FROM recette WHERE id_recette = :id
-            ');
 
-            $req->execute([
-                'id' => $id
-            ]);
+            // 🔥 supprimer relations (jointure)
+            $req2 = $db->prepare("DELETE FROM recette_ingredient WHERE id_recette = :id");
+            $req2->execute(['id' => $id]);
+
+            // 🔥 supprimer recette
+            $req = $db->prepare('DELETE FROM recette WHERE id_recette = :id');
+            $req->execute(['id' => $id]);
 
         } catch (Exception $e) {
             die('Erreur: ' . $e->getMessage());
@@ -80,56 +81,54 @@ class recetteC
     }
 
     public function updateRecette($id, $recette)
-    {
-        $db = config::getConnexion();
+{
+    $db = config::getConnexion();
 
-        try {
-            $req = $db->prepare('
-                UPDATE recette
-                SET nom = :n,
-                    description = :d,
-                    etapes = :e,
-                    temps_preparation = :t,
-                    categorie = :c,
-                    images = :i
-                WHERE id_recette = :id
-            ');
+    try {
+        $req = $db->prepare('
+            UPDATE recette
+            SET nom = :n,
+                description = :d,
+                etapes = :e,
+                temps_preparation = :t,
+                categorie = :c,
+                images = :i
+            WHERE id_recette = :id
+        ');
 
-            $req->execute([
-                'id' => $id,
-                'n' => $recette->getNom(),
-                'd' => $recette->getDescription(),
-                'e' => $recette->getEtapes(),
-                't' => $recette->getTemps(),
-                'c' => $recette->getCategorie(),
-                'i' => $recette->getImage()
-            ]);
+        $req->execute([
+            'id' => $id,
+            'n' => $recette->getNom(),
+            'd' => $recette->getDescription(),
+            'e' => $recette->getEtapes(),
+            't' => $recette->getTemps(),
+            'c' => $recette->getCategorie(),
+            'i' => $recette->getImage()
+        ]);
 
-        } catch (Exception $e) {
-            die('Erreur: ' . $e->getMessage());
-        }
+    } catch (Exception $e) {
+        die('Erreur: ' . $e->getMessage());
     }
-
+}
     
 
-    
 public function listes($categorie, $search)
 {
     $db = config::getConnexion();
 
     $sql = "SELECT * FROM recette WHERE 1=1";
-    // FILTRE
+
     if ($categorie != "" && $categorie != "all") {
         $sql .= " AND categorie = '$categorie'";
     }
 
-   // RECHERCHE
     if ($search != "") {
         $sql .= " AND nom LIKE '%$search%'";
     }
 
     return $db->query($sql);
 }
+
 public function getrecetteD($id)
 {
     $db = config::getConnexion();
@@ -141,7 +140,4 @@ public function getrecetteD($id)
 }
 
 }
-
-
-
 ?>

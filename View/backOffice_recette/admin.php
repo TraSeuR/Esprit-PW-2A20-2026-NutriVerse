@@ -1,16 +1,25 @@
 <?php
 include("../../Controller/recetteC.php");
+include("../../Controller/ingredientC.php");
+
 
 $recetteC = new recetteC();
 //par defaut lmode add
 $mode = "ajouter";
 $recette_edit = null;
+$ingredients_edit = []; 
+
 //si lurl fih id recette a modf
 if (isset($_GET['edit'])) {
 
     $id_edit = $_GET['edit'];
 
     $recette_edit = $recetteC->getRecette($id_edit);
+
+    
+    $ingredientC = new ingredientC();
+    $ingredients_edit = $ingredientC->getIngredientsByRecette($id_edit);
+
 //chngmt lpage twali feha form modf
     $mode = "modifier";
 }
@@ -18,6 +27,7 @@ if (isset($_GET['edit'])) {
 ?>
 
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -32,6 +42,7 @@ if (isset($_GET['edit'])) {
 <body>
 
 <!-- eli aal jnb mta site -->
+
 <aside class="sidebar">
     <div class="sidebar-top">
         <div class="brand">
@@ -43,26 +54,30 @@ if (isset($_GET['edit'])) {
         </div>
     </div>
 
-    <nav class="sidebar-menu">
-        <a href="#" class="menu-item">Dashboard</a>
-        <a href="#" class="menu-item active">Recettes</a>
-        <a href="#" class="menu-item">Utilisateurs</a>
-        <a href="#" class="menu-item">Produits</a>
-        <a href="#" class="menu-item">Commandes</a>
-        <a href="#" class="menu-item">Suivi Santé</a>
-        <a href="#" class="menu-item">Programmes</a>
-        <a href="#" class="menu-item">Paramètres</a>
-    </nav>
+<nav class="sidebar-menu">
+    <a href="#" class="menu-item">Dashboard</a>
+    <a href="#" class="menu-item active">Recettes</a>
+    <a href="#" class="menu-item">Utilisateurs</a>
+    <a href="#" class="menu-item">Produits</a>
+    <a href="#" class="menu-item">Commandes</a>
+    <a href="#" class="menu-item">Suivi Santé</a>
+    <a href="#" class="menu-item">Programmes</a>
+    <a href="#" class="menu-item">Paramètres</a>
+</nav>
 
-    <div class="sidebar-footer">
-        <p>© 2026 NutriVerse</p>
-    </div>
+<div class="sidebar-footer">
+    <p>© 2026 NutriVerse</p>
+</div>
+
 </aside>
-
 
 <div class="main">
 
 <!-- formlr -->
+<div class="form-container">
+
+    <button type="button" class="btn-reset" onclick="goHome()">←</button>
+
 <div class="form-card">
 
 <h2 class="title">
@@ -75,13 +90,11 @@ else
 ?>
 </h2>
 
-<!-- formlr 2 faces--> <!--ken modf yaabth lupdate snn add-->
 <form id="recetteForm" method="POST"
 action="<?php echo ($mode == 'modifier') ? 'update.php' : 'add.php'; ?>"
 enctype="multipart/form-data">
 
 <?php if ($mode == "modifier") { ?>
-<!--maybench id fl formulr-->
 <input type="hidden" name="id" value="<?= $recette_edit['id_recette'] ?>">
 <?php } ?>
 
@@ -90,13 +103,12 @@ enctype="multipart/form-data">
 <input type="text" id="nom" name="nom"
 value="<?= $recette_edit['nom'] ?? '' ?>">
 <span id="nomMsg" class="msg "></span>
-
 </div>
 
 <div class="form-group">
 <label>Description</label>
 <textarea id="description" name="description"><?= $recette_edit['description'] ?? '' ?></textarea>
-<span id="descMsg" class="msg"></span> <!--al contrl-->
+<span id="descMsg" class="msg"></span>
 </div>
 
 <div class="form-group">
@@ -114,33 +126,103 @@ value="<?= $recette_edit['temps_preparation'] ?? '' ?>">
 
 <div class="form-group">
 <label>Catégorie</label>
-<input type="text" id="categorie" name="categorie"
-value="<?= $recette_edit['categorie'] ?? '' ?>">
+
+<select id="categorie" name="categorie">
+    <option value="">-- Choisir catégorie --</option>
+
+    <option value="Healthy"
+        <?= (isset($recette_edit['categorie']) && $recette_edit['categorie'] == 'Healthy') ? 'selected' : '' ?>>
+        Healthy
+    </option>
+
+    <option value="Vegan"
+        <?= (isset($recette_edit['categorie']) && $recette_edit['categorie'] == 'Vegan') ? 'selected' : '' ?>>
+        Vegan
+    </option>
+
+    <option value="Cuisine Durable"
+        <?= (isset($recette_edit['categorie']) && $recette_edit['categorie'] == 'Cuisine Durable') ? 'selected' : '' ?>>
+        Cuisine Durable
+    </option>
+
+</select>
 <span id="catMsg" class="msg"></span>
 </div>
 
 <div class="form-group">
-<label>Image</label>
-<input type="file" id="image" name="image">
-<span id="imgMsg" class="msg"></span>
-<?php if ($mode == "modifier") { ?>
-    <input type="hidden" name="ancienne_image" value="<?= $recette_edit['images'] ?? '' ?>">
-<?php } ?>
+    <label>Image</label>
+    <input type="file" id="image" name="image">
+    <span id="imgMsg" class="msg"></span>
+
+    <?php if ($mode == "modifier") { ?>
+        <br>
+        <img src="displayImage.php?id=<?= $recette_edit['id_recette'] ?>" width="120">
+    <?php } ?>
 </div>
 
 <hr>
 
 <h2 class="title">Partie Ingrédients</h2>
+<div id="ingredients-container">
 
-<div class="ingredient-row">
-<input type="text" name="ingredient_nom[]" placeholder="Nom">
-<input type="text" name="ingredient_qte[]" placeholder="Quantité">
-<input type="text" name="ingredient_unite[]" placeholder="Unité">
+<?php if ($mode == "modifier" && !empty($ingredients_edit)) { ?>
+
+    <?php foreach ($ingredients_edit as $ing) { ?>
+        <div class="ingredient-row">
+
+            <div class="ing-field">
+                <input type="text" name="ingredient_nom[]" value="<?= $ing['nom'] ?>">
+                <span class="msg"></span>
+            </div>
+
+            <div class="ing-field">
+                <input type="text" name="ingredient_qte[]" value="<?= $ing['quantite'] ?>">
+                <span class="msg"></span>
+            </div>
+
+            <div class="ing-field">
+                <input type="text" name="ingredient_unite[]" value="<?= $ing['unite'] ?>">
+                <span class="msg"></span>
+            </div>
+
+            <button type="button" class="btn-remove">✖</button>
+
+        </div>
+    <?php } ?>
+
+<?php } else { ?>
+
+    <div class="ingredient-row">
+
+        <div class="ing-field">
+            <input type="text" name="ingredient_nom[]" placeholder="Nom">
+            <span class="msg"></span>
+        </div>
+
+        <div class="ing-field">
+            <input type="text" name="ingredient_qte[]" placeholder="Quantité">
+            <span class="msg"></span>
+        </div>
+
+        <div class="ing-field">
+            <input type="text" name="ingredient_unite[]" placeholder="Unité">
+            <span class="msg"></span>
+        </div>
+
+    </div>
+
+<?php } ?>
+
 </div>
 
 <button type="button" class="btn-add">
 + Ajouter Ingrédient
 </button>
+
+
+
+
+
 
 <div class="form-buttons">
 
@@ -167,37 +249,77 @@ Annuler
 <?php } ?>
 
 </div>
+</div>
 
 </form>
 
 </div>
 
-
 <div class="right-panel">
 
-<!-- tab -->
 <?php include("liste.php"); ?>
 
-<!-- el apercu taht el tab -->
 <div class="image-card">
 <h3>Image recette sélectionnée</h3>
 
-<?php if ($mode == "modifier" && !empty($recette_edit['images'])) { ?>
+<?php if ($mode == "modifier") { ?>
 
-<img src="images/<?= $recette_edit['images'] ?>" width="280">
+<img src="displayImage.php?id=<?= $recette_edit['id_recette'] ?>" width="280">
 
 <?php } else { ?>
-<!--el logo eli yben awel mnhelou ki yabda vide -->
+
 <img src="https://via.placeholder.com/300" width="280">
 
 <?php } ?>
-
 </div>
 
 </div>
 
 </div>
 
-<script src="recette.js"></script>
+<div id="confirmBox" class="popup hidden">
+    <div class="popup-content">
+        <p>Voulez-vous supprimer cette recette ?</p>
+        <div class="popup-buttons">
+            <button id="confirmYes" class="btn-submit">Oui</button>
+            <button id="confirmNo" class="btn-cancel">Non</button>
+        </div>
+    </div>
+</div>
+
+<div id="successBox" class="popup hidden success-msg">
+    <div class="popup-content">
+        <p id="successText"></p>
+    </div>
+</div>
+
+<?php if (isset($_GET['msg'])) { ?>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () { // add event : attendre un événement et reagit 
+
+let text = "";
+//depend de php njmch nhotou fl js 
+if ("<?= $_GET['msg'] ?>" == "ajout") text = "Recette ajoutée ✔";
+if ("<?= $_GET['msg'] ?>" == "update") text = "Recette mise à jour ✔";
+if ("<?= $_GET['msg'] ?>" == "delete") text = "Recette supprimée ✔";
+
+let box = document.getElementById("successBox");
+document.getElementById("successText").innerText = text;
+
+box.classList.remove("hidden");
+
+setTimeout(() => {
+    box.classList.add("hidden"); //taafichi el boite de mssg 
+}, 2000);
+
+});
+</script>
+
+<?php } ?>
+
+<script src="/recette_vf/View/backOffice_recette/recette.js"></script>
+<script src="ingredient.js"></script>
+
 </body>
 </html>
