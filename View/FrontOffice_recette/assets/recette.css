@@ -19,13 +19,12 @@ h1 {
   align-items: center;
   justify-content: center;
   text-align: center;
-
   background: linear-gradient(135deg, #7edc81, #5fcf65);
   color: white;
   position: relative;
   overflow: hidden;
 }
-/* text fl header */
+
 .header h1 {
   font-family: 'Poppins', sans-serif;
   font-size: 50px;
@@ -39,45 +38,38 @@ h1 {
   opacity: 0.9;
 }
 
-
-/* el emojis eli fl bloc vert  */
+/* emojis */
 .icons span {
   position: absolute;
   font-size: 28px;
   opacity: 0.15;
-
-  /* effet vert ghmk */
   filter: grayscale(100%) brightness(0.3) sepia(1) hue-rotate(70deg) saturate(4);
 }
 
-
-/* pos emojis eparpilles */
-
-.icons span:nth-child(1)  { top: 8%; left: 8%; }
-.icons span:nth-child(2)  { top: 18%; left: 25%; }
-.icons span:nth-child(3)  { top: 65%; left: 10%; }
-.icons span:nth-child(4)  { top: 40%; left: 45%; }
-.icons span:nth-child(5)  { top: 12%; right: 15%; }
-.icons span:nth-child(6)  { bottom: 18%; right: 8%; }
-.icons span:nth-child(7)  { bottom: 8%; left: 35%; }
-.icons span:nth-child(8)  { top: 55%; right: 28%; }
-
-.icons span:nth-child(9)  { top: 5%; left: 55%; }
-.icons span:nth-child(10) { top: 75%; left: 22%; }
-.icons span:nth-child(11) { top: 30%; right: 5%; }
-.icons span:nth-child(12) { bottom: 5%; left: 12%; }
-.icons span:nth-child(13) { top: 80%; right: 20%; }
-.icons span:nth-child(14) { top: 25%; left: 75%; }
-.icons span:nth-child(15) { bottom: 35%; right: 40%; }
-
+/* positions emojis */
+.icons span:nth-child(1){top:8%;left:8%;}
+.icons span:nth-child(2){top:18%;left:25%;}
+.icons span:nth-child(3){top:65%;left:10%;}
+.icons span:nth-child(4){top:40%;left:45%;}
+.icons span:nth-child(5){top:12%;right:15%;}
+.icons span:nth-child(6){bottom:18%;right:8%;}
+.icons span:nth-child(7){bottom:8%;left:35%;}
+.icons span:nth-child(8){top:55%;right:28%;}
+.icons span:nth-child(9){top:5%;left:55%;}
+.icons span:nth-child(10){top:75%;left:22%;}
+.icons span:nth-child(11){top:30%;right:5%;}
+.icons span:nth-child(12){bottom:5%;left:12%;}
+.icons span:nth-child(13){top:80%;right:20%;}
+.icons span:nth-child(14){top:25%;left:75%;}
+.icons span:nth-child(15){bottom:35%;right:40%;}
 
 /* recherche */
-
 .search-box {
   display: flex;
   justify-content: center;
   margin: 30px 0;
 }
+
 .search-box input {
   padding: 12px;
   width: 260px;
@@ -85,13 +77,13 @@ h1 {
   border: 1px solid #ccc;
   outline: none;
 }
-.search-box input:focus { /*tenzel zoom un peu */
+
+.search-box input:focus {
   transform: scale(1.03);
   box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-
-
+/* filtres */
 .filters {
   text-align: center;
   margin-bottom: 20px;
@@ -102,7 +94,7 @@ h1 {
   padding: 10px 18px;
   border: none;
   border-radius: 25px;
-  cursor: pointer; /*cliquable*/
+  cursor: pointer;
   background: linear-gradient(90deg, #f7a233, #d97e06);
   color: white;
   font-weight: bold;
@@ -110,30 +102,135 @@ h1 {
 }
 
 .filters button:hover {
-  transform: scale(1.1); /*yekbr un peu ki tenzel*/
+  transform: scale(1.1);
 }
 
-/* eli yethat fi westou*/
+/* 🔥 LAYOUT GLOBAL */
+.main-layout {
+  display: flex;
+  gap: 40px;
+  padding: 30px 60px;
+  align-items: flex-start;
+}
+
+/* BLOC GLOBAL */
+.ai-generator {
+  width: 330px;
+  background: #f3f7f4;
+  border: 1px solid #d6e7d9;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  margin-left: -10p;
+  min-height: 750;
+}
+
+/* TITRE */
+.ai-generator h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+/* BADGE IA */
+.badge {
+  background: #d4f5e2;
+  color: #2ecc71;
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+/* TEXTE */
+.ai-generator p {
+  font-size: 13px;
+  color: #6b7280;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* LABEL */
+.ai-generator label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* INPUT */
+.ai-generator input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  background: #ffffff;
+  margin-bottom: 15px;
+  outline: none;
+  font-size: 13px;
+  transition: 0.3s;
+  box-sizing: border-box;
+}
+
+.ai-generator input:focus {
+  border-color: #66bb6a;
+  box-shadow: 0 0 0 3px rgba(102,187,106,0.2);
+}
+
+/* BOUTON */
+.ai-generator button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(135deg, #66bb6a, #43a047);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.ai-generator button:hover {
+  transform: scale(1.05);
+}
+
+/* ASTUCE */
+.ai-tip {
+  margin-top: 20px;
+  background: #eaf4ec;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  color: #4b5563;
+  border: 1px solid #d6e7d9;
+}
+/*  recettes */
+.recettes-content {
+  flex: 1;
+  padding-left: 10px;
+}
+
+/* container recettes */
 .container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  padding: 20px;
+  justify-content: flex-start;
+  gap: 30px;
+  padding: 0;
 }
 
-/* les cartes mtra les recettes  */
+/* cartes */
 .card {
   background: #ffffff;
-   width: 300px;        
-   height: 300px;      
+  width: 280px;
+  height: 300px;
   border-radius: 18px;
   box-shadow: 0 5px 20px rgba(0,0,0,0.08);
   overflow: hidden;
   cursor: pointer;
   transition: all 0.3s ease;
-
-  /* glisse lfouk  */
   opacity: 0;
   transform: translateY(30px);
   animation: fadeIn 0.6s forwards;
@@ -144,24 +241,22 @@ h1 {
   box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
-
 .card img {
   width: 100%;
-  height: 160px;
+  height: 140px;
   object-fit: cover;
   display: block;
   transition: transform 0.4s ease;
 }
-/*zoom al tswira*/
+
 .card:hover img {
   transform: scale(1.1);
 }
-/* CONTENT */
+
 .card-content {
   padding: 15px;
 }
 
-/* ldwer mta categorie eli ybenou fl fcarte */
 .tag {
   display: inline-block;
   padding: 6px 12px;
@@ -172,33 +267,32 @@ h1 {
   font-weight: bold;
 }
 
-
-.btn {
-  margin-top: 12px;
-  padding: 10px 16px;
-  border: none;
-  background: linear-gradient(90deg, #a8e063, #56ab2f);
-  color: white;
-  border-radius: 25px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: normal;
 }
 
-.btn:hover {
-  background: #27ae60;
-  transform: scale(1.05);
-}
-
-/* yabdew moch beynin w baed yabdew yenou les cartes  */
+/* animation */
 @keyframes fadeIn {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
-.card-link {
-    text-decoration: none;  
-    color: inherit;         
-    font-weight: normal;    
+
+/* 🔥 RESPONSIVE */
+@media (max-width: 900px) {
+  .main-layout {
+    flex-direction: column;
+  }
+
+  .ai-generator {
+    width: 100%;
+    position: static;
+  }
+
+  .container {
+    justify-content: center;
+  }
 }

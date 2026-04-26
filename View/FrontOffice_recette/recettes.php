@@ -42,9 +42,10 @@ $recettes = $recetteC->listes($categorie, $search);
 <div class="search-box">
     <input 
         type="text"
+         id="search"
         name="search"
         placeholder="Rechercher une recette..."
-        value="<?= $search ?>" > <!--affiche la valr eli tketbt -->
+        >
 </div>
 
 <div class="filters">
@@ -57,38 +58,63 @@ $recettes = $recetteC->listes($categorie, $search);
 </div>
 
 </form>
+<div class="main-layout">
 
+    <div class="ai-generator">
 
-<div class="container">
+    <h3> Générer une recette personnalisée <span class="badge"></span></h3>
 
-<?php foreach ($recettes as $r) { ?> 
+    <p>
+        Entrez vos ingrédients et préférences,<br>
+        notre IA vous propose une recette sur mesure !
+    </p>
 
-<a href="recette_details.php?id=<?= $r['id_recette'] ?>" class="card-link"> <!-- lien lel detail mta recet yabath lid en url-->
+    <label>🍃 Ingrédients disponibles</label>
+    <input type="text" id="ingredients" placeholder="Ex : poulet, tomate...">
 
-    <div class="card">
+    <label>💚 Préférences</label>
+    <input type="text" id="preferences" placeholder="Ex : vegan, healthy...">
 
-      <img 
-    src="../backOffice_recette/displayImage.php?id=<?= $r['id_recette'] ?>" 
-    alt="<?= $r['nom'] ?>"
->
+    <button id="btnGenerate"> Générer ma recette</button>
 
-      <div class="card-content">
-
-        <div class="tags">
-          <span class="tag"><?= $r['categorie'] ?></span>
-        </div>
-
-        <h3><?= $r['nom'] ?></h3> <!-- affich esm el rect-->
-
-      </div>
-
+    <div class="ai-tip">
+         <strong>Astuce</strong><br>
+        Soyez précis pour des recettes encore plus adaptées à vos envies !
     </div>
-
-</a>
-
-<?php } ?>
 
 </div>
 
+
+    <!-- RECETTES -->
+    <div class="recettes-content">
+        <div class="container" id="resultats">
+
+            <?php foreach ($recettes as $r) { ?> 
+
+            <a href="recette_details.php?id=<?= $r['id_recette'] ?>" class="card-link">
+
+                <div class="card">
+                    <img src="../backOffice_recette/displayImage.php?id=<?= $r['id_recette'] ?>"
+                    alt="<?= $r['nom'] ?>">
+
+                    <div class="card-content">
+                        <div class="tags">
+                            <span class="tag"><?= $r['categorie'] ?></span>
+                        </div>
+
+                        <h3><?= $r['nom'] ?></h3>
+                    </div>
+                </div>
+
+            </a>
+
+            <?php } ?>
+
+        </div>
+    </div>
+
+</div>
+<script src="search.js"></script>
+<script src="ai.js"></script>
 </body>
 </html>

@@ -46,11 +46,11 @@ class recetteC
 
         try {
 
-            // 🔥 supprimer relations (jointure)
+            //  supprimer relations (jointure)
             $req2 = $db->prepare("DELETE FROM recette_ingredient WHERE id_recette = :id");
             $req2->execute(['id' => $id]);
 
-            // 🔥 supprimer recette
+            //  supprimer recette
             $req = $db->prepare('DELETE FROM recette WHERE id_recette = :id');
             $req->execute(['id' => $id]);
 
@@ -137,6 +137,20 @@ public function getrecetteD($id)
     $req->execute(['id' => $id]);
 
     return $req->fetch();
+}
+
+public function rechercherRecette($search) {
+    $sql = "SELECT * FROM recette 
+        WHERE LOWER(nom) LIKE LOWER(:search)"; //ignore maj min
+
+    $db = config::getConnexion();
+    $query = $db->prepare($sql);
+
+    $query->execute([
+        'search' => '%' . $search . '%'
+    ]);
+
+    return $query->fetchAll();
 }
 
 }

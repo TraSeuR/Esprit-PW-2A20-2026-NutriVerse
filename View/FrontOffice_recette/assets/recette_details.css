@@ -143,3 +143,132 @@ h1 {
 .btn-retour:hover {
     background:linear-gradient(90deg, #f7a233, #d97e06);
 }
+/*export*/
+.btn-export {
+    display: inline-block;
+    background: #66bb6a;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+.btn-export:hover {
+    background: #4caf50;
+}
+@media print {
+    body {
+        background: white;
+    }
+
+    .btn-export,
+    .btn-retour,
+    .header {
+        display: none; /* cacher boutons et header */
+    }
+
+    .details-container {
+        width: 100%;
+    }
+}
+
+/* partie ia */
+
+.ai-details-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 30px;
+}
+
+/* titre */
+.ai-title {
+    text-align: center;
+    font-size: 34px;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-weight: 800;
+}
+
+/* kifeh ki thel lpage */
+.ai-grid {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+
+.ai-info {
+    flex: 2;
+}
+
+/* img */
+.ai-image {
+    flex: 1;
+    max-width: 400px;
+    border-radius: 15px;
+}
+
+
+.ai-section {
+    margin-bottom: 18px;
+}
+
+.ai-section h3 {
+    color: #27ae60;
+    margin-bottom: 6px;
+}
+
+
+.ai-steps,
+.ai-ingredients {
+    padding-left: 20px;
+}
+
+.ai-steps li,
+.ai-ingredients li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+
+.ai-top {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+
+.ai-badge {
+    background: #e6f7ec;
+    color: #27ae60;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* btn retour*/
+.ai-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 18px;
+    background: linear-gradient(90deg, #f7a233, #d97e06);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.ai-btn:hover {
+    opacity: 0.9;
+}

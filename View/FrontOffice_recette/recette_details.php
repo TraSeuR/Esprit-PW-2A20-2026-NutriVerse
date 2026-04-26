@@ -105,7 +105,9 @@ if (isset($_GET['id'])) {
             <a href="recettes.php" class="btn-retour">
                 Retour aux recettes
             </a>
-
+            <button onclick="exportPDF()" class="btn-export">
+    Exporter PDF
+</button>
         </div>
       
         <img 
@@ -116,6 +118,10 @@ if (isset($_GET['id'])) {
     </div>
 
 </div>
-
+<script>
+function exportPDF() {
+    window.print();
+}
+</script>
 </body>
 </html>

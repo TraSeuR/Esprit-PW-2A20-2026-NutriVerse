@@ -318,7 +318,7 @@ setTimeout(() => {
 
 <?php } ?>
 
-<script src="/recette_vf/View/backOffice_recette/recette.js"></script>
+<script src="recette.js"></script>
 <script src="ingredient.js"></script>
 
 </body>
