@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutriVerse - Dashboard Back Office</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/back.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Feather Icons -->
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+
+  <!-- =========================
+       SIDEBAR
+  ========================== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <img src="images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
+        <div>
+          <h2>NutriVerse</h2>
+          <p>Back Office</p>
+        </div>
+      </div>
+
+      <button class="close-sidebar" id="closeSidebar">✕</button>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a href="back.html" class="menu-item active">
+        <i data-feather="grid"></i>
+        <span>Dashboard</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i data-feather="book-open"></i>
+        <span>Recettes</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i data-feather="users"></i>
+        <span>Utilisateurs</span>
+      </a>
+
+      <a href="produit/listProduit.php" class="menu-item">
+        <i data-feather="package"></i>
+        <span>Produits</span>
+      </a>
+
+      <a href="movement/listMovement.php" class="menu-item">
+        <i data-feather="activity"></i>
+        <span>Mouvements Stock</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i data-feather="shopping-cart"></i>
+        <span>Commandes</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i data-feather="activity"></i>
+        <span>Suivi Santé</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i data-feather="heart"></i>
+        <span>Programmes</span>
+      </a>
+
+      <a href="#" class="menu-item">
+        <i data-feather="settings"></i>
+        <span>Paramètres</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <p>© 2026 NutriVerse</p>
+    </div>
+  </aside>
+
+  <!-- =========================
+       MAIN CONTENT
+  ========================== -->
+  <div class="main-content">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" id="menuBtn">
+          <i data-feather="menu"></i>
+        </button>
+
+        <div class="search-box">
+          <i data-feather="search"></i>
+          <input type="text" placeholder="Rechercher..." />
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button class="icon-btn notification-btn">
+          <i data-feather="bell"></i>
+          <span class="notif-dot"></span>
+        </button>
+
+        <div class="admin-box">
+          <div class="admin-avatar">A</div>
+          <div>
+            <h4>Admin</h4>
+            <p>Administrateur</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD CONTENT -->
+    <main class="dashboard-content">
+
+      <!-- PAGE HEADER -->
+      <section class="page-header fade-up">
+        <div>
+          <span class="section-badge">Vue globale</span>
+          <h1>Dashboard NutriVerse</h1>
+          <p>
+            Vue d’ensemble intelligente de votre plateforme santé, nutrition et commandes.
+          </p>
+        </div>
+
+        <button class="export-btn">
+          <i data-feather="download"></i>
+          Exporter le rapport
+        </button>
+      </section>
+
+      <!-- =========================
+           STATS PLACEHOLDER
+      ========================== -->
+      <section class="stats-grid">
+
+        <div class="stat-card stat-placeholder">
+          <div class="stat-top">
+            <div>
+              <p class="stat-title">Utilisateurs</p>
+              <h2>--</h2>
+            </div>
+            <div class="stat-icon green"></div>
+          </div>
+          <p class="stat-subtitle">Les statistiques apparaîtront ici</p>
+        </div>
+
+        <div class="stat-card stat-placeholder">
+          <div class="stat-top">
+            <div>
+              <p class="stat-title">Recettes</p>
+              <h2>--</h2>
+            </div>
+            <div class="stat-icon orange"></div>
+          </div>
+          <p class="stat-subtitle">Les statistiques apparaîtront ici</p>
+        </div>
+
+        <div class="stat-card stat-placeholder">
+          <div class="stat-top">
+            <div>
+              <p class="stat-title">Produits</p>
+              <h2>--</h2>
+            </div>
+            <div class="stat-icon blue"></div>
+          </div>
+          <p class="stat-subtitle">Les statistiques apparaîtront ici</p>
+        </div>
+
+        <div class="stat-card stat-placeholder">
+          <div class="stat-top">
+            <div>
+              <p class="stat-title">Commandes</p>
+              <h2>--</h2>
+            </div>
+            <div class="stat-icon purple"></div>
+          </div>
+          <p class="stat-subtitle">Les statistiques apparaîtront ici</p>
+        </div>
+
+        <div class="stat-card stat-placeholder" style="grid-column: span 1;">
+          <div class="stat-top">
+            <div>
+              <p class="stat-title">Mouvements de Stock</p>
+              <h2>--</h2>
+            </div>
+            <div class="stat-icon purple"></div>
+          </div>
+          <p class="stat-subtitle">Les statistiques apparaîtront ici</p>
+        </div>
+
+      </section>
+
+      <!-- =========================
+           CHARTS PLACEHOLDERS
+      ========================== -->
+      <section class="charts-section">
+
+        <!-- Bloc 1 -->
+        <div class="chart-card placeholder-card">
+          <div class="chart-header">
+            <div>
+              <h3>Croissance Mensuelle</h3>
+              <p>Évolution de l’activité de la plateforme</p>
+            </div>
+            <button class="chart-badge">Mensuel</button>
+          </div>
+
+          <div class="chart-placeholder">
+            <div class="placeholder-icon"></div>
+            <h4>Le graphique apparaîtra ici</h4>
+            <p>
+              Cette zone sera connectée plus tard aux données réelles
+              des utilisateurs, recettes et commandes.
+            </p>
+          </div>
+        </div>
+
+        <!-- Bloc 2 -->
+        <div class="chart-card placeholder-card">
+          <div class="chart-header">
+            <div>
+              <h3>Répartition des Recettes</h3>
+              <p>Catégories principales les plus populaires</p>
+            </div>
+            <button class="chart-badge">2026</button>
+          </div>
+
+          <div class="chart-placeholder">
+            <div class="placeholder-icon"></div>
+            <h4>Le graphique apparaîtra ici</h4>
+            <p>
+              Cette section affichera plus tard la répartition
+              des catégories selon les recettes enregistrées.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =========================
+           TABLES / LISTES PLACEHOLDER
+      ========================== -->
+      <section class="bottom-section">
+
+        <!-- Commandes Récentes -->
+        <div class="table-card">
+          <div class="card-header">
+            <div>
+              <h3>Commandes Récentes</h3>
+              <p>Dernières commandes passées sur la plateforme</p>
+            </div>
+            <a href="#" class="view-all">Voir tout</a>
+          </div>
+
+          <div class="empty-table-box">
+            <div class="empty-table-icon"></div>
+            <h4>Les commandes apparaîtront ici</h4>
+            <p>
+              Les dernières commandes clients seront affichées automatiquement
+              une fois la base de données connectée.
+            </p>
+          </div>
+        </div>
+
+        <!-- Produits Sous Stock -->
+        <div class="table-card">
+          <div class="card-header">
+            <div>
+              <h3>Produits sous seuil</h3>
+              <p>Produits nécessitant un réapprovisionnement</p>
+            </div>
+            <a href="produit/listProduit.php" class="view-all">Voir tout</a>
+          </div>
+
+          <div class="empty-table-box">
+            <div class="empty-table-icon"></div>
+            <h4>Les alertes apparaîtront ici</h4>
+            <p>
+              Les produits avec un stock bas s'afficheront ici.
+            </p>
+          </div>
+        </div>
+
+        <!-- Nouveaux Utilisateurs -->
+        <div class="users-card">
+          <div class="card-header">
+            <div>
+              <h3>Nouveaux Utilisateurs</h3>
+              <p>Dernières inscriptions</p>
+            </div>
+          </div>
+
+          <div class="empty-users-box">
+            <div class="empty-table-icon"></div>
+            <h4>Les utilisateurs apparaîtront ici</h4>
+            <p>
+              Cette section affichera automatiquement les nouveaux comptes
+              inscrits sur la plateforme.
+            </p>
+          </div>
+        </div>
+
+        <!-- Mouvements Récents -->
+        <div class="users-card">
+          <div class="card-header">
+            <div>
+              <h3>Mouvements Récents</h3>
+              <p>Dernières opérations de stock</p>
+            </div>
+            <a href="movement/listMovement.php" class="view-all">Voir tout</a>
+          </div>
+
+          <div class="empty-users-box">
+            <div class="empty-table-icon"></div>
+            <h4>Les mouvements apparaîtront ici</h4>
+            <p>
+              Cette section affichera automatiquement les derniers mouvements.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- JS -->
+  <script src="back.js"></script>
+</body>
+</html>

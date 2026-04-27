@@ -1,0 +1,50 @@
+============================================================
+NUTRIVERSE - MODULE STOCK & PRODUITS (Detailed Tasks)
+============================================================
+
+------------------------------------------------------------
+[Étape 1: BASE DE DONNÉES]
+------------------------------------------------------------
+1.1 Create 'produit' table:
+    - Columns: idproduit (PK, AI), nom, prix, date_expiration, quantite_stock, seuil_alerte, categorie, statut, image.
+1.2 Create 'movement' table:
+    - Columns: id (PK, AI), id_produit (FK), titre, description, type_mouvement (achat/vente), quantite, date_mouvement.
+1.3 Establish Foreign Key relationship between 'movement' and 'produit'.
+
+------------------------------------------------------------
+[Étape 2: MODULE PRODUIT (CRUD)]
+------------------------------------------------------------
+2.1 MODEL: Develop Produit.php class (Private properties, Constructor, Getters/Setters).
+2.2 CONTROLLER: Develop ProduitController.php with PDO logic.
+2.3 VIEW (Ajout): Create addProduit.php with form and client-side validation (JS).
+2.4 VIEW (Affichage): Create listProduit.php to display the product table with status badges.
+2.5 VIEW (Modification): Create updateProduit.php to edit existing product details.
+2.6 VIEW (Suppression): Implement product deletion with confirmation alert.
+2.7 SEARCH (Rechercher): Implement a search bar to filter products by name/category using PHP or AJAX.
+
+------------------------------------------------------------
+[Étape 3: MODULE MOUVEMENT (CRUD)]
+------------------------------------------------------------
+3.1 MODEL: Develop Movement.php class (Private properties, Constructor, Getters/Setters).
+3.2 CONTROLLER: Develop MovementController.php with PDO logic.
+3.3 VIEW (Ajout): Create addMovement.php to record a new operation (Achat/Vente).
+3.4 VIEW (Affichage): Create listMovement.php to show the full transaction history.
+3.5 VIEW (Suppression): Implement logic to remove an entry from the movement history.
+3.6 SEARCH (Rechercher): Implement filtering of movements by Type (Achat vs Vente) or Date.
+
+------------------------------------------------------------
+[Étape 4: MÉTIER INNOVANTE (Advanced Features)]
+------------------------------------------------------------
+4.1 Auto-Inventory: Implement logic in MovementController to automatically increase/decrease Produit 'quantite_stock' when a movement is added.
+4.2 Smart Alerts: Implement a "Produits sous seuil" feature that automatically flags products where quantite_stock <= seuil_alerte.
+4.3 Export Data: Implement "Génération de PDF" for the product inventory or movement reports (using FPDF or Dompdf).
+4.4 Dashboard Analytics: Create dynamic charts (Chart.js) to visualize stock levels or volume of sales vs purchases.
+
+------------------------------------------------------------
+[Étape 5: INTÉGRATION & UI]
+------------------------------------------------------------
+5.1 Sidebar Sync: Integrate both modules into the Back Office sidebar (active state, icons).
+5.2 Layout Consistency: Ensure all pages use the uniform "NutriVerse Back Office" dashboard template (Topbar, Sidebar).
+5.3 Responsive Design: Ensure the inventory tables and forms are fully responsive for mobile/tablet.
+5.4 UX Polish: Add Toast notifications or Session messages for success/error (e.g., "Produit ajouté avec succès").
+============================================================
