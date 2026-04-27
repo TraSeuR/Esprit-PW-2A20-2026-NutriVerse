@@ -281,7 +281,7 @@ h1 {
   }
 }
 
-/* 🔥 RESPONSIVE */
+
 @media (max-width: 900px) {
   .main-layout {
     flex-direction: column;

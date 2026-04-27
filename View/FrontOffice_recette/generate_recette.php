@@ -5,7 +5,7 @@ if (isset($_POST['ingredients']) && isset($_POST['preferences'])) {
     $ingredients = htmlspecialchars($_POST['ingredients']);
     $preferences = htmlspecialchars($_POST['preferences']);
 
-    $apiKey = "AIzaSyAOqYCEPBa6fgvHk72vo4aNvYz7kB1z8eU"; 
+    $apiKey = ""; 
 
     // 3 modeles en cas ou
     $modelsToTry = [

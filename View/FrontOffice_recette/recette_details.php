@@ -9,7 +9,7 @@ $ingredients = $ingredientC->getIngredientsByRecette($_GET['id']);
 
 $recetteC = new recetteC();
 
-// récupérer  recette
+// recup  recette
 if (isset($_GET['id'])) {
     $recette = $recetteC->getrecetteD($_GET['id']);
 }
