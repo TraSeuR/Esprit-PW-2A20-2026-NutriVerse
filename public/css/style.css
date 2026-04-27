@@ -1,0 +1,28 @@
+/* style.css - Styles partagés NutriVerse */
+
+:root {
+  --primary: #2ECC71;
+  --primary-dark: #27AE60;
+  --secondary: #34495E;
+  --bg-color: #F9F9F9;
+  --text-main: #333333;
+  --border: #EEEEEE;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Utilitaires communs */
+.hidden { display: none; }
+.text-center { text-align: center; }
+.mt-20 { margin-top: 20px; }
