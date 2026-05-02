@@ -21,21 +21,78 @@ $recettes = $recetteC->listes($categorie, $search);
   <link rel="stylesheet" href="assets/recette.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body>
 
-<div class="header">
-  <div class="icons">
-     <span>🥑</span><span>🥕</span><span>🥦</span><span>🍎</span>
-     <span>🍇</span><span>🥬</span><span>🍅</span><span>🍌</span>
-     <span>🍓</span><span>🥒</span><span>🌽</span><span>🍍</span>
-     <span>🥭</span><span>🍉</span><span>🥔</span>
-  </div>
+<body class="recipe-page">
 
-  <div class="header-content">
-    <h1>NutriVerse</h1>
-    <p>Découvrez des recettes saines, gourmandes et durables</p>
-  </div>
+
+<!-- NAVBAR -->
+<header class="header">
+
+<div class="nav">
+<div class="logo">
+    <img src="/RECETTE_VF3/View/backOffice_recette/images/logo.png" class="logo-img">
 </div>
+
+<input type="checkbox" id="nav-toggle" hidden aria-hidden="true">
+
+<label for="nav-toggle" class="menu-toggle">☰</label>
+
+<nav class="navbar">
+
+<a href="#">Accueil</a>
+
+<a href="#">Marketplace</a>
+
+<a href="recettes.php" class="active-link">Recettes</a>
+
+<a href="#">Programmes</a>
+
+<a href="#">Suivi</a>
+
+<a href="#">Produits</a>
+
+<a href="#" class="cart-icon">🛒</a>
+
+<a href="#" class="btn-outline">Se connecter</a>
+
+<a href="#" class="btn-primary">S'inscrire</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+
+<!-- HERO VERT -->
+<section class="recipe-header">
+
+<div class="icons">
+<span>🥑</span>
+<span>🥕</span>
+<span>🥦</span>
+<span>🍎</span>
+<span>🍇</span>
+<span>🥬</span>
+<span>🍅</span>
+<span>🍌</span>
+<span>🍓</span>
+<span>🥒</span>
+<span>🌽</span>
+<span>🍍</span>
+<span>🥭</span>
+<span>🍉</span>
+<span>🥔</span>
+</div>
+
+<div class="header-content">
+<h1>NutriVerse</h1>
+<p>Découvrez des recettes saines, gourmandes et durables</p>
+</div>
+
+</section>
+
 
 <form method="GET">
 
@@ -74,8 +131,19 @@ $recettes = $recetteC->listes($categorie, $search);
 
     <label>💚 Préférences</label>
     <input type="text" id="preferences" placeholder="Ex : vegan, healthy...">
+   
+  <label class="quick-tags-label">⚡ Filtres rapides</label>
+    <div class="quick-tags" role="group" aria-label="Filtres rapides de préférences">
+        <button type="button" class="quick-tag-btn" data-tag="Healthy"><span>Healthy</span></button>
+        <button type="button" class="quick-tag-btn" data-tag="Vegan"><span>Vegan</span></button>
+        <button type="button" class="quick-tag-btn" data-tag="Sans gluten"><span>Sans gluten</span></button>
+        <button type="button" class="quick-tag-btn" data-tag="Sans lactose"><span>Sans lactose</span></button>
+        <button type="button" class="quick-tag-btn" data-tag="Rapide (<30min)"><span>Rapide &lt;30min</span></button>
+        <button type="button" class="quick-tag-btn" data-tag="Riche en protéines"><span>Riche en protéines</span></button>
+        <button type="button" class="quick-tag-btn" data-tag="Faible en calories"><span>Faible en calories</span></button>
+    </div>
 
-    <button id="btnGenerate"> Générer ma recette</button>
+<button type="button" id="btnGenerate">Générer ma recette</button>
 
     <div class="ai-tip">
          <strong>Astuce</strong><br>
@@ -87,7 +155,7 @@ $recettes = $recetteC->listes($categorie, $search);
 
     <!-- RECETTES -->
     <div class="recettes-content">
-        <div class="container" id="resultats">
+        <div class="recettes-container" id="resultats">
 
             <?php foreach ($recettes as $r) { ?> 
 

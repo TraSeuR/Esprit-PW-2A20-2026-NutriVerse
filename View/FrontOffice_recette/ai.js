@@ -1,9 +1,38 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    document.getElementById("btnGenerate").addEventListener("click", function () {
+    const pref = document.getElementById("preferences");
+    const btn = document.getElementById("btnGenerate");
+
+    /* el filtr */
+    document.querySelectorAll(".quick-tag-btn").forEach(tag => {
+
+        tag.onclick = function () {
+
+            const value = this.dataset.tag;
+
+            let arr = pref.value
+                .split(",")
+                .map(x => x.trim())
+                .filter(x => x !== "");
+
+            if (arr.includes(value)) {
+                arr = arr.filter(x => x !== value);
+                this.classList.remove("active");
+            } else {
+                arr.push(value);
+                this.classList.add("active");
+            }
+
+            pref.value = arr.join(", ");
+        };
+
+    });
+
+    /* btn generer */
+    btn.onclick = function () {
 
         let ingredients = document.getElementById("ingredients").value;
-        let preferences = document.getElementById("preferences").value;
+        let preferences = pref.value;
 
         let xhr = new XMLHttpRequest();
 
@@ -11,16 +40,13 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
         xhr.onload = function () {
-            if (this.status === 200) {
-                document.getElementById("resultats").innerHTML = this.responseText;
-            }
+            document.getElementById("resultats").innerHTML = this.responseText;
         };
 
         xhr.send(
             "ingredients=" + encodeURIComponent(ingredients) +
             "&preferences=" + encodeURIComponent(preferences)
         );
-
-    });
+    };
 
 });
