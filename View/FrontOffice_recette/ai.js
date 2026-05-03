@@ -29,24 +29,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     /* btn generer */
-    btn.onclick = function () {
+      btn.onclick = function () {
 
-        let ingredients = document.getElementById("ingredients").value;
-        let preferences = pref.value;
+    let ingredients = document.getElementById("ingredients").value;
+    let preferences = pref.value;
 
-        let xhr = new XMLHttpRequest();
+    // changer bouton
+    btn.innerHTML = "Génération en cours...";
+    btn.disabled = true;
+    btn.style.opacity = "0.7";
 
-        xhr.open("POST", "generate_recette.php", true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    let xhr = new XMLHttpRequest();
 
-        xhr.onload = function () {
-            document.getElementById("resultats").innerHTML = this.responseText;
-        };
+    xhr.open("POST", "generate_recette.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-        xhr.send(
-            "ingredients=" + encodeURIComponent(ingredients) +
-            "&preferences=" + encodeURIComponent(preferences)
-        );
+    xhr.onload = function () {
+
+        document.getElementById("resultats").innerHTML = this.responseText;
+
+        // remettre bouton normal
+        btn.innerHTML = "Générer";
+        btn.disabled = false;
+        btn.style.opacity = "1";
     };
 
+    xhr.send(
+        "ingredients=" + encodeURIComponent(ingredients) +
+        "&preferences=" + encodeURIComponent(preferences)
+    );
+};
 });

@@ -108,7 +108,36 @@ IMPORTANT: réponds uniquement en JSON.";
     $etapes = implode(" | ", $json['etapes']);
     $conseils = implode(" | ", $json['conseils']);
 
-    $image = "https://source.unsplash.com/300x200/?food," . urlencode($nom);
+//img
+$pexelsKey = "";
+
+// mot-clé = nom recette
+$keyword = $nom;
+
+// bonne URL
+$searchUrl = "https://api.pexels.com/v1/search?query=" 
+    . urlencode($keyword . " food") 
+    . "&per_page=1&orientation=landscape";
+
+$ch = curl_init($searchUrl);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Authorization: " . $pexelsKey
+]);
+
+$responseImg = curl_exec($ch);
+
+curl_close($ch);
+
+$dataImg = json_decode($responseImg, true);
+
+// bonne structure Pexels
+if (isset($dataImg['photos'][0]['src']['large'])) {
+    $image = $dataImg['photos'][0]['src']['large'];
+} else {
+    $image = "default.jpg";
+}
 
     
     $link = "recette_ai_details.php?"

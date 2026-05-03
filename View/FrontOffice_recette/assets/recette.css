@@ -485,3 +485,149 @@ body {
 .recipe-page .menu-toggle{
   display:none;
 }
+
+/* ================================================= */
+/* GENERATEUR BUDGET = MEME DESIGN + SOUS LE 1ER     */
+/* ================================================= */
+
+
+
+/* même largeur + même style déjà hérités de .ai-generator */
+
+
+/* champ budget */
+.budget-generator input[type="number"]{
+  width:100%;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid #dcdcdc;
+  background:#fff;
+  margin-bottom:15px;
+  outline:none;
+  font-size:13px;
+  box-sizing:border-box;
+  transition:0.3s;
+  font-family:'Onest',sans-serif;
+}
+
+.budget-generator input[type="number"]:focus{
+  border-color:#f1dd63;
+  box-shadow:0 0 0 3px rgba(172, 156, 84, 0.2);
+}
+
+
+/* bouton générer budget */
+.budget-generator > button:last-of-type{
+  width:100%;
+  padding:12px;
+  border-radius:25px;
+  border:none;
+  background:linear-gradient(135deg,#f7a233);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+  font-family:'Onest',sans-serif;
+}
+
+.budget-generator > button:last-of-type:hover{
+  transform:scale(1.05);
+}
+
+
+/* tip box */
+.budget-generator .ai-tip{
+  margin-top:20px;
+  padding:12px;
+  border-radius:12px;
+  font-size:12px;
+  color:#4b5563;
+
+}
+
+
+
+/* budget sous personnalisé */
+.budget-generator{
+  margin-top:25px;
+  width:330px;
+  display:block;
+  
+    background:#faf7f4 !important;   /* orange très clair */
+    border:1px solid #f8e7c8 !important;
+}
+
+
+.left-column{
+    display:flex;
+    flex-direction:column;
+    gap:30px;
+    width:100%;
+}
+
+.main-layout{
+    display:grid;
+    grid-template-columns: 340px 1fr;
+    gap:40px;
+    padding:30px 50px;
+    align-items:start;
+}
+
+.recettes-content{
+    padding-left:40px !important;
+}
+
+/* GENERATEUR BUDGET = thème orange */
+
+/* titre */
+.budget-generator h3{
+    color:#d98200;
+}
+
+/* labels */
+.budget-generator label{
+    color:#c77700;
+}
+
+/* badge rond */
+.budget-generator .badge{
+    background:#ffe8c2;
+    color:#f39c12;
+}
+
+
+
+/* hover */
+.budget-generator button:hover{
+    transform:scale(1.03);
+}
+
+/* input focus */
+.budget-generator input:focus{
+    border-color:#f7b733;
+    box-shadow:0 0 0 3px rgba(247,183,51,.20);
+}
+
+/* box astuce */
+.budget-generator .ai-tip{
+    background:#fff9e8;
+    border:1px solid #f5d06a;
+}
+
+
+/* TAGS ORANGE BUDGET (force override) */
+.budget-generator .quick-tags .quick-tag-btn{
+    border:1.5px solid #f5c26b !important;
+    background:#fff7e8 !important;
+    color:#c77700 !important;
+}
+
+.budget-generator .quick-tags .quick-tag-btn:hover{
+    background:#ffe9c8 !important;
+}
+
+.budget-generator .quick-tags .quick-tag-btn.active{
+    background:#f39c12 !important;
+    color:#fff !important;
+    border-color:#f39c12 !important;
+}

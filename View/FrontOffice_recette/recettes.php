@@ -115,23 +115,25 @@ $recettes = $recetteC->listes($categorie, $search);
 </div>
 
 </form>
+
 <div class="main-layout">
+    <div class="left-column">
 
-    <div class="ai-generator">
+<div class="ai-generator">
 
-    <h3> Générer une recette personnalisée <span class="badge"></span></h3>
+<h3> Générer une recette personnalisée </h3>
 
-    <p>
-        Entrez vos ingrédients et préférences,<br>
-        notre IA vous propose une recette sur mesure !
-    </p>
+<p>
+Entrez vos ingrédients et préférences,<br>
+notre IA vous propose une recette sur mesure !
+</p>
 
-    <label>🍃 Ingrédients disponibles</label>
-    <input type="text" id="ingredients" placeholder="Ex : poulet, tomate...">
+<label>🍃 Ingrédients disponibles</label>
+<input type="text" id="ingredients" placeholder="Ex : poulet, tomate...">
 
-    <label>💚 Préférences</label>
-    <input type="text" id="preferences" placeholder="Ex : vegan, healthy...">
-   
+<label>💚 Préférences</label>
+<input type="text" id="preferences" placeholder="Ex : vegan, healthy...">
+
   <label class="quick-tags-label">⚡ Filtres rapides</label>
     <div class="quick-tags" role="group" aria-label="Filtres rapides de préférences">
         <button type="button" class="quick-tag-btn" data-tag="Healthy"><span>Healthy</span></button>
@@ -145,15 +147,68 @@ $recettes = $recetteC->listes($categorie, $search);
 
 <button type="button" id="btnGenerate">Générer ma recette</button>
 
-    <div class="ai-tip">
-         <strong>Astuce</strong><br>
-        Soyez précis pour des recettes encore plus adaptées à vos envies !
-    </div>
+<div class="ai-tip">
+<strong>Astuce</strong><br>
+Soyez précis pour des recettes encore plus adaptées à vos envies !
+</div>
 
+</div>
+
+<div class="ai-generator budget-generator">
+
+<h3> Générateur par Budget </h3>
+
+<p>
+Entrez votre budget et préférences,<br>
+notre IA propose une recette économique !
+</p>
+
+<label>💰Budget</label>
+<input type="number" placeholder="Ex : 10 DT">
+
+<label> Type de repas</label>
+
+<div class="quick-tags">
+    <button type="button" class="quick-tag-btn"><span>Petit déjeuner</span></button>
+    <button type="button" class="quick-tag-btn"><span>Déjeuner</span></button>
+    <button type="button" class="quick-tag-btn"><span>Dîner</span></button>
+    <button type="button" class="quick-tag-btn"><span>Snack</span></button>
+    <button type="button" class="quick-tag-btn"><span>dessert</span></button>
+    <button type="button" class="quick-tag-btn"><span>boisson</span></button>
+</div>
+
+<label>💛 Préférences</label>
+
+<div class="quick-tags">
+    <button type="button" class="quick-tag-btn"><span>Healthy</span></button>
+    <button type="button" class="quick-tag-btn"><span>Vegan</span></button>
+    <button type="button" class="quick-tag-btn"><span>Rapide</span></button>
+    <button type="button" class="quick-tag-btn"><span>Riche en protéines</span></button>
+    <button type="button" class="quick-tag-btn"><span>Sans lactose</span></button>
+    <button type="button" class="quick-tag-btn"><span>Sans gluten</span></button>
+    <button type="button" class="quick-tag-btn"><span>Faible en calories</span></button>
+</div>
+<label>👥 Nombre de personnes</label>
+
+<div class="quick-tags">
+    <button type="button" class="quick-tag-btn"><span>1 personne</span></button>
+    <button type="button" class="quick-tag-btn "><span>2 personnes</span></button>
+    <button type="button" class="quick-tag-btn"><span>4 personnes</span></button>
+</div>
+
+<button type="button">Générer recette par budget</button>
+
+<div class="ai-tip">
+<strong>Astuce</strong><br>
+Plus votre budget est précis, meilleure sera la recette.
+</div>
+
+</div>
 </div>
 
 
     <!-- RECETTES -->
+     
     <div class="recettes-content">
         <div class="recettes-container" id="resultats">
 
