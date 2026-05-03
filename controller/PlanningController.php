@@ -39,7 +39,7 @@ class PlanningController
     /**
      * Récupère tous les plannings avec le nom du régime associé
      * via une INNER JOIN entre les tables planning et regime_alimentaire.
-     * backk
+     * backkkkkk
      * 
 
      */
@@ -65,8 +65,7 @@ class PlanningController
     }
 
     /**
-     * JOIN : Tous les plannings acceptés avec les données nutritionnelles du régime.
-     * Utilisé dans la galerie publique (view_ready_plannings.php).
+     * JOIN : (view_ready_plannings.php).
      */
     public function listAcceptedPlanningsWithRegimes()
     {

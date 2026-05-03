@@ -128,6 +128,7 @@
     </div>
   </section>
 
+
   <!-- RECIPES -->
   <section class="recipes section" id="recipes">
     <div class="container">
@@ -295,6 +296,9 @@
       </div>
     </div>
   </footer>
+
+
+    <?php include 'coach_widget.php'; ?>
 
 </body>
 </html>

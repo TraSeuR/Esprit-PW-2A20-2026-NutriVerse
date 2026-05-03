@@ -13,31 +13,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <style>
-        .page-bg { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-size: cover; background-position: center;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/technical_front.css">
 </head>
 <body>
 
-    <!-- SHARED NAVBAR -->
-    <header class="header">
-        <div class="container nav">
-            <div class="logo">
-                <img src="images/logo.png" alt="Logo NutriVerse" class="logo-img">
-            </div>
-            <nav class="navbar">
-                <a href="nutri_front.php">Accueil</a>
-                <a href="nutri_front.php#categories">Marketplace</a>
-                <a href="nutri_front.php#recipes">Recettes</a>
-                <a href="mode_selection.php" class="active">Programmes</a>
-                <a href="nutri_front.php#suivi">Suivi</a>
-                <a href="#" class="btn-primary">Mon Compte</a>
-            </nav>
-        </div>
-    </header>
+    <?php include 'global_header.php'; ?>
 
     <div class="page-bg" style="background-image: linear-gradient(rgba(89, 184, 77, 0.7), rgba(45, 106, 79, 0.8)), url('https://images.unsplash.com/photo-1505253149613-112d21d9f6a9?auto=format&fit=crop&q=80&w=1920');"></div>
 
@@ -75,6 +55,9 @@
             <a href="nutri_front.php" style="color: white; font-weight: 600; text-decoration: none; border-bottom: 2px solid rgba(255,255,255,0.5); padding-bottom: 5px;">← Retour au portail NutriVerse</a>
         </div>
     </div>
+
+
+    <?php include 'coach_widget.php'; ?>
 
 </body>
 </html>

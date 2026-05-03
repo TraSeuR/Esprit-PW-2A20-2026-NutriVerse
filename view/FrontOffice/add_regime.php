@@ -29,15 +29,38 @@ $regime = $controller->handleRequest($id_regime, $source);
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="assets/front.css">
+    <link rel="stylesheet" href="../assets/style.css?v=1.3">
 </head>
 
 <body style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh;">
 
-    <header class="premium-header fade-up">
-        <h1 style="font-family: 'Playfair Display';">Étape 1</h1>
+    <?php include 'global_header.php'; ?>
 
-    </header>
+    <!-- HERO VERT -->
+    <section class="recipe-header fade-up">
+        <div class="icons">
+            <span>🥑</span>
+            <span>🥕</span>
+            <span>🥦</span>
+            <span>🍎</span>
+            <span>🍇</span>
+            <span>🥬</span>
+            <span>🍅</span>
+            <span>🍌</span>
+            <span>🍓</span>
+            <span>🥒</span>
+            <span>🌽</span>
+            <span>🍍</span>
+            <span>🥭</span>
+            <span>🍉</span>
+            <span>🥔</span>
+        </div>
+        <div class="header-content">
+            <h1 style="margin-bottom: 0;">NutriVerse</h1>
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Étape 1</h2>
+        </div>
+    </section>
 
     <div class="container fade-up" style="animation-delay: 0.2s; padding-bottom: 80px;">
         <div class="glass-card">
@@ -178,6 +201,7 @@ $regime = $controller->handleRequest($id_regime, $source);
         </div>
     </div>
 
+    <?php include 'coach_widget.php'; ?>
     <script src="assets/front_validation.js"></script>
     <script>
         const btnTerminer = document.getElementById('btn-terminer');

@@ -31,40 +31,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NutriVerse - Modifier le Régime</title>
-    <link rel="stylesheet" href="../../../view/front/assets/front.css">
+    <link rel="stylesheet" href="assets/front.css">
+    <link rel="stylesheet" href="../assets/style.css?v=1.3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        .form-section { padding: 60px 0; background: transparent; }
-        .form-container { 
-            max-width: 800px; 
-            margin: 0 auto; 
-            background: var(--white); 
-            padding: 40px; 
-            border-radius: var(--radius); 
-            box-shadow: var(--shadow);
-        }
-        .form-group { margin-bottom: 25px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%; padding: 12px 18px; border-radius: 12px; border: 1.5px solid #e5ebe4; font-family: inherit;
-        }
-        .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 5px; display: none; }
-    </style>
+    <link rel="stylesheet" href="assets/technical_front.css">
 </head>
 <body style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh; font-family: 'Poppins', sans-serif;">
-    <header class="header">
-        <div class="container nav">
-            <div class="logo">
-                <img src="../../../view/front/images/logo.png" alt="Logo NutriVerse" class="logo-img">
-            </div>
-            <nav class="navbar">
-                <a href="../../../view/front/front.php">Accueil</a>
-                <a href="list_programmes.php">Programmes</a>
-            </nav>
+    <?php include 'global_header.php'; ?>
+
+    <!-- HERO VERT -->
+    <section class="recipe-header fade-up">
+        <div class="icons">
+            <span>🥑</span>
+            <span>🥕</span>
+            <span>🥦</span>
+            <span>🍎</span>
+            <span>🍇</span>
+            <span>🥬</span>
+            <span>🍅</span>
+            <span>🍌</span>
+            <span>🍓</span>
+            <span>🥒</span>
+            <span>🌽</span>
+            <span>🍍</span>
+            <span>🥭</span>
+            <span>🍉</span>
+            <span>🥔</span>
         </div>
-    </header>
+        <div class="header-content">
+            <h1 style="margin-bottom: 0;">NutriVerse</h1>
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Modification</h2>
+        </div>
+    </section>
 
     <section class="form-section">
         <div class="container">
@@ -128,6 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 
+    <?php include 'coach_widget.php'; ?>
     <script src="assets/front_validation.js"></script>
 </body>
 </html>

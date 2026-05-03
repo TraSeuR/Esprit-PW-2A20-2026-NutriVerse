@@ -26,28 +26,9 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
 
     <!-- Nutrition styles -->
     <link rel="stylesheet" href="assets/front.css">
-    <style>
-        @media print {
-
-            footer,
-            .no-print,
-            .btn-premium,
-            #action-footer,
-            header,
-            .header {
-                display: none !important;
-                visibility: hidden !important;
-                opacity: 0 !important;
-                height: 0 !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                position: absolute !important;
-                top: -9999px !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/technical_front.css">
     <!-- Existing programme styles -->
-    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css?v=1.3">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,26 +43,36 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
 <body
     style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh; font-family: 'Poppins', sans-serif;">
 
-    <!-- SHARED NAVBAR -->
-    <header class="header">
-        <div class="container nav">
-            <div class="logo">
-                <img src="images/logo.png" alt="Logo NutriVerse" class="logo-img">
-            </div>
-            <nav class="navbar">
-                <a href="nutri_front.php">Accueil</a>
-                <a href="nutri_front.php#categories">Marketplace</a>
-                <a href="nutri_front.php#recipes">Recettes</a>
-                <a href="mode_selection.php" class="active">Programmes</a>
-                <a href="nutri_front.php#suivi">Suivi</a>
-                <a href="#" class="btn-primary">Mon Compte</a>
-            </nav>
+    <?php include 'global_header.php'; ?>
+
+    <!-- HERO VERT -->
+    <section class="recipe-header fade-up">
+        <div class="icons">
+            <span>🥑</span>
+            <span>🥕</span>
+            <span>🥦</span>
+            <span>🍎</span>
+            <span>🍇</span>
+            <span>🥬</span>
+            <span>🍅</span>
+            <span>🍌</span>
+            <span>🍓</span>
+            <span>🥒</span>
+            <span>🌽</span>
+            <span>🍍</span>
+            <span>🥭</span>
+            <span>🍉</span>
+            <span>🥔</span>
         </div>
-    </header>
+        <div class="header-content">
+            <h1 style="margin-bottom: 0;">NutriVerse</h1>
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Analyse Technique</h2>
+        </div>
+    </section>
 
 
 
-    <div class="container fade-up" style="max-width: 1200px; padding: 120px 20px 60px;">
+    <div class="container fade-up" style="max-width: 1200px; padding: 60px 20px 60px;">
 
         <div class="glass-dashboard-card">
 
@@ -225,6 +216,8 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                     <div style="display: flex; gap: 15px; flex-wrap: wrap;">
                         <a href="mode_selection.php" class="btn-premium"
                             style="width: auto; padding: 12px 30px; font-size: 0.85rem; background: #fff; color: #000; font-weight: 800;">RETOUR</a>
+                        <a href="simulator.php?id_regime=<?php echo $data['id_regime']; ?>" class="btn-premium"
+                            style="width: auto; padding: 12px 30px; font-size: 0.85rem; background: #ff9f43; color: white; font-weight: 800;">SIMULER</a>
                         <a href="view_ready_plannings.php" class="btn-premium"
                             style="width: auto; padding: 12px 30px; font-size: 0.85rem; background: var(--primary-dark); font-weight: 800;">VOIR
                             DANS LA GALERIE</a>
@@ -259,6 +252,8 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
             }
         }
     </script>
+
+    <?php include 'coach_widget.php'; ?>
 
 </body>
 

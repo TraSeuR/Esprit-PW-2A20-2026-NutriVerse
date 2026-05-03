@@ -15,24 +15,39 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Programmes - NutriVerse</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="assets/front.css">
+    <link rel="stylesheet" href="../assets/style.css?v=1.3">
 </head>
 <body>
 
-    <header class="header">
-        <div class="fade-in">
-            <h1>Mes Programmes</h1>
-            <p>Retrouvez vos configurations personnalisées</p>
+    <?php include 'global_header.php'; ?>
+
+    <!-- HERO VERT -->
+    <section class="recipe-header fade-up">
+        <div class="icons">
+            <span>🥑</span>
+            <span>🥕</span>
+            <span>🥦</span>
+            <span>🍎</span>
+            <span>🍇</span>
+            <span>🥬</span>
+            <span>🍅</span>
+            <span>🍌</span>
+            <span>🍓</span>
+            <span>🥒</span>
+            <span>🌽</span>
+            <span>🍍</span>
+            <span>🥭</span>
+            <span>🍉</span>
+            <span>🥔</span>
         </div>
-    </header>
+        <div class="header-content">
+            <h1 style="margin-bottom: 0;">NutriVerse</h1>
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Mes Programmes</h2>
+        </div>
+    </section>
 
-    <div class="nav-bar">
-        <a href="mode_selection.php">← Accueil Module</a>
-        <a href="add_regime.php?action=new">Nouveau Programme</a>
-        <a href="list_programmes.php" class="active">Ma Liste</a>
-    </div>
-
-    <div class="container fade-in">
+    <div class="container fade-in" style="padding: 60px 20px 80px;">
         <div class="form-box">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <h2 style="color: var(--primary-dark);">Régimes Enregistrés</h2>
@@ -60,7 +75,8 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
                             <td><?php echo htmlspecialchars($r->getType()); ?></td>
                             <td><span style="color: var(--primary-dark); font-weight: bold;"><?php echo $r->getCalorieJour(); ?></span> kcal</td>
                             <td class="action-links">
-                                <a href="add_planning.php?id_regime=<?php echo $r->getIdRegime(); ?>" style="color: var(--primary);">+ Planning</a>
+                                <a href="add_planning.php?id_regime=<?php echo $r->getIdRegime(); ?>" style="color: var(--primary);">+ Planning</a> |
+                                <a href="simulator.php?id_regime=<?php echo $r->getIdRegime(); ?>" style="color: #ff9f43; font-weight: bold;">Simuler</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -104,6 +120,8 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
             </table>
         </div>
     </div>
+
+    <?php include 'coach_widget.php'; ?>
 
 </body>
 </html>
