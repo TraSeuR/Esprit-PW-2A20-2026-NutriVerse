@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriVerse — Votre Santé par la Nutrition</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/front.css">
+</head>
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="front.html" class="logo">
+                    <img src="images/logo.png" alt="Logo NutriVerse" class="logo-img">
+                </a>
+                
+                <input type="checkbox" id="nav-toggle" hidden>
+                <label for="nav-toggle" class="menu-toggle">☰</label>
+
+                <div class="navbar">
+                    <a href="front.html" class="active">Accueil</a>
+                    <a href="#categories">Marketplace</a>
+                    <a href="#recipes">Recettes</a>
+                    <a href="#programs">Programmes</a>
+                    <a href="../../controller/OffreController.php?action=front_list">Offre & Échange</a>
+                    <a href="#" class="cart-icon">🛒</a>
+                    <a href="../../controller/OffreController.php?action=front_list" class="btn-primary">Mon Compte</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
+    <section class="section hero">
+        <div class="containerHero container">
+            <div class="hero-grid">
+                <div class="hero-content fade-up">
+                    <span class="badge">Nouveau : Mode Don Solidaire</span>
+                    <h1>Mangez Mieux, Vivez Plus <span>Fort</span></h1>
+                    <p>Découvrez une approche personnalisée de la nutrition. NutriVerse vous connecte aux meilleurs ingrédients locaux et vous guide vers une santé optimale.</p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#categories" class="btn-primary large">Explorer le Market</a>
+                        <a href="#recipes" class="btn-secondary large">Voir les Recettes</a>
+                    </div>
+
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <h3>10k+</h3>
+                            <p>Utilisateurs</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>500+</h3>
+                            <p>Recettes Bio</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>15</h3>
+                            <p>Programmes</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual fade-up delay-1">
+                    <div class="hero-main-img">
+                        <img src="images/hero-salad.jpg" alt="Salade Fraîche">
+                    </div>
+                    <div class="hero-side">
+                        <div class="small-img">
+                            <img src="images/oranges.jpg" alt="Agrumes Frais">
+                        </div>
+                        <div class="quote-box">
+                            "La santé est <br> le vrai <br> luxe."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         CATEGORIES SECTION
+    ========================== -->
+    <section class="section" id="categories">
+        <div class="container">
+            <div class="section-header center fade-up">
+                <span class="section-tag">Marketplace</span>
+                <h2>Inspiration par Catégorie</h2>
+                <p>Naviguez à travers nos sélections d'ingrédients frais et sains pour vos prochaines préparations culinaires.</p>
+            </div>
+
+            <div class="category-grid">
+                <div class="category-card fade-up delay-1">
+                    <img src="images/grains.jpg" alt="Grains & Céréales">
+                    <h3>Grains</h3>
+                    <p>Céréales complètes et bio</p>
+                </div>
+                <div class="category-card fade-up delay-2">
+                    <img src="images/fruits.jpg" alt="Fruits">
+                    <h3>Fruits</h3>
+                    <p>Produits de saison</p>
+                </div>
+                <div class="category-card fade-up delay-3">
+                    <img src="images/legumes.jpg" alt="Légumes">
+                    <h3>Légumes</h3>
+                    <p>Directement du potager</p>
+                </div>
+                <div class="category-card fade-up delay-1">
+                    <img src="images/dairy.jpg" alt="Produits Laitiers">
+                    <h3>Laitages</h3>
+                    <p>Options saines et locales</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         RECIPES SECTION
+    ========================== -->
+    <section class="section" id="recipes">
+        <div class="container">
+            <div class="section-header fade-up">
+                <span class="section-tag">Recettes</span>
+                <h2>Recettes de la Semaine</h2>
+                <p>Des idées délicieuses validées par nos nutritionnistes pour régaler toute la famille.</p>
+            </div>
+
+            <div class="recipe-grid">
+                <div class="recipe-card large fade-up delay-1">
+                    <img src="images/hero-salad.jpg" alt="Salade de saison">
+                    <div class="recipe-overlay">
+                        <span>Équilibré • 15 min</span>
+                        <h3>Salade Signature NutriVerse</h3>
+                    </div>
+                </div>
+                <!-- Other cards would go here, using available images -->
+                <div class="recipe-card fade-up delay-2">
+                    <img src="images/oranges.jpg" alt="Jus frais">
+                    <div class="recipe-overlay">
+                        <span>Vitamines • 5 min</span>
+                        <h3>Focus Agrumes</h3>
+                    </div>
+                </div>
+                <div class="recipe-card fade-up delay-3">
+                    <img src="images/grains.jpg" alt="Bowl céréales">
+                    <div class="recipe-overlay">
+                        <span>Énergie • 20 min</span>
+                        <h3>Bowl Petit-Déj</h3>
+                    </div>
+                </div>
+                <div class="recipe-card fade-up delay-1">
+                    <img src="images/legumes.jpg" alt="Légumes grillés">
+                    <div class="recipe-overlay">
+                        <span>Léger • 30 min</span>
+                        <h3>Mix du Jardin</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center-btn fade-up">
+                <a href="#" class="btn-outline">Voir toutes les recettes</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         PROGRAMS SECTION
+    ========================== -->
+    <section class="section programs" id="programs">
+        <div class="container">
+            <div class="programs-grid">
+                <div class="program-list fade-up">
+                    <div class="program-card">
+                        <img src="images/detox.jpg" alt="Programme Detox">
+                        <div class="program-info">
+                            <div>
+                                <h3>Programme Detox</h3>
+                                <p>Purifiez votre organisme en 7 jours.</p>
+                            </div>
+                            <span>4.9 ★</span>
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <img src="images/fitness.jpg" alt="Programme Fitness">
+                        <div class="program-info">
+                            <div>
+                                <h3>Objectif Fitness</h3>
+                                <p>Optimisez vos performances sportives.</p>
+                            </div>
+                            <span>4.8 ★</span>
+                        </div>
+                    </div>
+                    <div class="program-card">
+                        <img src="images/elite.jpg" alt="Programme Elite">
+                        <div class="program-info">
+                            <div>
+                                <h3>Nutrition Elite</h3>
+                                <p>Accompagnement VIP personnalisé.</p>
+                            </div>
+                            <span>5.0 ★</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="program-content fade-up delay-2">
+                    <span class="section-tag">Programmes</span>
+                    <h2>Atteignez Vos Objectifs <span>Santé</span></h2>
+                    <p>Nos programmes sont conçus par des experts pour s'adapter à votre rythme de vie et à vos besoins spécifiques.</p>
+                    <a href="#" class="btn-primary large">Démarrer un programme</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         MODULE SECTION
+    ========================== -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header center fade-up">
+                <span class="section-tag">Innovation</span>
+                <h2>Offre & Échange d'Ingrédients</h2>
+                <p>Rejoignez notre réseau de partage local pour réduire le gaspillage et découvrir de nouveaux produits.</p>
+            </div>
+
+            <div class="offre-echange-box">
+                <div class="offre-echange-card fade-up delay-1">
+                    <h3>Publier une Offre</h3>
+                    <p>Partagez vos surplus d'ingrédients avec vos voisins.</p>
+                </div>
+                <div class="offre-echange-card fade-up delay-2">
+                    <h3>Lancer un Échange</h3>
+                    <p>Troc d'aliments sain et convivial dans votre quartier.</p>
+                </div>
+                <div class="offre-echange-card fade-up delay-3">
+                    <h3>Don Solidaire</h3>
+                    <p>Donnez gratuitement pour aider ceux qui en ont besoin.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         CTA SECTION
+    ========================== -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-box fade-up">
+                <div>
+                    <span class="section-tag">Abonnez-vous</span>
+                    <h2>Prêt à transformer votre alimentation ?</h2>
+                    <p>Inscrivez-vous à notre newsletter pour recevoir des conseils exclusifs et les dernières recettes de saison.</p>
+                </div>
+                <div class="cta-form">
+                    <a href="../../controller/OffreController.php?action=front_list" class="btn-primary large">Commencer Gratuitement</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo">
+                     <img src="images/logo.png" alt="Logo NutriVerse" class="logo-img">
+                </div>
+                <div class="footer-links">
+                    <a href="#">Conditions d'utilisation</a>
+                    <a href="#">Politique de confidentialité</a>
+                    <a href="#">Contact</a>
+                    <a href="#">FAQ</a>
+                </div>
+                <p class="footer-copy">© 2026 NutriVerse. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
