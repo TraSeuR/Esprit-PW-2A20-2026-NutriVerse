@@ -15,31 +15,6 @@
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header class="header">
-    <div class="container nav">
-
-      <div class="logo">
-        <img src="images/logo.png" alt="Logo NutriVerse" class="logo-img">
-      </div>
-
-      <input type="checkbox" id="nav-toggle" hidden aria-hidden="true" />
-      <label for="nav-toggle" class="menu-toggle" aria-label="Ouvrir le menu">☰</label>
-      <nav class="navbar">
-        <a href="#hero">Accueil</a>
-        <a href="#categories">Marketplace</a>
-        <a href="#recipes">Recettes</a>
-        <a href="#programs">Programmes</a>
-        <a href="#suivi">Suivi</a>
-        <a href="#categories">Produits</a>
-
-        <a href="#" class="cart-icon" title="Commandes">🛒</a>
-
-        <a href="#" class="btn-outline">Se connecter</a>
-        <a href="#" class="btn-primary">S'inscrire</a>
-      </nav>
-    </div>
-  </header>
 
   <!-- HERO -->
   <section class="hero section" id="hero">
@@ -278,23 +253,6 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-content">
-      <div>
-        <h3>NutriVerse</h3>
-        <p>Nutrition intelligente pour une vie plus saine.</p>
-      </div>
-
-      <div class="footer-links">
-        <a href="#">Accueil</a>
-        <a href="#">Recettes</a>
-        <a href="#">Produits</a>
-        <a href="#">Programmes</a>
-        <a href="#">Suivi</a>
-      </div>
-    </div>
-  </footer>
 
 </body>
 </html>

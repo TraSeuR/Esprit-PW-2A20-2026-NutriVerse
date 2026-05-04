@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NutriVerse - Dashboard Back Office</title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="assets/back.css" />
+  <link rel="stylesheet" href="view/back/assets/comb.css" />
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
+    rel="stylesheet" />
 
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -22,75 +22,42 @@
   <!-- Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
 </head>
+
 <body>
 
-  <!-- =========================
-       SIDEBAR
-  ========================== -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <div class="brand">
-        <img src="images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
-        <div>
-          <h2>NutriVerse</h2>
-          <p>Back Office</p>
+  <div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <img src="images/logo.png" alt="Logo NutriVerse" class="brand-logo" onerror="this.style.display='none'">
+          <div>
+            <h2>NutriVerse</h2>
+            <p>Back Office</p>
+          </div>
         </div>
       </div>
 
-      <button class="close-sidebar" id="closeSidebar">✕</button>
-    </div>
+      <nav class="sidebar-menu">
+        <a href="index.php?action=admin_dashboard" class="active"><i data-feather="grid"></i> Dashboard</a>
+        <a href="#"><i data-feather="book-open"></i> Recettes</a>
+        <a href="#"><i data-feather="users"></i> Utilisateurs</a>
+        <a href="#"><i data-feather="shopping-bag"></i> Produits</a>
+        <a href="index.php?action=admin_orders"><i data-feather="shopping-cart"></i> Commandes</a>
+        <a href="index.php?action=admin_livraisons"><i data-feather="truck"></i> Livraisons</a>
+        <a href="#"><i data-feather="activity"></i> Suivi Santé</a>
+        <a href="#"><i data-feather="heart"></i> Programmes</a>
+        <a href="#"><i data-feather="settings"></i> Paramètres</a>
+      </nav>
 
-    <nav class="sidebar-menu">
-      <a href="#" class="menu-item active">
-        <i data-feather="grid"></i>
-        <span>Dashboard</span>
-      </a>
+      <div class="sidebar-footer">
+        <p>© 2026 NutriVerse</p>
+      </div>
+    </aside>
 
-      <a href="#" class="menu-item">
-        <i data-feather="book-open"></i>
-        <span>Recettes</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="users"></i>
-        <span>Utilisateurs</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="package"></i>
-        <span>Produits</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="shopping-cart"></i>
-        <span>Commandes</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="activity"></i>
-        <span>Suivi Santé</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="heart"></i>
-        <span>Programmes</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="settings"></i>
-        <span>Paramètres</span>
-      </a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <p>© 2026 NutriVerse</p>
-    </div>
-  </aside>
-
-  <!-- =========================
-       MAIN CONTENT
-  ========================== -->
-  <div class="main-content">
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
 
     <!-- TOPBAR -->
     <header class="topbar">
@@ -288,6 +255,10 @@
   </div>
 
   <!-- JS -->
-  <script src="back.js"></script>
+  <script src="view/back/comb.js"></script>
+  <script>
+    feather.replace();
+  </script>
 </body>
+
 </html>
