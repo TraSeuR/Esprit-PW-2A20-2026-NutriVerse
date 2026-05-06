@@ -12,6 +12,35 @@ class AdminController
         // On enregistre la connexion à la base de données.
         $this->pdo = $pdo;
     }
+
+    // Cette fonction affiche le tableau de bord principal du back-office.
+    public function dashboard()
+    {
+        // 1. Statistiques Globales
+        $totalOrders = $this->pdo->query("SELECT COUNT(*) FROM commande")->fetchColumn();
+        $totalRevenue = $this->pdo->query("SELECT SUM(montant_total) FROM commande")->fetchColumn() ?: 0;
+        $totalProducts = $this->pdo->query("SELECT COUNT(*) FROM produit")->fetchColumn();
+        $totalUsers = $this->pdo->query("SELECT COUNT(*) FROM user")->fetchColumn();
+        $totalRecettes = $this->pdo->query("SELECT COUNT(*) FROM recette")->fetchColumn();
+
+        // 2. Commandes Récentes (les 5 dernières)
+        $stmtRecent = $this->pdo->query("SELECT * FROM commande ORDER BY date_commande DESC LIMIT 5");
+        $recentOrders = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
+
+        // 3. Nouveaux Utilisateurs (les 5 derniers)
+        $stmtUsers = $this->pdo->query("SELECT * FROM user ORDER BY id_user DESC LIMIT 5");
+        $recentUsers = $stmtUsers->fetchAll(PDO::FETCH_ASSOC);
+
+        // 4. Données pour le Graphique (Commandes par mois)
+        $stmtChart = $this->pdo->query("SELECT MONTH(date_commande) as mois, COUNT(*) as nb FROM commande WHERE YEAR(date_commande) = YEAR(CURDATE()) GROUP BY MONTH(date_commande)");
+        $chartData = array_fill(1, 12, 0);
+        while ($row = $stmtChart->fetch(PDO::FETCH_ASSOC)) {
+            $chartData[(int)$row['mois']] = (int)$row['nb'];
+        }
+        $chartJson = json_encode(array_values($chartData));
+
+        require __DIR__ . '/../view/back/back.php';
+    }
     
     // Cette fonction permet d'afficher la liste de toutes les commandes passées sur le site.
     public function listOrders()
@@ -21,7 +50,7 @@ class AdminController
         $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // On affiche la page qui liste les commandes pour l'administrateur.
-        require __DIR__ . '/../view/back/commandes.php';
+        require __DIR__ . '/../view/back/commande/commandes.php';
     }
     
     // Cette fonction permet de voir les détails d'une commande précise.
@@ -41,7 +70,7 @@ class AdminController
         $lines = $stmtLines->fetchAll(PDO::FETCH_ASSOC);
         
         // On affiche la page des détails de la commande.
-        require __DIR__ . '/../view/back/commande_detail.php';
+        require __DIR__ . '/../view/back/commande/commande_detail.php';
     }
     
     // Cette fonction permet de changer l'état d'une commande (ex: de "en attente" à "expédiée").

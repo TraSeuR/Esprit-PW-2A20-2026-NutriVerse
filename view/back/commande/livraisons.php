@@ -268,7 +268,7 @@
     </div>
   </div>
 
-  <script src="view/back/comb.js"></script>
+  <script src="view/back/commande/comb.js"></script>
   <script>
     feather.replace();
     

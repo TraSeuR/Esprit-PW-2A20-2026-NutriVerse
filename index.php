@@ -9,10 +9,10 @@ if (!isset($_SESSION['user_id'])) {
 require_once __DIR__ . '/config/db.php';
 
 require_once __DIR__ . '/controller/ProductController.php';
-require_once __DIR__ . '/controller/CartController.php';
-require_once __DIR__ . '/controller/OrderController.php';
-require_once __DIR__ . '/controller/AdminController.php';
-require_once __DIR__ . '/controller/LivraisonController.php';
+require_once __DIR__ . '/controller/CartC.php';
+require_once __DIR__ . '/controller/OrderC.php';
+require_once __DIR__ . '/controller/AdminC.php';
+require_once __DIR__ . '/controller/LivraisonC.php';
 
 $action = $_GET['action'] ?? 'products';
 
@@ -82,9 +82,6 @@ switch ($action) {
         break;
     case 'order_detail':
         (new OrderController($pdo))->orderDetail();
-        break;
-    case 'change_to_livraison':
-        (new OrderController($pdo))->changeToLivraison();
         break;
     default:
         http_response_code(404);

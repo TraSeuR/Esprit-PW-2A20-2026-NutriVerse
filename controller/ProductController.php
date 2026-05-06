@@ -18,17 +18,17 @@ class ProductController
         $products = $this->productModel->getAllProducts();
         
         // On affiche les différentes parties de la page (le haut, la liste des produits, et le bas).
-        require __DIR__ . '/../view/front/header.php';
+        require __DIR__ . '/../view/front/commande/header.php';
         require __DIR__ . '/../view/front/produits.php';
-        require __DIR__ . '/../view/front/footer.php';
+        require __DIR__ . '/../view/front/commande/footer.php';
     }
 
     // Cette fonction sert à afficher la page d'accueil du site.
     public function frontPage()
     {
         // On affiche le haut de la page, le contenu principal, et le bas de la page.
-        require __DIR__ . '/../view/front/header.php';
+        require __DIR__ . '/../view/front/commande/header.php';
         require __DIR__ . '/../view/front/front.php'; // votre contenu HTML
-        require __DIR__ . '/../view/front/footer.php';
+        require __DIR__ . '/../view/front/commande/footer.php';
     }
 }

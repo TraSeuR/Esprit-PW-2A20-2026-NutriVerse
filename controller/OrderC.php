@@ -28,9 +28,9 @@ class OrderController
         }
         
         // On affiche les parties de la page de commande.
-        require __DIR__ . '/../view/front/header.php';
-        require __DIR__ . '/../view/front/commande.php';
-        require __DIR__ . '/../view/front/footer.php';
+        require __DIR__ . '/../view/front/commande/header.php';
+        require __DIR__ . '/../view/front/commande/commande.php';
+        require __DIR__ . '/../view/front/commande/footer.php';
     }
 
     // Cette fonction vérifie si un code promo est valide.
@@ -120,43 +120,23 @@ class OrderController
             $numCarte = $_POST['numero_carte'] ?? '';
             $dateExp = $_POST['date_expiration'] ?? '';
 
-            // 1. Créer l'enregistrement de paiement 'en_attente'
-            $insertPaiement = $this->pdo->prepare("INSERT INTO paiement (commande_id, nom_carte, numero_carte, date_expiration, montant, statut, methode, date_paiement) VALUES (?, ?, ?, ?, ?, 'en_attente', 'carte bancaire', NOW())");
+            // 1. Créer l'enregistrement de paiement 'payé' directement
+            $insertPaiement = $this->pdo->prepare("INSERT INTO paiement (commande_id, nom_carte, numero_carte, date_expiration, montant, statut, methode, date_paiement) VALUES (?, ?, ?, ?, ?, 'payé', 'carte bancaire', NOW())");
             $insertPaiement->execute([$orderId, $nomCarte, $numCarte, $dateExp, $total]);
 
-            // 2. Vérification du paiement dans la base de données
-            $numCarteClean = str_replace(' ', '', $numCarte);
+            // 2. Mettre à jour la commande : 'expédiée' (en livraison)
+            $this->pdo->prepare("UPDATE commande SET statut_commande = 'expédiée' WHERE id_commande = ?")->execute([$orderId]);
             
-            $stmtCard = $this->pdo->prepare("SELECT * FROM carte_bancaire WHERE REPLACE(numero, ' ', '') = ? AND UPPER(nom) = UPPER(?) AND date_expiration = ?");
-            $stmtCard->execute([$numCarteClean, $nomCarte, $dateExp]);
-            $card = $stmtCard->fetch(PDO::FETCH_ASSOC);
+            // 3. Déclencher le processus de livraison
+            $addr = $_POST['adresse'];
+            $insertLivraison = $this->pdo->prepare(
+                "INSERT INTO livraison (date_livraison, statut_livraison, adresse_livraison, nom_livreur, id_commande) 
+                 VALUES (NOW(), 'en cours de préparation', ?, 'Non assigné', ?)"
+            );
+            $insertLivraison->execute([$addr, $orderId]);
 
-            if ($card) {
-                // Paiement réussi
-                $this->pdo->prepare("UPDATE paiement SET statut = 'payé' WHERE commande_id = ?")->execute([$orderId]);
-                
-                // Mettre à jour la commande : 'confirmée' puis 'expédiée' (en livraison)
-                $this->pdo->prepare("UPDATE commande SET statut_commande = 'expédiée' WHERE id_commande = ?")->execute([$orderId]);
-                
-                // Déclencher le processus de livraison
-                $addr = $_POST['adresse'];
-                $insertLivraison = $this->pdo->prepare(
-                    "INSERT INTO livraison (date_livraison, statut_livraison, adresse_livraison, nom_livreur, id_commande) 
-                     VALUES (NOW(), 'en cours de préparation', ?, 'Non assigné', ?)"
-                );
-                $insertLivraison->execute([$addr, $orderId]);
-
-                header("Location: index.php?action=order_confirmation&id=$orderId&payment=success");
-                exit();
-            } else {
-                // Paiement échoué
-                $this->pdo->prepare("UPDATE paiement SET statut = 'refusé' WHERE commande_id = ?")->execute([$orderId]);
-                // On met la commande en "paiement refusé" pour la bloquer sans l'annuler définitivement
-                $this->pdo->prepare("UPDATE commande SET statut_commande = 'paiement refusé' WHERE id_commande = ?")->execute([$orderId]);
-
-                header("Location: index.php?action=order_confirmation&id=$orderId&payment=failed");
-                exit();
-            }
+            header("Location: index.php?action=order_confirmation&id=$orderId&payment=success");
+            exit();
         }
 
         // Si paiement à la livraison, redirection normale
@@ -183,9 +163,9 @@ class OrderController
         $linesData = $stmtLines->fetchAll(PDO::FETCH_ASSOC);
         
         // On affiche la page de confirmation.
-        require __DIR__ . '/../view/front/header.php';
-        require __DIR__ . '/../view/front/confirmation.php';
-        require __DIR__ . '/../view/front/footer.php';
+        require __DIR__ . '/../view/front/commande/header.php';
+        require __DIR__ . '/../view/front/commande/confirmation.php';
+        require __DIR__ . '/../view/front/commande/footer.php';
     }
 
     // Cette fonction affiche la liste de toutes les commandes de l'utilisateur.
@@ -200,9 +180,9 @@ class OrderController
         $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         // On affiche la page "Mes commandes".
-        require __DIR__ . '/../view/front/header.php';
-        require __DIR__ . '/../view/front/mes_commandes.php';
-        require __DIR__ . '/../view/front/footer.php';
+        require __DIR__ . '/../view/front/commande/header.php';
+        require __DIR__ . '/../view/front/commande/mes_commandes.php';
+        require __DIR__ . '/../view/front/commande/footer.php';
     }
 
     // Cette fonction affiche les détails d'une de mes commandes.
@@ -231,9 +211,9 @@ class OrderController
         $livraison = $stmtLivraison->fetch(PDO::FETCH_ASSOC);
 
         // On affiche la page des détails.
-        require __DIR__ . '/../view/front/header.php';
-        require __DIR__ . '/../view/front/commande_detail.php';
-        require __DIR__ . '/../view/front/footer.php';
+        require __DIR__ . '/../view/front/commande/header.php';
+        require __DIR__ . '/../view/front/commande/commande_detail.php';
+        require __DIR__ . '/../view/front/commande/footer.php';
     }
 
     // Cette fonction permet à l'utilisateur de changer son adresse tant que la commande n'est pas envoyée.
@@ -285,26 +265,5 @@ class OrderController
         }
     }
 
-    // Cette fonction permet de changer le mode de paiement en cas d'échec de la carte bancaire
-    public function changeToLivraison()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $orderId = (int)$_POST['id_commande'];
-            
-            // On vérifie que la commande est bien en "paiement refusé"
-            $checkStmt = $this->pdo->prepare("SELECT statut_commande FROM commande WHERE id_commande = ?");
-            $checkStmt->execute([$orderId]);
-            $status = $checkStmt->fetchColumn();
-            
-            if ($status === 'paiement refusé') {
-                // On repasse la commande "en attente" avec le mode "livraison"
-                $stmt = $this->pdo->prepare("UPDATE commande SET statut_commande = 'en attente', mode_paiement = 'livraison' WHERE id_commande = ?");
-                $stmt->execute([$orderId]);
-            }
-            
-            // On redirige vers la confirmation avec succès (paiement à la livraison)
-            header("Location: index.php?action=order_confirmation&id=$orderId&payment=changed");
-            exit();
-        }
-    }
+
 }

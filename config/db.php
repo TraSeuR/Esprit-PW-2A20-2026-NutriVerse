@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'nutri';
+$dbname = 'nutriverse';
 $username = 'root';
 $password = '';
 

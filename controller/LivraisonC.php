@@ -28,7 +28,7 @@ class LivraisonController
         $livraisons = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // On affiche la page des livraisons pour l'administrateur.
-        require __DIR__ . '/../view/back/livraisons.php';
+        require __DIR__ . '/../view/back/commande/livraisons.php';
     }
 
     // AFFICHER LE FORMULAIRE D'ASSIGNATION DE LIVREUR

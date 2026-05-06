@@ -58,8 +58,8 @@ class CartController
         $total = array_sum(array_column($cartItems, 'sous_total'));
         
         // On affiche les parties de la page du panier.
-        require __DIR__ . '/../view/front/header.php';
+        require __DIR__ . '/../view/front/commande/header.php';
         require __DIR__ . '/../view/front/panier.php';
-        require __DIR__ . '/../view/front/footer.php';
+        require __DIR__ . '/../view/front/commande/footer.php';
     }
 }

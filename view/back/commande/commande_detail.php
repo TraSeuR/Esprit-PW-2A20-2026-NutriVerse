@@ -266,7 +266,7 @@
     </main>
   </div>
 
-  <script src="view/back/comb.js"></script>
+  <script src="view/back/commande/comb.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     feather.replace();
