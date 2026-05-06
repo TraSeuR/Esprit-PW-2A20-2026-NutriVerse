@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --green: #2ecc71;
+    --green-dark: #27ae60;
+    --green-light: #58d68d;
+    --green-soft: #edfcf2;
+    --green-gradient: linear-gradient(135deg, #1e8449 0%, #2ecc71 100%);
+    --orange: #ff9f43;
+    --orange-gradient: linear-gradient(135deg, #ff9f43 0%, #ff6b6b 100%);
+    --blue-gradient: linear-gradient(135deg, #4834d4 0%, #686de0 100%);
+    --purple-gradient: linear-gradient(135deg, #be2edd 0%, #e056fd 100%);
+    --bg: #f0f4f8;
+    --white: #ffffff;
+    --text: #2d3436;
+    --muted: #636e72;
+    --border: #dfe6e9;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --radius: 24px;
+    --radius-sm: 14px;
+    --glass: rgba(255, 255, 255, 0.9);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+/* Styles removed to avoid conflict with back.css sidebar */
+
+/* TOPBAR */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.menu-btn {
+    display: none;
+    border: none;
+    background: white;
+    border-radius: 14px;
+    width: 48px;
+    height: 48px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px 18px;
+    min-width: 360px;
+    box-shadow: var(--shadow);
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+.notif-btn {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 14px;
+    background: white;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.notif-dot {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    background: orange;
+    border-radius: 50%;
+}
+
+.admin-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    padding: 10px 14px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.admin-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--green-light);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+}
+
+/* Redundant styles removed to avoid conflict with back.css */
+
+/* Keep only shop-specific content styles if they differ slightly or provide extra detail */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: 120px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.stat-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    color: white;
+}
+
+.stat-icon.green { background: var(--green-gradient); }
+.stat-icon.orange { background: var(--orange-gradient); }
+.stat-icon.blue { background: var(--blue-gradient); }
+.stat-icon.purple { background: var(--purple-gradient); }
+
+.stat-card h3 {
+    font-size: 1.8rem;
+    min-height: 36px;
+}
+
+.stat-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+}
+
+/* TABLE & CHARTS */
+.chart-card, .table-card, .filter-bar {
+    background: white;
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.chart-card {
+    padding: 28px;
+    margin-bottom: 28px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.empty-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 70px 20px;
+    color: var(--muted);
+}
+
+.empty-table svg {
+    width: 48px;
+    height: 48px;
+    opacity: 0.6;
+}
