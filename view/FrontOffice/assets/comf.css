@@ -1,0 +1,179 @@
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    background: #fbfffb;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #fbfffb;
+}
+
+.logo img {
+    height: 50px;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #4CAF50;
+}
+
+nav a.active {
+    color: #4CAF50;
+    font-weight: 600;
+}
+
+.cart {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* AUTH */
+.auth button {
+    padding: 8px 18px;
+    border-radius: 25px;
+    border: none;
+    margin-left: 10px;
+}
+
+.login {
+    border: 1px solid #4CAF50;
+    background: white;
+    color: #4CAF50;
+}
+
+.signup {
+    background: #4CAF50;
+    color: white;
+}
+
+/* LAYOUT */
+.container {
+    display: flex;
+    gap: 40px;
+    padding: 40px;
+}
+
+/* LEFT */
+.panier {
+    flex: 1;
+}
+
+.tag {
+    background: #e8f5e9;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #4CAF50;
+}
+
+.panier h1 {
+    font-size: 36px;
+    margin: 15px 0;
+}
+
+.panier-box {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.icon {
+    font-size: 40px;
+}
+
+/* RIGHT */
+.commande {
+    flex: 1;
+    background: #edf7ec;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.commande h2 {
+    margin-bottom: 20px;
+}
+
+.commande label {
+    display: block;
+    margin-top: 15px;
+}
+
+.commande input,
+.commande textarea,
+.commande select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 5px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+textarea {
+    height: 80px;
+}
+
+/* PROMO */
+.promo {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.promo input {
+    flex: 1;
+}
+
+.promo button {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* TOTAL */
+.total {
+    margin-top: 20px;
+}
+
+.total div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.final {
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* BUTTON */
+.confirm {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
