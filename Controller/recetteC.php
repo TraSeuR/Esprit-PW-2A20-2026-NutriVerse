@@ -1,5 +1,5 @@
 <?php
-include("../../config.php");
+include_once(__DIR__ . "/../config.php");
 
 class recetteC
 {
@@ -46,11 +46,11 @@ class recetteC
 
         try {
 
-            //  supprimer relations (jointure)
+            
             $req2 = $db->prepare("DELETE FROM recette_ingredient WHERE id_recette = :id");
             $req2->execute(['id' => $id]);
 
-            //  supprimer recette
+            
             $req = $db->prepare('DELETE FROM recette WHERE id_recette = :id');
             $req->execute(['id' => $id]);
 
@@ -139,6 +139,7 @@ public function getrecetteD($id)
     return $req->fetch();
 }
 
+
 public function rechercherRecette($search) {
     $sql = "SELECT * FROM recette 
         WHERE LOWER(nom) LIKE LOWER(:search)"; //ignore maj min
@@ -153,5 +154,33 @@ public function rechercherRecette($search) {
     return $query->fetchAll();
 }
 
+
+//stst lel back 
+public function countRecettes()
+{
+    $db = config::getConnexion();
+    $sql = "SELECT COUNT(*) as total FROM recette";
+    return $db->query($sql)->fetch()['total'];
 }
+
+public function statsCategories()
+{
+    $db = config::getConnexion();
+
+    $sql = "SELECT categorie, COUNT(*) as total
+            FROM recette
+            GROUP BY categorie";
+
+    return $db->query($sql)->fetchAll();
+}
+
+
+
+
+}
+
+
+
+
 ?>
+

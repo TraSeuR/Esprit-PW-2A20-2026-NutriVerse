@@ -2,12 +2,12 @@
 
 class ingredientC
 {
-    
+   
     public function addIngredient($nom)
     {
         $db = config::getConnexion();
 
-        // verf si mwjoud deja 
+        // vérifier si existe déjà
         $req = $db->prepare("SELECT id_ingredient FROM ingredient WHERE nom = :nom");
         $req->execute(['nom' => $nom]);
         $res = $req->fetch();
@@ -16,14 +16,14 @@ class ingredientC
             return $res['id_ingredient'];
         }
 
-        // sinon cree
+        // sinon créer
         $insert = $db->prepare("INSERT INTO ingredient (nom) VALUES (:nom)");
         $insert->execute(['nom' => $nom]);
 
         return $db->lastInsertId();
     }
 
-    //  recupr ingrd
+    //  recup ingrd de recette 
     public function getIngredientsByRecette($id_recette)
     {
         $db = config::getConnexion();
@@ -41,7 +41,7 @@ class ingredientC
         return $req->fetchAll();
     }
 
-   
+    
     public function deleteByRecette($id_recette)
     {
         $db = config::getConnexion();
