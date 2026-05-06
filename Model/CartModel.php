@@ -76,7 +76,9 @@ class CartModel
         
         // Pour chaque produit, on ajoute sa quantité et on calcule son prix total (sous-total).
         foreach ($products as &$product) {
-            $product['quantite_panier'] = $cart[$product['idproduit']];
+            $qty = $cart[$product['idproduit']] ?? 1;
+            // Safeguard: if it's an array (old format), we cast or default to 1 to avoid Fatal Error
+            $product['quantite_panier'] = is_array($qty) ? 1 : (int)$qty;
             $product['sous_total'] = $product['prix'] * $product['quantite_panier'];
         }
         // On renvoie la liste détaillée.

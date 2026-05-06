@@ -1,8 +1,17 @@
 <?php
 require_once __DIR__ . '/../../controller/recetteC.php';
+require_once __DIR__ . '/../../Controller/ProduitController.php';
+require_once __DIR__ . '/../../Controller/NotificationController.php';
+require_once __DIR__ . '/../../service/MonitoringService.php';
 
 $recetteC = new recetteC();
 $recettes = $recetteC->listes("all", "");
+$notifController = new NotificationController();
+
+// Trigger automatic monitoring
+MonitoringService::checkAll();
+
+$unreadCount = $notifController->getUnreadCount();
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -40,9 +49,31 @@ $recettes = $recetteC->listes("all", "");
         <a href="RECETTE/recettes.php">Recettes</a>
         <a href="programme/mode_selection.php">Programmes</a>
         <a href="#suivi">Suivi</a>
-        <a href="shop.php?action=products">Produits</a>
+        <a href="produit/listProduit.php">Produits Locaux</a>
+        
+        <div style="position: relative; margin-left: 15px;">
+            <a href="javascript:void(0)" onclick="toggleNotifs()" class="notif-icon-front" style="font-size: 1.2rem; cursor: pointer; text-decoration: none;">
+                🔔
+                <?php if($unreadCount > 0): ?>
+                    <span class="notif-badge-ui"><?= $unreadCount ?></span>
+                <?php endif; ?>
+            </a>
+            <div id="notif-dropdown" class="notif-dropdown">
+                <div style="padding: 15px; border-bottom: 1px solid #eee; font-weight: 600; display:flex; justify-content: space-between; color: #333;">
+                    Notifications
+                    <span style="font-size: 11px; color: #3498db; cursor: pointer;" onclick="markAllRead()">Tout marquer lu</span>
+                </div>
+                <div id="notif-content">
+                    <p style="padding: 20px; text-align: center; color: #888;">Chargement...</p>
+                </div>
+                <div class="notif-footer" id="notif-footer">
+                    <a href="javascript:void(0)" onclick="loadNotifications(true)">Voir tout l'historique</a>
+                </div>
+            </div>
+        </div>
 
-        <a href="shop.php?action=cart" class="cart-icon" title="Commandes">🛒</a>
+        <a href="../../shop.php?action=cart" class="cart-icon" title="Panier">🛒</a>
+        <a href="../../shop.php?action=my_orders" class="cart-icon" title="Mes Commandes">📋</a>
 
         <a href="#" class="btn-outline">Se connecter</a>
         <a href="#" class="btn-primary">S'inscrire</a>
@@ -189,7 +220,7 @@ $recettes = $recetteC->listes("all", "");
       <div class="program-list fade-up">
 
         <div class="program-card">
-          <img src="images/prise.jpg" alt=Programme 1">
+          <img src="images/prise.jpg" alt="Programme 1">
           <div class="program-info">
             <div>
               <h3>Prise de masse</h3>
@@ -276,7 +307,6 @@ $recettes = $recetteC->listes("all", "");
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-content">
       <div>
@@ -285,13 +315,11 @@ $recettes = $recetteC->listes("all", "");
       </div>
 
       <div class="footer-links">
-        <a href="#">Accueil</a>
-        <a href="RECETTE/admin.php" class="menu-item">
-        <i data-feather="book-open"></i>
-        <span>Recettes</span>
-      </a>  <a href="#">Produits</a>
-        <a href="#">Programmes</a>
-        <a href="#">Suivi</a>
+        <a href="#hero">Accueil</a>
+        <a href="#recipes">Recettes</a>
+        <a href="produit/listProduit.php">Produits locaux</a>
+        <a href="#programs">Programmes</a>
+        <a href="#suivi">Suivi</a>
       </div>
     </div>
   </footer>
@@ -299,6 +327,48 @@ $recettes = $recetteC->listes("all", "");
 
   <?php include 'programme/coach_widget.php'; ?>
 
-</body>
+  <script>
+    // Notification Logic
+    function toggleNotifs() {
+        const dropdown = document.getElementById('notif-dropdown');
+        const isOpen = dropdown.classList.contains('show');
+        
+        dropdown.classList.toggle('show');
+        
+        if (!isOpen) {
+            loadNotifications();
+        }
+    }
 
+    function loadNotifications(showAll = false) {
+        let url = 'produit/ajax_get_notifications.php';
+        if (showAll) {
+            url += '?show=all';
+            document.getElementById('notif-footer').style.display = 'none';
+        }
+        
+        fetch(url)
+        .then(r => r.text())
+        .then(html => {
+            document.getElementById('notif-content').innerHTML = html;
+        });
+    }
+
+    function markAllRead() {
+        fetch('produit/ajax_get_notifications.php?action=read_all')
+        .then(() => {
+            loadNotifications();
+            const badge = document.querySelector('.notif-badge-ui');
+            if (badge) badge.remove();
+        });
+    }
+
+    window.addEventListener('click', function(e) {
+        if (!e.target.closest('.notif-icon-front') && !e.target.closest('.notif-dropdown')) {
+            document.getElementById('notif-dropdown').classList.remove('show');
+        }
+    });
+  </script>
+
+</body>
 </html>

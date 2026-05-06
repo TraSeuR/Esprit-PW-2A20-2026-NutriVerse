@@ -114,14 +114,24 @@
           <span>Recettes</span>
         </a>
 
-        <a href="#" class="menu-item">
+        <a href="shop.php?action=admin_users" class="menu-item">
           <i data-feather="users"></i>
           <span>Utilisateurs</span>
         </a>
 
-        <a href="shop.php?action=admin_dashboard" class="menu-item">
-          <i data-feather="shopping-bag"></i>
-          <span>Boutique</span>
+        <a href="view/BackOffice/produit/listProduit.php" class="menu-item">
+          <i data-feather="package"></i>
+          <span>Produits</span>
+        </a>
+
+        <a href="view/BackOffice/movement/listMovement.php" class="menu-item">
+          <i data-feather="activity"></i>
+          <span>Mouvements Stock</span>
+        </a>
+
+        <a href="view/BackOffice/notifications/listNotifications.php" class="menu-item">
+          <i data-feather="bell"></i>
+          <span>Notifications</span>
         </a>
 
         <a href="shop.php?action=admin_orders" class="menu-item">
@@ -135,18 +145,13 @@
         </a>
 
         <a href="#" class="menu-item">
-          <i data-feather="activity"></i>
+          <i data-feather="heart-pulse"></i>
           <span>Suivi Santé</span>
         </a>
 
         <a href="view/BackOffice/programme/admin_dashboard.php" class="menu-item">
           <i data-feather="heart"></i>
           <span>Programmes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="settings"></i>
-          <span>Paramètres</span>
         </a>
       </nav>
 
