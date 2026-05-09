@@ -19,26 +19,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $personnes   = htmlspecialchars($personnes);
 
     $apiKey = "";
+    $apiUrl = "https://api.groq.com/openai/v1/chat/completions";
+    $model = "llama-3.3-70b-versatile";
 
-    // 3 modèles Gemini
-    $modelsToTry = [
-        "gemini-1.5-flash",
-        "gemini-2.0-flash",
-        "gemini-2.5-flash"
-    ];
-
-    // prompt simple
     $prompt = "Tu es un chef expert cuisine économique.
-
 Crée 1 ou 2 recettes avec ce budget.
-
 Budget : $budget $devise
 Type repas : $type_repas
 Personnes : $personnes
 Préférences : $preferences
 
-Réponds STRICTEMENT en JSON :
-
+Réponds STRICTEMENT en JSON avec ce format :
 {
   \"recipes\": [
     {
@@ -56,65 +47,49 @@ Réponds STRICTEMENT en JSON :
   ]
 }";
 
-    $responseText = null;
-
-    // tester plusieurs modèles
-    foreach ($modelsToTry as $model) {
-
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/"
-            . rawurlencode($model)
-            . ":generateContent?key=" . $apiKey;
-
-        $postData = [
-            "contents" => [
-                [
-                    "parts" => [
-                        ["text" => $prompt]
-                    ]
-                ]
+    $postData = [
+        "model" => $model,
+        "messages" => [
+            [
+                "role" => "system",
+                "content" => "Tu es un assistant culinaire qui répond exclusivement en JSON."
+            ],
+            [
+                "role" => "user",
+                "content" => $prompt
             ]
-        ];
+        ],
+        "temperature" => 0.7,
+        "response_format" => ["type" => "json_object"]
+    ];
 
-        $ch = curl_init($url);
+    $ch = curl_init($apiUrl);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            "Content-Type: application/json",
+            "Authorization: Bearer " . $apiKey
+        ],
+        CURLOPT_POSTFIELDS => json_encode($postData),
+        CURLOPT_SSL_VERIFYPEER => false
+    ]);
 
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json"
-        ]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($postData));
+    $response = curl_exec($ch);
+    curl_close($ch);
 
-        $response = curl_exec($ch);
+    $result = json_decode($response, true);
+    $responseText = $result['choices'][0]['message']['content'] ?? null;
 
-        curl_close($ch);
-
-        $result = json_decode($response, true);
-
-        if (isset($result['candidates'][0]['content']['parts'][0]['text'])) {
-            $responseText = $result['candidates'][0]['content']['parts'][0]['text'];
-            break;
-        }
-    }
-
-    // erreur API
     if (!$responseText) {
-        echo json_encode([
-            "error" => "Erreur API Gemini"
-        ]);
+        echo json_encode(["error" => "Erreur API Groq"]);
         exit;
     }
 
-    // nettoyer markdown
-    $responseText = trim($responseText);
-    $responseText = preg_replace('/```json|```/', '', $responseText);
-
     $json = json_decode($responseText, true);
 
-    // erreur JSON
     if (!$json) {
-        echo json_encode([
-            "error" => "Erreur lecture JSON"
-        ]);
+        echo json_encode(["error" => "Erreur lecture JSON de l'IA"]);
         exit;
     }
 
@@ -127,31 +102,20 @@ Réponds STRICTEMENT en JSON :
     if (isset($json["recipes"])) {
 
         foreach ($json["recipes"] as $k => $recipe) {
+            $keyword = $recipe['nom'];
 
-            $keyword = $recipe["nom"] . " food";
-
-            $searchUrl = "https://api.pexels.com/v1/search?query="
-                . urlencode($keyword)
-                . "&per_page=1&orientation=landscape";
-
-            $ch = curl_init($searchUrl);
-
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Authorization: " . $pexelsKey
-            ]);
-
-            $imgResponse = curl_exec($ch);
-
-            curl_close($ch);
+            $searchUrl = "https://api.pexels.com/v1/search?query=" . urlencode($keyword . " food") . "&per_page=1&orientation=landscape";
+            $chImg = curl_init($searchUrl);
+            curl_setopt($chImg, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($chImg, CURLOPT_HTTPHEADER, ["Authorization: $pexelsKey"]);
+            $imgResponse = curl_exec($chImg);
+            curl_close($chImg);
 
             $imgData = json_decode($imgResponse, true);
-
-            if (isset($imgData['photos'][0]['src']['large'])) {
-                $json["recipes"][$k]["image"] = $imgData['photos'][0]['src']['large'];
-            } else {
-                $json["recipes"][$k]["image"] = "default.jpg";
-            }
+            $image = $imgData['photos'][0]['src']['large'] ?? "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800";
+            
+            // On injecte l'image dans le JSON pour le frontend
+            $json["recipes"][$k]["image"] = $image;
         }
     }
 

@@ -1,5 +1,5 @@
 <?php
-include("../../../Controller/recetteC.php");
+include("../../../controller/recetteC.php");
 
 $recetteC = new recetteC();
 

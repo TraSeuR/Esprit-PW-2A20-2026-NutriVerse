@@ -1,6 +1,6 @@
 <?php
-include("../../../Controller/recetteC.php");
-include("../../../Model/recette.php");
+include("../../../controller/recetteC.php");
+include("../../../model/recette.php");
 
 
 $recetteC = new recetteC();

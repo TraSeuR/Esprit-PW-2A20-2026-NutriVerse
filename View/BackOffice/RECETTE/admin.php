@@ -1,6 +1,6 @@
 <?php
-include("../../../Controller/recetteC.php");
-include("../../../Controller/ingredientC.php");
+include("../../../controller/recetteC.php");
+include("../../../controller/ingredientC.php");
 
 
 $recetteC = new recetteC();
@@ -32,10 +32,9 @@ if (isset($_GET['edit'])) {
 <head>
 <meta charset="UTF-8">
 <title>Admin Recettes</title>
-<link rel="stylesheet" href="http://localhost/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/assets/admin.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="../assets/admin.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
 <body>
@@ -45,7 +44,7 @@ if (isset($_GET['edit'])) {
 <aside class="sidebar">
     <div class="sidebar-top">
         <div class="brand">
-            <img src="http://localhost/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/images/logo.png" class="brand-logo">
+            <img src="../images/logo.png" class="brand-logo">
             <div>
                 <h2>NutriVerse</h2>
                 <p>Back Office</p>
@@ -55,27 +54,53 @@ if (isset($_GET['edit'])) {
 
 <nav class="sidebar-menu">
 
-  <a href="/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/back.php" class="menu-item ">
+  <a href="../nutri_back.php" class="menu-item">
     <i data-feather="grid"></i>
     <span>Dashboard</span>
   </a>
 
-  <a href="/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/RECETTE/admin.php" class="menu-item active">
+  <a href="admin.php" class="menu-item active">
     <i data-feather="book-open"></i>
     <span>Recettes</span>
   </a>
 
+  <a href="#" class="menu-item">
+    <i data-feather="users"></i>
+    <span>Utilisateurs</span>
+  </a>
 
-    <a href="#" class="menu-item">Utilisateurs</a>
-    <a href="#" class="menu-item">Produits</a>
-    <a href="#" class="menu-item">Commandes</a>
-    <a href="#" class="menu-item">Suivi Santé</a>
-    <a href="#" class="menu-item">Programmes</a>
-    <a href="#" class="menu-item">Paramètres</a>
+  <a href="#" class="menu-item">
+    <i data-feather="package"></i>
+    <span>Produits</span>
+  </a>
+
+  <a href="#" class="menu-item">
+    <i data-feather="shopping-cart"></i>
+    <span>Commandes</span>
+  </a>
+
+  <a href="#" class="menu-item">
+    <i data-feather="activity"></i>
+    <span>Suivi Santé</span>
+  </a>
+
+  <a href="../programme/admin_dashboard.php" class="menu-item">
+    <i data-feather="heart"></i>
+    <span>Programmes</span>
+  </a>
+
+  <a href="#" class="menu-item">
+    <i data-feather="settings"></i>
+    <span>Paramètres</span>
+  </a>
 </nav>
 
 <div class="sidebar-footer">
-    <p>© 2026 NutriVerse</p>
+  <a href="../../FrontOffice/nutri_front.php" class="menu-item" style="padding: 10px 0; font-size: 0.85rem; opacity: 0.7;">
+    <i data-feather="log-out" style="width: 16px;"></i>
+    <span>Quitter l'admin</span>
+  </a>
+  <p style="margin-top: 10px;">© 2026 NutriVerse</p>
 </div>
 
 </aside>
@@ -229,10 +254,6 @@ value="<?= $recette_edit['temps_preparation'] ?? '' ?>">
 </button>
 
 
-
-
-
-
 <div class="form-buttons">
 
 <?php if ($mode == "modifier") { ?>
@@ -301,6 +322,14 @@ Annuler
         <p id="successText"></p>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+    });
+</script>
 
 <?php if (isset($_GET['msg'])) { ?>
 

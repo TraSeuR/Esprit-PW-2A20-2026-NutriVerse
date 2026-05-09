@@ -1,31 +1,33 @@
 <?php
-include_once(__DIR__ . "/../config.php");
+include_once(__DIR__ . "/../config/config.php");
 
 class recetteC
 {
-   public function addRecette($recette)
-{
-    $db = config::getConnexion();
+    public function addRecette($recette)
+    {
+        $db = config::getConnexion();
 
-    try {
-        $req = $db->prepare('
-            INSERT INTO recette (nom, description, etapes, temps_preparation, categorie, images)
-            VALUES (:n,:d,:e,:t,:c,:i)
-        ');
+        try {
+            $req = $db->prepare('
+                INSERT INTO recette (nom, description, etapes, temps_preparation, categorie, images)
+                VALUES (:n,:d,:e,:t,:c,:i)
+            ');
 
-        $req->execute([
-            'n' => $recette->getNom(),
-            'd' => $recette->getDescription(),
-            'e' => $recette->getEtapes(),
-            't' => $recette->getTemps(),
-            'c' => $recette->getCategorie(),
-            'i' => $recette->getImage()
-        ]);
+            $req->execute([
+                'n' => $recette->getNom(),
+                'd' => $recette->getDescription(),
+                'e' => $recette->getEtapes(),
+                't' => $recette->getTemps(),
+                'c' => $recette->getCategorie(),
+                'i' => $recette->getImage()
+            ]);
 
-    } catch (Exception $e) {
-        die('Erreur: ' . $e->getMessage());
+            return $db->lastInsertId();
+
+        } catch (Exception $e) {
+            die('Erreur: ' . $e->getMessage());
+        }
     }
-}
 
     public function listeRecette()
     {

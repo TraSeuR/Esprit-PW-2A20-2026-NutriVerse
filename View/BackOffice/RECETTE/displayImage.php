@@ -1,7 +1,7 @@
 <?php
 ob_start();
 
-include_once("../../../Controller/recetteC.php");
+include_once("../../../controller/recetteC.php");
 
 $recetteC = new recetteC();
 

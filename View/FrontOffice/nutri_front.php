@@ -1,13 +1,12 @@
 <?php
-include("../../Controller/recetteC.php");
+require_once __DIR__ . '/../../controller/recetteC.php';
 
 $recetteC = new recetteC();
-$recettes = $recetteC->listes("all","");
+$recettes = $recetteC->listes("all", "");
 ?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,8 +18,10 @@ $recettes = $recetteC->listes("all","");
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -34,10 +35,10 @@ $recettes = $recetteC->listes("all","");
       <input type="checkbox" id="nav-toggle" hidden aria-hidden="true" />
       <label for="nav-toggle" class="menu-toggle" aria-label="Ouvrir le menu">☰</label>
       <nav class="navbar">
-        <a href="#hero">Accueil</a>
+        <a href="nutri_front.php">Accueil</a>
         <a href="#categories">Marketplace</a>
-        <a href="RECETTE/recettes.php">Recettes</a> <!-- yassmine -->
-        <a href="#programs">Programmes</a>
+        <a href="RECETTE/recettes.php">Recettes</a>
+        <a href="programme/mode_selection.php">Programmes</a>
         <a href="#suivi">Suivi</a>
         <a href="#categories">Produits</a>
 
@@ -136,6 +137,7 @@ $recettes = $recetteC->listes("all","");
     </div>
   </section>
 
+
 <section class="recipes section" id="recipes">
   <div class="container">
 
@@ -155,7 +157,7 @@ $recettes = $recetteC->listes("all","");
 
       <a href="RECETTE/recette_details.php?id=<?= $r['id_recette'] ?>" class="recipe-card <?= $large ?> fade-up">
 
-        <img src="/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/RECETTE/displayImage.php?id=<?= $r['id_recette'] ?>">
+        <img src="../BackOffice/RECETTE/displayImage.php?id=<?= $r['id_recette'] ?>">
 
         <div class="recipe-overlay">
           <h3><?= $r['nom'] ?></h3>
@@ -181,40 +183,39 @@ $recettes = $recetteC->listes("all","");
   </div>
 </section>
 
-
   <!-- PROGRAMS -->
   <section class="programs section" id="programs">
     <div class="container programs-grid">
       <div class="program-list fade-up">
 
         <div class="program-card">
-          <img src="images/elite.jpg" alt="Programme 1">
+          <img src="images/prise.jpg" alt=Programme 1">
           <div class="program-info">
             <div>
-              <h3>Nutrition Élite</h3>
-              <p>Optimisez vos performances sportives.</p>
+              <h3>Prise de masse</h3>
+              <p>Optimisez vos performances et votre volume musculaire.</p>
             </div>
             <span>01</span>
           </div>
         </div>
 
         <div class="program-card">
-          <img src="images/fitness.jpg" alt="Programme 2">
+          <img src="images/perte.jpg" alt="Programme 2">
           <div class="program-info">
             <div>
-              <h3>Challenge Cardio</h3>
-              <p>Relancez votre métabolisme intelligemment.</p>
+              <h3>Perte de poids</h3>
+              <p>Brûlez des calories et affinez votre silhouette.</p>
             </div>
             <span>02</span>
           </div>
         </div>
 
         <div class="program-card">
-          <img src="images/detox.jpg" alt="Programme 3">
+          <img src="images/equilibre.jpg" alt="Programme 3">
           <div class="program-info">
             <div>
-              <h3>Reset Détox</h3>
-              <p>Purifiez votre organisme en douceur.</p>
+              <h3>Équilibre Santé</h3>
+              <p>Stabilisez votre poids et purifiez votre organisme.</p>
             </div>
             <span>03</span>
           </div>
@@ -229,7 +230,7 @@ $recettes = $recetteC->listes("all","");
           bien-être et activité physique. Conçus pour aider vos utilisateurs
           à mieux manger, mieux bouger et mieux vivre au quotidien.
         </p>
-        <a href="#" class="btn-primary large">Découvrir les programmes</a>
+        <a href="programme/mode_selection.php" class="btn-primary large">Découvrir les programmes</a>
       </div>
     </div>
   </section>
@@ -285,13 +286,19 @@ $recettes = $recetteC->listes("all","");
 
       <div class="footer-links">
         <a href="#">Accueil</a>
-        <a href="#">Recettes</a>
-        <a href="#">Produits</a>
+        <a href="RECETTE/admin.php" class="menu-item">
+        <i data-feather="book-open"></i>
+        <span>Recettes</span>
+      </a>  <a href="#">Produits</a>
         <a href="#">Programmes</a>
         <a href="#">Suivi</a>
       </div>
     </div>
   </footer>
 
+
+  <?php include 'programme/coach_widget.php'; ?>
+
 </body>
+
 </html>
