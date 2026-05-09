@@ -1,4 +1,8 @@
-
+<!-- Pattern répété dans tous les formulaires -->
+<input type="text" name="nom" id="nom">
+<span id="error-nom" class="error-text" style="color: #e63946; font-size: 0.75rem; font-weight: 600; margin-top: 5px; display: block;"></span>/* =========================
+   RESET
+========================= */
 * {
   margin: 0;
   padding: 0;
@@ -798,20 +802,4 @@ table tr:not(:last-child) td {
     flex-direction: column;
     align-items: start;
   }
-}
-
-/* ICON FOURCHETTE + COUTEAU DANS CADRE ORANGE */
-
-.stat-icon.orange{
-  position: relative;
-}
-
-.stat-icon.orange::before{
-  content: "🍴";
-  font-size: 34px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  line-height: 1;
 }
