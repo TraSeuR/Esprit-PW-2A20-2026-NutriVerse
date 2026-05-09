@@ -1,5 +1,6 @@
 <?php
-include("../../../Controller/recetteC.php");
+include("../../../controller/recetteC.php");
+include("../../../controller/ingredientC.php");
 
 if (isset($_POST['query'])) {
 
@@ -16,7 +17,7 @@ if (isset($_POST['query'])) {
 
     <div class="card">
 
-        <img src="/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/RECETTE/displayImage.php?id=' . $recette['id_recette'] . '" 
+        <img src="../../BackOffice/RECETTE/displayImage.php?id=' . $recette['id_recette'] . '" 
         alt="' . $recette['nom'] . '">
 
         <div class="card-content">

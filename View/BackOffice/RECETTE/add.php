@@ -1,6 +1,6 @@
 <?php
-include("../../../Controller/recetteC.php");
-include("../../../Model/recette.php");
+include("../../../controller/recetteC.php");
+include("../../../model/recette.php");
 if (
     isset($_POST['nom']) &&
     isset($_POST['description']) &&
@@ -25,10 +25,9 @@ if (
     );
 
     $recetteC = new recetteC();
-    $recetteC->addRecette($recette);
+    $id_recette = $recetteC->addRecette($recette);
 
     $db = config::getConnexion();
-    $id_recette = $db->lastInsertId();
 
     if (isset($_POST['ingredient_nom'])) {
 

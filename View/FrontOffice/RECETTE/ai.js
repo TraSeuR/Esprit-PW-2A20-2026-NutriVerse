@@ -151,14 +151,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 data.recipes.forEach(r => {
 
                  html += `
-<a href="budget_details.php?type=budget&nom=${encodeURIComponent(r.nom)}&categorie=${encodeURIComponent(r.categorie)}&description=${encodeURIComponent(r.description)}&temps=${encodeURIComponent(r.temps)}&ingredients=${encodeURIComponent(
-r.ingredients.map(i =>
-i.nom + " - " +
-i.quantite + " - " +
-i.prix + " " +
-document.getElementById("devise").value
-).join("|")
-)}&etapes=${encodeURIComponent(r.etapes.join("|"))}&conseil=${encodeURIComponent(r.conseil)}&image=${encodeURIComponent(r.image)}&budget_total=${encodeURIComponent(r.budget_total)}&budget_user=${encodeURIComponent(document.getElementById("budget").value)}&devise=${encodeURIComponent(document.getElementById("devise").value)}&personnes=${encodeURIComponent(selectedPeople)}" class="card-link">
+                 html += `
+<a href="ai_recette_details.php?nom=${encodeURIComponent(r.nom)}&categorie=${encodeURIComponent(r.categorie)}&desc=${encodeURIComponent(r.description)}&temps=${encodeURIComponent(r.temps)}&ing=${encodeURIComponent(
+r.ingredients.map(i => i.nom + " (" + i.quantite + ")").join(", ")
+)}&steps=${encodeURIComponent(r.etapes.join(" | "))}&tips=${encodeURIComponent(r.conseil || "")}&img=${encodeURIComponent(r.image)}" class="card-link">
 
 <div class="card">
 <img src="${r.image}" alt="${r.nom}">

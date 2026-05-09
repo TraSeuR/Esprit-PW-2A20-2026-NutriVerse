@@ -1,6 +1,6 @@
 <?php
 
-include("../../../Controller/recetteC.php");
+include("../../../controller/recetteC.php");
 
 if (isset($_GET['id'])) {
 

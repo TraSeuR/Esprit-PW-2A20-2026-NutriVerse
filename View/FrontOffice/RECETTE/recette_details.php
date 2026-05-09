@@ -1,7 +1,7 @@
 <?php
 
-include("../../../Controller/recetteC.php");
-include("../../../Controller/ingredientC.php");
+include("../../../controller/recetteC.php");
+include("../../../controller/ingredientC.php");
 
 $ingredientC = new ingredientC();
 //appl  jointure
@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
 
 <meta charset="UTF-8">
 <title>Détails Recette</title>
-<link rel="stylesheet" href="/Esprit-PW-2A20-2026-NutriVerse/View/FrontOffice/assets/recette_details.css">
+<link rel="stylesheet" href="../assets/recette_details.css">
 
 </head>
 
@@ -112,7 +112,7 @@ if (isset($_GET['id'])) {
         </div>
       
         <img 
-    src="/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/RECETTE/displayImage.php?id=<?= $recette['id_recette'] ?>"
+    src="../../BackOffice/RECETTE/displayImage.php?id=<?= $recette['id_recette'] ?>"
     class="details-image"
 >
 

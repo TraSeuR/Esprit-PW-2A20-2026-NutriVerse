@@ -5,12 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const btn = document.querySelector(".btn-add");
     const container = document.getElementById("ingredients-container");
 
-
-
-
     btn.addEventListener("click", function () {
-
-       
 
         const row = document.createElement("div");
         row.className = "ingredient-row";

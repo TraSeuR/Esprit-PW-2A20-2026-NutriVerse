@@ -20,86 +20,106 @@ $reste = $budget_user - $budget_total;
 
 ?>
 
-<link rel="stylesheet" href="/Esprit-PW-2A20-2026-NutriVerse/View/FrontOffice/assets/recette_details.css">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= htmlspecialchars($nom) ?> - NutriVerse Budget</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/recette_details.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
 
-<div class="details-container">
+    <link rel="stylesheet" href="../assets/recette_details.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body class="recipe-page">
 
-<h1 class="details-title"><?= $nom ?></h1>
-
-<div class="details-grid">
-
-    <div class="details-info">
-
-        <div class="details-section">
-            <h3>Description</h3>
-            <p><?= $description ?></p>
-        </div>
-
-        <div class="details-section">
-            <h3>Étapes</h3>
-            <ol class="details-steps">
-                <?php foreach ($etapes as $e) { ?>
-                    <li><?= $e ?></li>
-                <?php } ?>
-            </ol>
-        </div>
-
-        <div class="details-section">
-            <h3>Ingrédients</h3>
-            <ul class="details-steps">
-                <?php foreach ($ingredients as $i) { ?>
-                    <li><?= $i ?></li>
-                <?php } ?>
-            </ul>
-        </div>
-
-        <div class="details-section">
-            <h3>Temps de préparation</h3>
-            <p><?= $temps ?></p>
-        </div>
-
-        <div class="details-section">
-            <h3>Catégorie</h3>
-            <p><?= $categorie ?></p>
-        </div>
-
-        <div class="details-section">
-            <h3>Nombre de personnes</h3>
-            <p><?= $personnes ?></p>
-        </div>
-
-        <div class="details-section">
-            <h3>Budget</h3>
-            <p>
-                Total : <?= $budget_total ?> <?= $devise ?> <br>
-                Votre budget : <?= $budget_user ?> <?= $devise ?> <br>
-                Reste : <?= $reste ?> <?= $devise ?>
-            </p>
-        </div>
-
-        <div class="details-section">
-            <h3>Conseil du chef</h3>
-            <p><?= $conseil ?></p>
-        </div>
-
-        <div class="details-actions">
-            <a href="recettes.php" class="btn-retour">Retour aux recettes </a>
-
-            <button type="button" class="btn-save" onclick="saveRecipe()">
-                Enregistrer
-            </button>
-        </div>
-
+<div class="header">
+    <div class="icons">
+        <span>🥑</span><span>🥕</span><span>🥦</span><span>🍎</span>
+        <span>🍇</span><span>🥬</span><span>🍅</span><span>🍌</span>
+        <span>🍓</span><span>🥒</span><span>🌽</span><span>🍍</span>
+        <span>🥭</span><span>🍉</span><span>🥔</span>
     </div>
-
-    <img src="<?= $image ?>" class="details-image">
-
+    <div class="header-content">
+        <h1>NutriVerse Budget</h1>
+        <p>Cuisiner malin, manger sain</p>
+    </div>
 </div>
 
+<div class="ai-details-container">
+    <div class="ai-top">
+        <span class="ai-badge">💰 Budget IA : <?= htmlspecialchars($budget_user) ?> <?= htmlspecialchars($devise) ?></span>
+    </div>
+    
+    <h1 class="ai-title"><?= htmlspecialchars($nom) ?></h1>
+
+    <div class="ai-grid">
+        <div class="ai-info">
+            <div class="ai-section">
+                <h3>Description</h3>
+                <p><?= htmlspecialchars($description) ?></p>
+            </div>
+
+            <div class="ai-section">
+                <h3>Ingrédients</h3>
+                <ul class="ai-ingredients">
+                    <?php foreach ($ingredients as $i): ?>
+                        <?php if(trim($i)): ?>
+                        <li><?= htmlspecialchars(trim($i)) ?></li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+            <div class="ai-section">
+                <h3>Détails</h3>
+                <p><strong>Temps :</strong> <?= htmlspecialchars($temps) ?></p>
+                <p><strong>Catégorie :</strong> <?= htmlspecialchars($categorie) ?></p>
+                <p><strong>Pour :</strong> <?= htmlspecialchars($personnes) ?> personne(s)</p>
+            </div>
+
+            <div class="ai-section">
+                <h3>Étapes</h3>
+                <ol class="ai-steps">
+                    <?php foreach ($etapes as $e): ?>
+                        <?php if(trim($e)): ?>
+                        <li><?= htmlspecialchars(trim($e)) ?></li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </ol>
+            </div>
+
+            <div class="ai-section">
+                <h3>Analyse du Budget</h3>
+                <div class="ai-top">
+                    <span class="ai-badge">Coût : <?= htmlspecialchars($budget_total) ?> <?= htmlspecialchars($devise) ?></span>
+                    <span class="ai-badge" style="background:#e8f5e9; color:#2e7d32;">Économie : <?= htmlspecialchars($reste) ?> <?= htmlspecialchars($devise) ?></span>
+                </div>
+            </div>
+
+            <?php if ($conseil): ?>
+            <div class="ai-section">
+                <h3>Astuce Éco</h3>
+                <p><?= htmlspecialchars($conseil) ?></p>
+            </div>
+            <?php endif; ?>
+
+            <div class="details-actions">
+                <a href="recettes.php" class="btn-retour">← Retour</a>
+                <button type="button" class="btn-export" onclick="window.print()">Imprimer</button>
+            </div>
+        </div>
+
+        <img src="<?= htmlspecialchars($image) ?>" class="ai-image">
+    </div>
 </div>
 
-<script>
-function saveRecipe(){
-    window.print();
-}
-</script>
+</body>
+</html>

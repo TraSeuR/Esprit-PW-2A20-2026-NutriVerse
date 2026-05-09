@@ -32,7 +32,7 @@ $recettes = $recetteC->listeRecette();
 
 <tr>
 
-<td><?= $i++ ?></td>
+<td><?= $r['id_recette'] ?></td>
 
 <td><?= $r['nom'] ?></td>
 

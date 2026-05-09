@@ -1,11 +1,3 @@
-<?php
-include("../../Controller/recetteC.php");
-
-$recetteC = new recetteC();
-$recettes = $recetteC->listes("all","");
-?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -36,8 +28,8 @@ $recettes = $recetteC->listes("all","");
       <nav class="navbar">
         <a href="#hero">Accueil</a>
         <a href="#categories">Marketplace</a>
-        <a href="RECETTE/recettes.php">Recettes</a> <!-- yassmine -->
-        <a href="#programs">Programmes</a>
+        <a href="#recipes">Recettes</a>
+        <a href="mode_selection.php">Programmes</a>
         <a href="#suivi">Suivi</a>
         <a href="#categories">Produits</a>
 
@@ -136,51 +128,63 @@ $recettes = $recetteC->listes("all","");
     </div>
   </section>
 
-<section class="recipes section" id="recipes">
-  <div class="container">
 
-    <div class="section-header center fade-up">
-      <span class="section-tag">Cuisine santé</span>
-      <h2>Dernières Recettes Santé</h2>
-      <p>Inspirez-vous de nos créations culinaires simples, locales et savoureuses.</p>
-    </div>
+  <!-- RECIPES -->
+  <section class="recipes section" id="recipes">
+    <div class="container">
+      <div class="section-header center fade-up">
+        <span class="section-tag">Cuisine santé</span>
+        <h2>Dernières Recettes Santé</h2>
+        <p>Inspirez-vous de nos créations culinaires simples, locales et savoureuses.</p>
+      </div>
 
-    <div class="recipe-grid">
-
-      <?php
-      $i = 0;
-      foreach($recettes as $r){
-        $large = ($i == 0) ? "large" : "";
-      ?>
-
-      <a href="RECETTE/recette_details.php?id=<?= $r['id_recette'] ?>" class="recipe-card <?= $large ?> fade-up">
-
-        <img src="/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/RECETTE/displayImage.php?id=<?= $r['id_recette'] ?>">
-
-        <div class="recipe-overlay">
-          <h3><?= $r['nom'] ?></h3>
-          <span><?= $r['categorie'] ?></span>
+      <div class="recipe-grid">
+        <div class="recipe-card large fade-up">
+          <img src="images/recipe1.jpg" alt="Recette 1">
+          <div class="recipe-overlay">
+            <h3>Salade vitaminée</h3>
+            <span>15 min</span>
+          </div>
         </div>
 
-      </a>
+        <div class="recipe-card fade-up delay-1">
+          <img src="images/recipe2.jpg" alt="Recette 2">
+          <div class="recipe-overlay">
+            <h3>Smoothie kiwi</h3>
+            <span>10 min</span>
+          </div>
+        </div>
 
-      <?php
-      $i++;
-      if($i == 5) break; // juste 5 recettes accueil
-      }
-      ?>
+        <div class="recipe-card fade-up delay-2">
+          <img src="images/recipe3.jpg" alt="Recette 3">
+          <div class="recipe-overlay">
+            <h3>Toast avocat</h3>
+            <span>12 min</span>
+          </div>
+        </div>
 
+        <div class="recipe-card fade-up delay-3">
+          <img src="images/recipe4.jpg" alt="Recette 4">
+          <div class="recipe-overlay">
+            <h3>Grillade légère</h3>
+            <span>20 min</span>
+          </div>
+        </div>
+
+        <div class="recipe-card fade-up delay-1">
+          <img src="images/recipe5.jpg" alt="Recette 5">
+          <div class="recipe-overlay">
+            <h3>Chia bowl</h3>
+            <span>8 min</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="center-btn fade-up">
+        <a href="#" class="text-link">Découvrir tout le blog →</a>
+      </div>
     </div>
-
-    <div class="center-btn fade-up">
-      <a href="RECETTE/recettes.php" class="text-link">
-        Découvrir toutes les recettes →
-      </a>
-    </div>
-
-  </div>
-</section>
-
+  </section>
 
   <!-- PROGRAMS -->
   <section class="programs section" id="programs">
@@ -292,6 +296,9 @@ $recettes = $recetteC->listes("all","");
       </div>
     </div>
   </footer>
+
+
+    <?php include 'coach_widget.php'; ?>
 
 </body>
 </html>

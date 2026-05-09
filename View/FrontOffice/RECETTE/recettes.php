@@ -1,6 +1,6 @@
 <?php
 
-include("../../../Controller/recetteC.php");
+include("../../../controller/recetteC.php");
 
 $recetteC = new recetteC();
 
@@ -23,7 +23,7 @@ $recettes = $recetteC->listes($categorie, $search);
 <meta charset="UTF-8">
 <title>NutriVerse - Recettes</title>
 
-<link rel="stylesheet" href="http://localhost/Esprit-PW-2A20-2026-NutriVerse/View/FrontOffice/assets/recette.css">
+<link rel="stylesheet" href="../assets/recette.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -37,7 +37,7 @@ $recettes = $recetteC->listes($categorie, $search);
 <div class="nav">
 
 <div class="logo">
-<img src="/Esprit-PW-2A20-2026-NutriVerse/View/FrontOffice/images/logo.png" class="logo-img">
+<img src="../images/logo.png" class="logo-img">
 </div>
 
 <input type="checkbox" id="nav-toggle" hidden aria-hidden="true">
@@ -46,12 +46,12 @@ $recettes = $recetteC->listes($categorie, $search);
 
 <nav class="navbar">
 
-<a href="/Esprit-PW-2A20-2026-NutriVerse/View/FrontOffice/front.php">Accueil</a>
-<a href="#">Marketplace</a>
-<a href="/Esprit-PW-2A20-2026-NutriVerse/View/FrontOffice/RECETTE/recettes.php" class="active-link">Recettes</a>
-<a href="#">Programmes</a>
-<a href="#">Suivi</a>
-<a href="#">Produits</a>
+<a href="../nutri_front.php">Accueil</a>
+<a href="../nutri_front.php#categories">Marketplace</a>
+<a href="recettes.php" class="active-link">Recettes</a>
+<a href="../programme/mode_selection.php">Programmes</a>
+<a href="../nutri_front.php#suivi">Suivi</a>
+<a href="../nutri_front.php#categories">Produits</a>
 <a href="#" class="cart-icon">🛒</a>
 <a href="#" class="btn-outline">Se connecter</a>
 <a href="#" class="btn-primary">S'inscrire</a>
@@ -224,7 +224,7 @@ Plus votre budget est précis, meilleure sera la recette.
 <div class="card">
 
 <img
-src="/Esprit-PW-2A20-2026-NutriVerse/View/BackOffice/RECETTE/displayImage.php?id=<?= $r['id_recette'] ?>"
+src="../../BackOffice/RECETTE/displayImage.php?id=<?= $r['id_recette'] ?>"
 alt="<?= $r['nom'] ?>"
 >
 
