@@ -12,7 +12,7 @@ class config
 
                 self::$pdo = new PDO(
 
-                    'mysql:host=localhost;dbname=nutriverse',
+                    'mysql:host=localhost;dbname=nut',
 
                     'root',
 

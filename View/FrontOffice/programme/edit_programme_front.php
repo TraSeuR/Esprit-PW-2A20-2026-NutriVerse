@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         rel="stylesheet">
     <link rel="stylesheet" href="../assets/front.css">
     <link rel="stylesheet" href="../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../assets/css/userbox.css">
 </head>
 
 <body
@@ -182,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <?php $t1 = sprintf('%02d:00', $h); ?>
                                                 <option value="<?php echo $t1; ?>" <?php if ($val === $t1)
                                                        echo 'selected'; ?>>
-                                              <?php echo $t1; ?></option>
+                                             <?php echo $t1; ?></option>
                                                 <?php $t2 = sprintf('%02d:30', $h); ?>
                                                 <option value="<?php echo $t2; ?>" <?php if ($val === $t2)
                                                        echo 'selected'; ?>>
@@ -201,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div style="margin-top: 40px; display: flex; gap: 20px;">
                     <a href="summary.php?id_regime=<?php echo $id_regime; ?>" class="btn-premium"
                         style="background: #fff; color: #000; text-decoration: none; text-align: center; border: 1px solid #ddd;">ANNULER</a>
-                    <button type="submit" class="btn-premium">ENREGISTRER LES MODIFICATIONS ?</button>
+                    <button type="submit" class="btn-premium">ENREGISTRER</button>
                 </div>
 
             </form>
@@ -210,6 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <?php include 'coach_widget.php'; ?>
     <script src="../assets/front_validation.js"></script>
+    <script src="../assets/js/userbox.js"></script>
 </body>
 
 </html>

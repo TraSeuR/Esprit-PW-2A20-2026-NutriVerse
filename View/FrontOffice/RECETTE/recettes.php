@@ -1,6 +1,22 @@
 <?php
 
+require_once __DIR__ . "/../../../Controller/no_cache.php";
 include("../../../controller/recetteC.php");
+
+// Auto-login from "remember me" cookie
+if (!isset($_SESSION['id_user']) && isset($_COOKIE['remember_token'])) {
+    require_once __DIR__ . "/../../../Controller/userC.php";
+    $userC = new userC();
+    $user = $userC->getUserByRememberToken($_COOKIE['remember_token']);
+    if ($user) {
+        $_SESSION['id_user'] = $user['id_user'];
+        $_SESSION['email']   = $user['email'];
+        $_SESSION['role']    = $user['role'];
+        $_SESSION['nom']     = $user['nom'];
+        $_SESSION['prenom']  = $user['prenom'];
+        $_SESSION['avatar']  = $user['avatar'] ?? 'avatar1.png';
+    }
+}
 
 $recetteC = new recetteC();
 
@@ -24,6 +40,7 @@ $recettes = $recetteC->listes($categorie, $search);
 <title>NutriVerse - Recettes</title>
 
 <link rel="stylesheet" href="../assets/recette.css">
+<link rel="stylesheet" href="../assets/css/userbox.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -46,15 +63,35 @@ $recettes = $recetteC->listes($categorie, $search);
 
 <nav class="navbar">
 
-<a href="../nutri_front.php">Accueil</a>
-<a href="../nutri_front.php#categories">Marketplace</a>
+<a href="../index.php">Accueil</a>
+<a href="../index.php#categories">Marketplace</a>
 <a href="recettes.php" class="active-link">Recettes</a>
 <a href="../programme/mode_selection.php">Programmes</a>
-<a href="../nutri_front.php#suivi">Suivi</a>
-<a href="../nutri_front.php#categories">Produits</a>
+<a href="../index.php#suivi">Suivi</a>
+<a href="../index.php#categories">Produits</a>
 <a href="#" class="cart-icon">🛒</a>
-<a href="#" class="btn-outline">Se connecter</a>
-<a href="#" class="btn-primary">S'inscrire</a>
+
+<?php if (isset($_SESSION['id_user'])): ?>
+    <div class="user-menu admin-box-style">
+        <button class="user-btn transparent-btn" id="userMenuBtn">
+            <img src="../images/<?= htmlspecialchars($_SESSION['avatar'] ?? 'avatar1.png') ?>" alt="Avatar"
+                class="user-avatar-circle" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+            <div class="user-info-text">
+                <h4><?= htmlspecialchars($_SESSION['prenom'] . ' ' . $_SESSION['nom']) ?></h4>
+                <p>Utilisateur</p>
+            </div>
+            <span>▼</span>
+        </button>
+
+        <div class="user-dropdown" id="userDropdown" style="top: 100%; right: 0;">
+            <a href="../utilisateur/edit_profile.php">👤 Éditer Profil</a>
+            <a href="../utilisateur/logout.php" class="logout">🚪 Déconnexion</a>
+        </div>
+    </div>
+<?php else: ?>
+    <a href="../utilisateur/login.php" class="btn-outline">Se connecter</a>
+    <a href="../utilisateur/register.php" class="btn-primary">S'inscrire</a>
+<?php endif; ?>
 
 </nav>
 </div>
@@ -252,6 +289,7 @@ alt="<?= $r['nom'] ?>"
 
 <script src="./search.js"></script>
 <script src="./ai.js"></script>
+<script src="../assets/js/userbox.js"></script>
 
 </body>
 </html>

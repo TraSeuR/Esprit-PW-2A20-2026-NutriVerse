@@ -5,9 +5,9 @@
 
 
     const COACH_ENDPOINT = (function () {
-        const depth = window.location.pathname.split('/').filter(Boolean).length;
-
-        return '../../controller/CoachController.php';
+        const path = window.location.pathname;
+        const isSubfolder = path.includes('/programme/');
+        return isSubfolder ? '../../../controller/CoachC.php' : '../../controller/CoachC.php';
     })();
 
     const MAX_CHARS = 1000;
@@ -140,7 +140,7 @@
     }
 
     /* ─────────────────────────────────────────
-       APPEL API (fetch → CoachController.php)
+       APPEL API (fetch → CoachC.php)
     ───────────────────────────────────────── */
     function fetchCoachReply(userMessage) {
         isLoading = true;
@@ -178,7 +178,7 @@
             .catch(function (err) {
                 hideTyping();
                 renderMessage(
-                    '🔌 Impossible de contacter le coach. Vérifiez que XAMPP est démarré et que votre clé API est configurée dans CoachController.php.',
+                    '🔌 Impossible de contacter le coach. Vérifiez que XAMPP est démarré et que votre clé API est configurée dans CoachC.php.',
                     'bot', now(), true
                 );
                 console.error('[NutriCoach] Erreur fetch :', err);

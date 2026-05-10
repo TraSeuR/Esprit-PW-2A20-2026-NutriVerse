@@ -1,11 +1,11 @@
 <?php
-$coachBasePath = (basename($_SERVER['PHP_SELF']) == 'nutri_front.php') ? 'assets/' : '../assets/';
+$coachBasePath = (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'assets/' : '../assets/';
 ?>
 
 
 <button id="nutricoach-toggle" aria-label="Ouvrir le coach NutriVerse" title="Coach NutriVerse">
     <span class="coach-emoji-main">AI</span>
-    <span class="coach-close-icon">ÃƒÂ¢Ã…â€œÃ¢â‚¬Â¢</span>
+    <span class="coach-close-icon">AI</span>
     <span id="nutricoach-badge" class="hidden" aria-label="Nouveau message">1</span>
 </button>
 
@@ -31,7 +31,7 @@ $coachBasePath = (basename($_SERVER['PHP_SELF']) == 'nutri_front.php') ? 'assets
     </div>
 
 
-    <div id="coach-typing" class="hidden" aria-label="Le coach rÃƒÆ’Ã‚Â©dige une rÃƒÆ’Ã‚Â©ponse">
+    <div id="coach-typing" class="hidden" aria-label="Le coach reponds a vos questions">
         <div class="typing-avatar">AI</div>
         <div class="typing-bubble">
             <span class="typing-dot"></span>
@@ -60,7 +60,7 @@ $coachBasePath = (basename($_SERVER['PHP_SELF']) == 'nutri_front.php') ? 'assets
     </div>
 
 
-    <div id="coach-footer">PropulsÃƒÆ’Ã‚Â© par Google Gemini ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ NutriVerse 2026</div>
+
 
 </div>
 

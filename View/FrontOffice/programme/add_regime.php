@@ -31,6 +31,7 @@ $regime = $controller->handleRequest($id_regime, $source);
         rel="stylesheet">
     <link rel="stylesheet" href="../assets/front.css">
     <link rel="stylesheet" href="../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../assets/css/userbox.css">
 </head>
 
 <body style="background: #e6eae8; min-height: 100vh;">
@@ -213,6 +214,7 @@ $regime = $controller->handleRequest($id_regime, $source);
 
     <?php include 'coach_widget.php'; ?>
     <script src="../assets/front_validation.js"></script>
+    <script src="../assets/js/userbox.js"></script>
     <script>
         const btnTerminer = document.getElementById('btn-terminer');
         const btnModifier = document.getElementById('btn-modifier');

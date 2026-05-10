@@ -1,3 +1,6 @@
+<?php
+require_once __DIR__ . "/../../../Controller/no_cache.php";
+?>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="../assets/technical_front.css">
+    <link rel="stylesheet" href="../assets/css/userbox.css">
 
     <style>
         body {
@@ -122,12 +126,13 @@
         </div>
 
         <div style="text-align: center; margin-top: 60px;" class="fade-up">
-            <a href="../nutri_front.php" style="color: #1c2733; font-weight: 600; text-decoration: none; border-bottom: 2px solid #59b84d; padding-bottom: 5px; transition: 0.3s;">← Retour au portail NutriVerse</a>
+            <a href="../index.php" style="color: #1c2733; font-weight: 600; text-decoration: none; border-bottom: 2px solid #59b84d; padding-bottom: 5px; transition: 0.3s;">← Retour au portail NutriVerse</a>
         </div>
     </div>
 
 
     <?php include 'coach_widget.php'; ?>
+    <script src="../assets/js/userbox.js"></script>
 
 </body>
 </html>

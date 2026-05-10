@@ -29,6 +29,8 @@ $calories_regime = $regime->getCalorieJour();
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/front.css">
     <link rel="stylesheet" href="../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../assets/css/userbox.css">
+    <link rel="stylesheet" href="../assets/technical_front.css">
 
     <!-- Fonts -->
     <link
@@ -314,6 +316,7 @@ $calories_regime = $regime->getCalorieJour();
     </script>
 
     <?php include 'coach_widget.php'; ?>
+    <script src="../assets/js/userbox.js"></script>
 </body>
 
 </html>

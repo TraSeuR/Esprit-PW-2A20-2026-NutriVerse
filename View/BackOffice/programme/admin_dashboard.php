@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . "/../../../Controller/auth_check_admin.php";
 require_once __DIR__ . '/../../../controller/RegimeC.php';
 require_once __DIR__ . '/../../../controller/PlanningC.php';
 
@@ -45,6 +46,7 @@ if (isset($_GET['action'])) {
 
     <!-- Nutrition styles -->
     <link rel="stylesheet" href="../assets/back.css">
+    <link rel="stylesheet" href="../../FrontOffice/assets/css/userbox.css" />
     <!-- Existing programme styles for table -->
     <link rel="stylesheet" href="../assets/style.css">
 
@@ -139,7 +141,7 @@ if (isset($_GET['action'])) {
         </div>
 
         <nav class="sidebar-menu">
-            <a href="../nutri_back.php" class="menu-item">
+            <a href="../back.php" class="menu-item">
                 <i data-feather="grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -149,7 +151,7 @@ if (isset($_GET['action'])) {
                 <span>Recettes</span>
             </a>
 
-            <a href="#" class="menu-item">
+            <a href="../utilisateur/admin_utilisateurs.php" class="menu-item">
                 <i data-feather="users"></i>
                 <span>Utilisateurs</span>
             </a>
@@ -181,10 +183,6 @@ if (isset($_GET['action'])) {
         </nav>
 
         <div class="sidebar-footer">
-            <a href="../../FrontOffice/nutri_front.php" class="menu-item" style="padding: 10px 0; font-size: 0.85rem; opacity: 0.7;">
-                <i data-feather="log-out" style="width: 16px;"></i>
-                <span>Quitter l'admin</span>
-            </a>
             <p style="margin-top: 10px;">© 2026 NutriVerse</p>
         </div>
     </aside>
@@ -209,11 +207,23 @@ if (isset($_GET['action'])) {
             </div>
 
             <div class="topbar-right">
-                <div class="admin-box">
-                    <div class="admin-avatar">A</div>
-                    <div>
-                        <h4>Admin</h4>
-                        <p>Administrateur</p>
+                <div class="user-menu admin-box">
+                    <button class="user-btn" id="userMenuBtn"
+                        style="background-color: transparent; color: #333; gap: 10px; padding: 5px;">
+                        <div class="admin-avatar"><?= strtoupper(substr($_SESSION['prenom'] ?? 'A', 0, 1)) ?></div>
+                        <div style="text-align: left; display: flex; flex-direction: column;">
+                            <h4 style="margin:0; font-size: 0.95rem;">
+                                <?= htmlspecialchars(($_SESSION['prenom'] ?? '') . ' ' . ($_SESSION['nom'] ?? '')) ?>
+                            </h4>
+                            <p style="margin:0; font-size: 0.8rem; color: #777;">Administrateur</p>
+                        </div>
+                        <span>▼</span>
+                    </button>
+
+                    <div class="user-dropdown" id="userDropdown" style="top: 100%; right: 0;">
+                        <a href="../../FrontOffice/utilisateur/logout.php" class="logout"><i data-feather="log-out"
+                                style="width: 16px;"></i>
+                            Déconnexion</a>
                     </div>
                 </div>
             </div>
@@ -296,7 +306,8 @@ if (isset($_GET['action'])) {
                                         <td style="font-weight: 700; color: var(--muted);">#<?php echo $r->getIdRegime(); ?>
                                         </td>
                                         <td style="font-weight: 800; color: #222; font-size: 0.95rem;">
-                                            <?php echo htmlspecialchars($r->getNom()); ?></td>
+                                            <?php echo htmlspecialchars($r->getNom()); ?>
+                                        </td>
                                         <td>
                                             <span
                                                 style="font-size: 0.65rem; color: #59b84d; font-weight: 800; text-transform: uppercase; background: rgba(89,184,77,0.1); padding: 4px 10px; border-radius: 6px;">
@@ -484,6 +495,7 @@ if (isset($_GET['action'])) {
             document.body.appendChild(iframe);
         }
     </script>
+    <script src="../../FrontOffice/assets/js/userbox.js"></script>
 </body>
 
 </html>

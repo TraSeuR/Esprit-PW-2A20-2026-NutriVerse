@@ -29,6 +29,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
     <link rel="stylesheet" href="../assets/technical_front.css">
     <!-- Existing programme styles -->
     <link rel="stylesheet" href="../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../assets/css/userbox.css">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +67,8 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
-            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Analyse Technique</h2>
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Analyse Technique
+            </h2>
         </div>
     </section>
 
@@ -115,21 +117,24 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
 
                     <div class="macro-container">
                         <div class="macro-label"><span>Protéines (Mass)</span>
-                            <span><?php echo $data['proteine']; ?>g</span></div>
+                            <span><?php echo $data['proteine']; ?>g</span>
+                        </div>
                         <div class="macro-track">
                             <div class="macro-fill fill-p" style="width: <?php echo $p_perc; ?>%;"></div>
                         </div>
                     </div>
                     <div class="macro-container">
                         <div class="macro-label"><span>Glucides (Energie)</span>
-                            <span><?php echo $data['glucide']; ?>g</span></div>
+                            <span><?php echo $data['glucide']; ?>g</span>
+                        </div>
                         <div class="macro-track">
                             <div class="macro-fill fill-g" style="width: <?php echo $g_perc; ?>%;"></div>
                         </div>
                     </div>
                     <div class="macro-container">
                         <div class="macro-label"><span>Lipides (Vitalité)</span>
-                            <span><?php echo $data['lipides']; ?>g</span></div>
+                            <span><?php echo $data['lipides']; ?>g</span>
+                        </div>
                         <div class="macro-track">
                             <div class="macro-fill fill-l" style="width: <?php echo $l_perc; ?>%;"></div>
                         </div>
@@ -140,7 +145,8 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                             style="display: block; font-size: 0.7rem; margin-bottom: 10px; color: #666;">INSTRUCTIONS
                             DÉTAILLÉES</strong>
                         <p style="font-size: 0.95rem; line-height: 1.8; color: #222;">
-                            <?php echo nl2br(htmlspecialchars($data['description'] ?? '')); ?></p>
+                            <?php echo nl2br(htmlspecialchars($data['description'] ?? '')); ?>
+                        </p>
                     </div>
                 </div>
 
@@ -156,7 +162,8 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                             PLANNING</strong>
                         <h4
                             style="font-size: 1.4rem; margin-bottom: 10px; font-family: 'Playfair Display'; color: #000;">
-                            <?php echo htmlspecialchars($data['titre_planning'] ?? 'Standard Plan'); ?></h4>
+                            <?php echo htmlspecialchars($data['titre_planning'] ?? 'Standard Plan'); ?>
+                        </h4>
                         <p style="font-size: 0.95rem; line-height: 1.8; color: #333;">
                             <?php echo isset($data['programme_sport']) ? nl2br(htmlspecialchars($data['programme_sport'])) : 'Consignes générales : 30min de marche quotidienne.'; ?>
                         </p>
@@ -196,7 +203,8 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                                 style="display: block; font-size: 0.65rem; font-weight: 800; color: #666; margin-bottom: 10px;">CYCLE
                                 SOMMEIL</span>
                             <div style="font-size: 1.1rem; font-weight: 900;">🌙
-                                <?php echo htmlspecialchars($data['sommeil'] ?? '8h Cible'); ?></div>
+                                <?php echo htmlspecialchars($data['sommeil'] ?? '8h Cible'); ?>
+                            </div>
                         </div>
                         <div
                             style="background: rgba(255,255,255,0.5); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.5);">
@@ -254,7 +262,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
     </script>
 
     <?php include 'coach_widget.php'; ?>
-
+    <script src="../assets/js/userbox.js"></script>
 </body>
 
 </html>
