@@ -7,7 +7,7 @@ $temps = $_GET['temps'] ?? '';
 $image = $_GET['image'] ?? '';
 
 $ingredients = explode(",", $_GET['ingredients'] ?? '');
-$etapes = explode("|", $_GET['etapes'] ?? '');
+$eÉtapes = explode("|", $_GET['eÉtapes'] ?? '');
 $conseils = explode("|", $_GET['conseils'] ?? '');
 
 ?>
@@ -28,9 +28,9 @@ $conseils = explode("|", $_GET['conseils'] ?? '');
 </div>
 
 <div class="details-section">
-<h3>Ã‰tapes</h3>
+<h3>Ã‰Étapes</h3>
 <ol class="details-steps">
-<?php foreach ($etapes as $e) { ?>
+<?php foreach ($eÉtapes as $e) { ?>
 <li><?= $e ?></li>
 <?php } ?>
 </ol>
@@ -89,3 +89,4 @@ function saveRecipe() {
     window.print();
 }
 </script>
+

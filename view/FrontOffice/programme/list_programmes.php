@@ -1,3 +1,4 @@
+<?php
 require_once __DIR__ . '/../../../controller/RegimeC.php';
 require_once __DIR__ . '/../../../controller/PlanningC.php';
 
@@ -5,7 +6,7 @@ $regimeCtrl = new RegimeC();
 $regimes    = $regimeCtrl->listRegimes();
 
 $planningCtrl = new PlanningC();
-// INNER JOIN : chaque planning avec le nom du r�gime associ�
+// INNER JOIN : chaque planning avec le nom du régime associé
 $plannings    = $planningCtrl->listPlanningsWithRegimes();
 ?>
 <!DOCTYPE html>
@@ -16,7 +17,7 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
     <title>Mes Programmes - NutriVerse</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/front.css">
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 </head>
 <body>
 
@@ -25,21 +26,18 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
     <!-- HERO VERT -->
     <section class="recipe-header fade-up">
         <div class="icons">
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
+    <span>🥗</span>
+    <span>🍎</span>
+    <span>🥑</span>
+    <span>🍉</span>
+    <span>🥦</span>
+    <span>🍓</span>
+    <span>🥕</span>
+    <span>🍋</span>
+    <span>🍇</span>
+    <span>🥝</span>
+    <span>🍍</span>
+    <span>🥬</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
@@ -50,7 +48,7 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
     <div class="container fade-in" style="padding: 60px 20px 80px;">
         <div class="form-box">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="color: var(--primary-dark);">R�gimes Enregistr�s</h2>
+                <h2 style="color: var(--primary-dark);">Régimes Enregistrés</h2>
                 <a href="add_regime.php?action=new" class="btn-primary" style="width: auto; padding: 10px 20px; font-size: 0.9rem;">+ Ajouter</a>
             </div>
 
@@ -66,7 +64,7 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
                 </thead>
                 <tbody>
                     <?php if (empty($regimes)): ?>
-                        <tr><td colspan="5" style="text-align: center;">Aucun r�gime trouv�.</td></tr>
+                        <tr><td colspan="5" style="text-align: center;">Aucun régime trouvé.</td></tr>
                     <?php else: ?>
                         <?php foreach ($regimes as $r): ?>
                         <tr>
@@ -92,14 +90,14 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
                     <tr>
                         <th>ID</th>
                         <th>Titre</th>
-                        <th>R�gime associ�</th>
+                        <th>Régime associé</th>
                         <th>Sommeil</th>
                         <th>Statut</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($plannings)): ?>
-                        <tr><td colspan="4" style="text-align: center;">Aucun planning trouv�.</td></tr>
+                        <tr><td colspan="4" style="text-align: center;">Aucun planning trouvé.</td></tr>
                     <?php else: ?>
                         <?php foreach ($plannings as $p): ?>
                         <tr>
@@ -125,3 +123,7 @@ $plannings    = $planningCtrl->listPlanningsWithRegimes();
 
 </body>
 </html>
+
+
+
+

@@ -23,11 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $regime) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier le RÈgime - Admin</title>
+    <title>Modifier le R√©gime - Admin</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh; font-family: 'Poppins', sans-serif;">
 
@@ -36,19 +36,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $regime) {
     </header>
 
     <div class="nav-bar">
-        <a href="admin_dashboard.php">? Retour Dashboard</a>
+        <a href="admin_dashboard.php">‚Üê Retour Dashboard</a>
     </div>
 
     <div class="container fade-in">
         <div class="form-box">
-            <h2 class="form-title">Modifier RÈgime #<?php echo $regime ? $regime->getIdRegime() : ''; ?></h2>
+            <h2 class="form-title">Modifier R√©gime #<?php echo $regime ? $regime->getIdRegime() : ''; ?></h2>
             
             <?php if (!$regime): ?>
-                <p>RÈgime non trouvÈ.</p>
+                <p>R√©gime non trouv√©.</p>
             <?php else: ?>
                 <form id="regimeForm" method="POST" novalidate>
                     <div class="form-group">
-                        <label for="nom">Nom du RÈgime</label>
+                        <label for="nom">Nom du R√©gime</label>
                         <input type="text" name="nom" id="nom" value="<?php echo htmlspecialchars($regime->getNom()); ?>">
                         <span id="error-nom" class="error-msg"></span>
                     </div>
@@ -58,20 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $regime) {
                         <select name="type" id="type">
                             <option value="perte_poids" <?php if($regime->getType() == 'perte_poids') echo 'selected'; ?>>Perte de poids</option>
                             <option value="prise_masse" <?php if($regime->getType() == 'prise_masse') echo 'selected'; ?>>Prise de masse</option>
-                            <option value="equilibre" <?php if($regime->getType() == 'equilibre') echo 'selected'; ?>>…quilibre</option>
+                            <option value="equilibre" <?php if($regime->getType() == 'equilibre') echo 'selected'; ?>>√âquilibre</option>
                         </select>
                         <span id="error-type" class="error-msg"></span>
                     </div>
 
                     <div class="form-group">
-                        <label for="calorie_jour">Calories journaliËres</label>
+                        <label for="calorie_jour">Calories journali√®res</label>
                         <input type="text" name="calorie_jour" id="calorie_jour" value="<?php echo $regime->getCalorieJour(); ?>">
                         <span id="error-calorie" class="error-msg"></span>
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px;">
                         <div class="form-group">
-                            <label>ProtÈines (g)</label>
+                            <label>Prot√©ines (g)</label>
                             <input type="text" name="proteine" id="proteine" value="<?php echo $regime->getProteine(); ?>">
                             <span id="error-proteine" class="error-msg"></span>
                         </div>
@@ -102,3 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $regime) {
     <script src="../assets/back_validation.js"></script>
 </body>
 </html>
+
+
+

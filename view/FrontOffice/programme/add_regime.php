@@ -16,7 +16,7 @@ if ($action === 'new') {
 
 $controller = new RegimeC();
 
-// Le contrôleur gère la logique (POST et chargement des données)
+// Le contrÃ´leur gÃ¨re la logique (POST et chargement des donnÃ©es)
 $regime = $controller->handleRequest($id_regime, $source);
 ?>
 <!DOCTYPE html>
@@ -30,43 +30,50 @@ $regime = $controller->handleRequest($id_regime, $source);
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../assets/front.css">
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 </head>
 
-<body style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh;">
+<body >
 
     <?php include 'global_header.php'; ?>
 
     <!-- HERO VERT -->
     <section class="recipe-header fade-up">
         <div class="icons">
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
+    <span>ğŸ¥—</span>
+    <span>ğŸ</span>
+    <span>ğŸ¥‘</span>
+    <span>ğŸ‰</span>
+    <span>ğŸ¥¦</span>
+    <span>ğŸ“</span>
+    <span>ğŸ¥•</span>
+    <span>ğŸ‹</span>
+    <span>ğŸ‡</span>
+    <span>ğŸ¥</span>
+    <span>ğŸ</span>
+    <span>ğŸ¥¬</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
-            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Étape 1</h2>
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Ã‰tape 1</h2>
         </div>
     </section>
 
     <div class="container fade-up" style="animation-delay: 0.2s; padding-bottom: 80px;">
         <div class="glass-card">
-            <h2 class="form-title" style="font-family: 'Playfair Display';">Mon régime</h2>
+            <h2 class="form-title" style="font-family: 'Playfair Display';">Mon rÃ©gime</h2>
+<style>
+  
 
-            <!-- NOVAlIDATE pour désactiver HTML5 -->
+
+    .recipe-header{
+        margin-bottom: 70px;
+    }
+</style>
+    
+
+
+            <!-- NOVAlIDATE pour dÃ©sactiver HTML5 -->
             <?php
             $actionUrl = "add_regime.php";
             $queryParams = [];
@@ -80,7 +87,7 @@ $regime = $controller->handleRequest($id_regime, $source);
             <form id="regimeForm" action="<?php echo $actionUrl; ?>" method="POST" novalidate>
                 <div class="form-group">
                     <label style="font-family: 'Poppins'; font-weight: 700;">Nom du Planning</label>
-                    <input type="text" name="nom" id="nom" placeholder="Ex: Ma Cure Détox"
+                    <input type="text" name="nom" id="nom" placeholder="Ex: Ma Cure DÃ©tox"
                         value="<?php echo $regime ? htmlspecialchars($regime->getNom()) : ''; ?>">
                     <span id="error-nom" class="error-text"
                         style="color: #e63946; font-size: 0.75rem; font-weight: 600; margin-top: 5px; display: block;"></span>
@@ -89,10 +96,10 @@ $regime = $controller->handleRequest($id_regime, $source);
                 <div class="form-group">
                     <label style="font-family: 'Poppins'; font-weight: 700;">Type d'objectif</label>
                     <select name="type" id="type">
-                        <option value="">Sélectionnez un objectif</option>
+                        <option value="">SÃ©lectionnez un objectif</option>
                         <option value="perte_poids" <?php echo ($regime && $regime->getType() == 'perte_poids') ? 'selected' : ''; ?>>Perte de poids</option>
                         <option value="prise_masse" <?php echo ($regime && $regime->getType() == 'prise_masse') ? 'selected' : ''; ?>>Prise de masse</option>
-                        <option value="equilibre" <?php echo ($regime && $regime->getType() == 'equilibre') ? 'selected' : ''; ?>>Équilibre Santé</option>
+                        <option value="equilibre" <?php echo ($regime && $regime->getType() == 'equilibre') ? 'selected' : ''; ?>>Ã‰quilibre SantÃ©</option>
                     </select>
                     <span id="error-type" class="error-text"
                         style="color: #e63946; font-size: 0.75rem; font-weight: 600; margin-top: 5px; display: block;"></span>
@@ -108,7 +115,7 @@ $regime = $controller->handleRequest($id_regime, $source);
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
                     <div class="form-group">
-                        <label>Protéines (g)</label>
+                        <label>ProtÃ©ines (g)</label>
                         <input type="text" name="proteine" id="proteine"
                             value="<?php echo $regime ? htmlspecialchars($regime->getProteine()) : ''; ?>">
                         <span id="error-proteine" class="error-text"
@@ -142,8 +149,8 @@ $regime = $controller->handleRequest($id_regime, $source);
                         style="font-family: 'Playfair Display'; font-weight: 900; font-size: 1.1rem; color: var(--primary-dark); margin-bottom: 15px; display: block; border-bottom: 2px solid var(--primary-color); padding-bottom: 5px;">
                         Calendrier sport
                     </label>
-                    <p style="font-size: 0.8rem; font-family: 'Poppins'; color: #555; margin-bottom: 15px;">Sélectionnez
-                        l'heure de votre séance de sport pour chaque jour de la semaine. Laissez vide si c'est un jour
+                    <p style="font-size: 0.8rem; font-family: 'Poppins'; color: #555; margin-bottom: 15px;">SÃ©lectionnez
+                        l'heure de votre sÃ©ance de sport pour chaque jour de la semaine. Laissez vide si c'est un jour
                         de repos.</p>
 
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px;">
@@ -157,7 +164,7 @@ $regime = $controller->handleRequest($id_regime, $source);
                             $current_val = $saved_hours[$jour] ?? 'Rest-day';
                             ?>
                             <div
-                                style="background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); text-align: center;">
+                                style="background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(124, 186, 119, 0.05); text-align: center;">
                                 <label
                                     style="font-family: 'Poppins'; font-weight: 700; font-size: 0.85rem; color: #444; display: block; margin-bottom: 8px;"><?php echo $jour; ?></label>
                                 <select name="heures_semaine[<?php echo $jour; ?>]"
@@ -241,7 +248,7 @@ $regime = $controller->handleRequest($id_regime, $source);
         });
 
         btnSupprimer.addEventListener('click', () => {
-            if (confirm('Êtes-vous sûr de vouloir supprimer votre saisie ?')) {
+            if (confirm('ÃŠtes-vous sÃ»r de vouloir supprimer votre saisie ?')) {
                 <?php if ($id_regime): ?>
                     // Si un ID existe, on supprime en base et on revient sur un formulaire vide
                     window.location.href = 'delete_regime.php?id=<?php echo $id_regime; ?>&redirect=add_regime.php';
@@ -259,7 +266,7 @@ $regime = $controller->handleRequest($id_regime, $source);
         });
 
         <?php if ($regime): ?>
-            // Si on est en mode édition (retour étape 2), on affiche directement le résumé "verrouillé"
+            // Si on est en mode Ã©dition (retour Ã©ï¿½tape 2), on affiche directement le rÃ©sumÃ© "verrouillÃ©"
             document.addEventListener('DOMContentLoaded', () => {
                 setFieldsReadOnly(true);
                 action1.style.display = 'none';
@@ -270,3 +277,7 @@ $regime = $controller->handleRequest($id_regime, $source);
 </body>
 
 </html>
+
+
+
+

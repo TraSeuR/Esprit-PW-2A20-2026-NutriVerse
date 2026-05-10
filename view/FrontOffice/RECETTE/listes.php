@@ -10,3 +10,4 @@ $recettes = $recetteC->listes($categorie, $search);
 ?>
 <!--nekhdou la categorie chois/recherche fl lurl-->
 <!--naytou l  listes mta  classe recetteC>
+

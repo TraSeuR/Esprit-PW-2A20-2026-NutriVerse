@@ -73,7 +73,7 @@ $tips = explode(" | ", $tipsRaw);
             </div>
 
             <div class="ai-section">
-                <h3>Étapes de préparation</h3>
+                <h3>É�tapes de préparation</h3>
                 <ul class="ai-steps">
                     <?php foreach ($steps as $step): ?>
                         <?php if (trim($step)): ?>
@@ -113,3 +113,5 @@ $tips = explode(" | ", $tipsRaw);
 
 </body>
 </html>
+
+

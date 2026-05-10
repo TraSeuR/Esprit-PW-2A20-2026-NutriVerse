@@ -2,6 +2,8 @@
 require_once __DIR__.'/../../../Controller/ProduitController.php';
 require_once __DIR__.'/../../../Controller/NotificationController.php';
 require_once __DIR__.'/../../../service/MonitoringService.php';
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Produit']);
 
 $produitController = new ProduitController();
 $notifController = new NotificationController();
@@ -19,6 +21,16 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id']))
 }
 
 $produits = $produitController->getProduits();
+
+// Calculate Stats
+$totalProduits = count($produits);
+$lowStockCount = count(array_filter($produits, function($p) { return $p['quantite_stock'] <= $p['seuil_alerte']; }));
+$promoCount = count(array_filter($produits, function($p) { return ($p['prix_original'] ?? $p['prix']) > $p['prix']; }));
+$expiringCount = count(array_filter($produits, function($p) { 
+    $d = new DateTime($p['date_expiration']); 
+    $now = new DateTime(); 
+    return $now->diff($d)->days <= 5 && !$now->diff($d)->invert; 
+}));
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,174 +39,181 @@ $produits = $produitController->getProduits();
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NutriVerse - Produits locaux (Admin)</title>
   <link rel="stylesheet" href="../assets/back.css" />
-  <link rel="stylesheet" href="../../../Produit Locaux/adminproduitlocaux.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    /* Custom enhancements for this page */
+    .dashboard-content { padding: 30px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 34px; }
+    .stat-card { background: white; padding: 24px; border-radius: 24px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: space-between; transition: 0.3s ease; }
+    .stat-card:hover { transform: translateY(-5px); }
+    .stat-icon { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; }
+    .stat-icon.green { background: #eaf8ef; color: #21b66f; }
+    .stat-icon.orange { background: #fff4e6; color: #ff922b; }
+    .stat-icon.blue { background: #e7f5ff; color: #339af0; }
+    .stat-icon.red { background: #fff5f5; color: #ff6b6b; }
+    
+    .table-card { background: white; border-radius: 28px; box-shadow: var(--shadow); overflow: hidden; margin-top: 24px; }
+    .card-header { padding: 24px 34px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    
+    .status-pill { padding: 6px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .status-pill.active { background: #eaf8ef; color: #21b66f; }
+    .status-pill.warning { background: #fff4e6; color: #ff922b; }
+    .status-pill.danger { background: #fff5f5; color: #ff6b6b; }
+    
+    .action-btns { display: flex; gap: 10px; }
+    .btn-icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; color: white; transition: 0.2s; text-decoration: none; border: none; cursor: pointer; }
+    .btn-edit { background: #339af0; }
+    .btn-edit:hover { background: #1c7ed6; }
+    .btn-delete { background: #ff6b6b; }
+    .btn-delete:hover { background: #fa5252; }
+    
+    .price-original { text-decoration: line-through; color: #adb5bd; font-size: 0.85rem; margin-right: 4px; }
+    .price-current { font-weight: 700; color: #212529; }
+    .price-promo { color: #fa5252; font-weight: 700; }
+    
+    .fade-up { animation: fadeUp 0.6s ease forwards; opacity: 0; transform: translateY(20px); }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+  </style>
 </head>
 <body>
 
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <div class="brand">
-        <img src="../images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
-        <div>
-          <h2>NutriVerse</h2>
-          <p>Back Office</p>
-        </div>
-      </div>
-    </div>
-    <nav class="sidebar-menu">
-      <a href="../nutri_back.php" class="menu-item">
-        <i data-feather="grid"></i>
-        <span>Dashboard</span>
-      </a>
-
-      <a href="../RECETTE/admin.php" class="menu-item">
-        <i data-feather="book-open"></i>
-        <span>Recettes</span>
-      </a>
-
-      <a href="../../../shop.php?action=admin_users" class="menu-item">
-        <i data-feather="users"></i>
-        <span>Utilisateurs</span>
-      </a>
-
-      <a href="listProduit.php" class="menu-item active">
-        <i data-feather="package"></i>
-        <span>Produits</span>
-      </a>
-
-      <a href="../movement/listMovement.php" class="menu-item">
-        <i data-feather="activity"></i>
-        <span>Mouvements Stock</span>
-      </a>
-
-      <a href="../notifications/listNotifications.php" class="menu-item">
-        <i data-feather="bell"></i>
-        <span>Notifications</span>
-        <?php if(isset($unreadCount) && $unreadCount > 0): ?>
-            <span style="background: #e74c3c; color: white; border-radius: 10px; padding: 2px 8px; font-size: 10px; margin-left: auto;"><?= $unreadCount ?></span>
-        <?php endif; ?>
-      </a>
-
-      <a href="../../../shop.php?action=admin_orders" class="menu-item">
-        <i data-feather="shopping-cart"></i>
-        <span>Commandes</span>
-      </a>
-
-      <a href="../../../shop.php?action=admin_livraisons" class="menu-item">
-        <i data-feather="truck"></i>
-        <span>Livraisons</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="heart-pulse"></i>
-        <span>Suivi Santé</span>
-      </a>
-
-      <a href="../programme/admin_dashboard.php" class="menu-item">
-        <i data-feather="heart"></i>
-        <span>Programmes</span>
-      </a>
-    </nav>
-  </aside>
+  <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/sidebar.php'; ?>
 
   <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left">
-        <h2>Gestion des Produits</h2>
-      </div>
-      <div class="topbar-right" style="display: flex; align-items: center; gap: 20px;">
-          <a href="../notifications/listNotifications.php" style="position: relative; color: var(--text-main);">
-            <i data-feather="bell"></i>
-            <?php if($unreadCount > 0): ?>
-                <span style="position: absolute; top: -5px; right: -5px; background: red; color: white; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; display: flex; align-items: center; justify-content: center;">
-                    <?= $unreadCount ?>
-                </span>
-            <?php endif; ?>
-          </a>
-          <div class="user-profile" style="display: flex; align-items: center; gap: 10px;">
-              <img src="../images/admin.png" alt="Admin" style="width: 35px; height: 35px; border-radius: 50%;" onerror="this.src='https://ui-avatars.com/api/?name=Admin'"/>
-              <span>Admin</span>
-          </div>
-      </div>
-    </header>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/topbar.php'; ?>
 
     <main class="dashboard-content">
-      <section class="page-header">
+      <section class="page-header fade-up">
         <div>
-          <span class="section-badge">Catalogue</span>
-          <h1>Produits locaux</h1>
+          <span class="section-badge">Catalogue local</span>
+          <h1>Gestion des Produits</h1>
+          <p>Gérez vos produits, surveillez les stocks et les dates d'expiration.</p>
         </div>
-        <a class="export-btn" href="addProduit.php" style="background: #27ae60;">
+        <a class="export-btn" href="addProduit.php" style="background: var(--green); color: white; text-decoration: none;">
           <i data-feather="plus"></i>
           Ajouter un produit
         </a>
       </section>
 
-      <section class="pl-panel">
-        <div class="pl-panel-header">
-          <h3>Catalogue</h3>
+      <!-- Stats Grid -->
+      <section class="stats-grid fade-up delay-1">
+        <div class="stat-card">
+          <div>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 4px;">Total Produits</p>
+            <h2 style="font-size: 1.8rem;"><?= $totalProduits ?></h2>
+          </div>
+          <div class="stat-icon blue"><i data-feather="package"></i></div>
         </div>
-        <div class="pl-table-wrap">
-          <table class="pl-table">
-            <thead>
+        <div class="stat-card">
+          <div>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 4px;">Alertes Stock</p>
+            <h2 style="font-size: 1.8rem;"><?= $lowStockCount ?></h2>
+          </div>
+          <div class="stat-icon orange"><i data-feather="alert-circle"></i></div>
+        </div>
+        <div class="stat-card">
+          <div>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 4px;">Promotions Actives</p>
+            <h2 style="font-size: 1.8rem;"><?= $promoCount ?></h2>
+          </div>
+          <div class="stat-icon green"><i data-feather="trending-down"></i></div>
+        </div>
+        <div class="stat-card">
+          <div>
+            <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 4px;">Expirations (5j)</p>
+            <h2 style="font-size: 1.8rem;"><?= $expiringCount ?></h2>
+          </div>
+          <div class="stat-icon red"><i data-feather="clock"></i></div>
+        </div>
+      </section>
+
+      <!-- Table Section -->
+      <section class="table-card fade-up delay-2">
+        <div class="card-header">
+          <h3>Liste du Catalogue</h3>
+          <div style="color: var(--muted); font-size: 0.85rem;">Mise à jour en temps réel</div>
+        </div>
+        <div class="table-wrapper">
+          <table style="width: 100%; border-collapse: collapse;">
+            <thead style="background: #f8f9fa;">
               <tr>
-                <th>ID</th>
-                <th>Nom</th>
+                <th style="padding: 18px 24px;">ID</th>
+                <th>Produit</th>
                 <th>Prix</th>
                 <th>Expiration</th>
-                <th>Quantité</th>
+                <th>Stock</th>
                 <th>Seuil</th>
                 <th>Catégorie</th>
                 <th>Statut</th>
-                <th>Actions</th>
+                <th style="text-align: right; padding-right: 34px;">Actions</th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($produits as $prod): ?>
-              <tr>
-                <td class="pl-mono">P-<?= htmlspecialchars($prod['idproduit']) ?></td>
-                <td style="font-weight: 500;"><?= htmlspecialchars($prod['nom']) ?></td>
+              <?php foreach ($produits as $prod): 
+                  $isLow = $prod['quantite_stock'] <= $prod['seuil_alerte'];
+                  $expDate = new DateTime($prod['date_expiration']);
+                  $today = new DateTime();
+                  $diff = $today->diff($expDate);
+                  $days = $diff->invert ? -$diff->days : $diff->days;
+                  $isExpiring = $days <= 5;
+                  $isPromo = ($prod['prix_original'] ?? $prod['prix']) > $prod['prix'];
+              ?>
+              <tr style="border-bottom: 1px solid #f1f3f5; transition: 0.2s;" onmouseover="this.style.background='#fcfdfe'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 18px 24px; font-family: monospace; color: var(--muted);">P-<?= $prod['idproduit'] ?></td>
                 <td>
-                    <?php if($prod['prix'] < ($prod['prix_original'] ?? $prod['prix'])): ?>
-                        <span style="text-decoration: line-through; color: #aaa; margin-right: 5px;"><?= htmlspecialchars($prod['prix_original']) ?></span>
-                        <span style="color: #e74c3c; font-weight: 600;"><?= htmlspecialchars($prod['prix']) ?> TND</span>
-                    <?php else: ?>
-                        <span style="font-weight: 500;"><?= htmlspecialchars($prod['prix']) ?> TND</span>
-                    <?php endif; ?>
+                  <div style="font-weight: 600; color: var(--text);"><?= htmlspecialchars($prod['nom']) ?></div>
                 </td>
                 <td>
-                    <?php 
-                        $expDate = new DateTime($prod['date_expiration']);
-                        $today = new DateTime();
-                        $diff = $today->diff($expDate);
-                        $days = $diff->invert ? -$diff->days : $diff->days;
-                        $color = $days <= 5 ? '#e74c3c' : 'inherit';
-                    ?>
-                    <span style="color: <?= $color ?>; font-weight: 500;"><?= htmlspecialchars($prod['date_expiration']) ?></span>
-                    <?php if($days >= 0 && $days <= 10): ?>
-                        <br><small style="color: #f39c12;">(Réduction active)</small>
-                    <?php endif; ?>
-                </td>
-                <td style="font-weight: 500;"><?= htmlspecialchars($prod['quantite_stock']) ?></td>
-                <td style="font-weight: 500;"><?= htmlspecialchars($prod['seuil_alerte']) ?></td>
-                <td><?= htmlspecialchars($prod['categorie']) ?></td>
-                <td>
-                  <?php if($prod['quantite_stock'] <= $prod['seuil_alerte']): ?>
-                      <span style="color: #e67e22; font-weight: 500;">Sous seuil</span>
+                  <?php if($isPromo): ?>
+                    <span class="price-original"><?= number_format($prod['prix_original'], 2) ?></span>
+                    <span class="price-promo"><?= number_format($prod['prix'], 2) ?> TND</span>
                   <?php else: ?>
-                      <span style="color: #27ae60; font-weight: 500;">actif</span>
+                    <span class="price-current"><?= number_format($prod['prix'], 2) ?> TND</span>
                   <?php endif; ?>
                 </td>
-                <td class="pl-actions-cell">
-                  <a href="updateProduit.php?id=<?= $prod['idproduit'] ?>" style="color: #3498db; text-decoration: underline; margin-right: 10px;">Modifier</a>
-                  <a href="listProduit.php?action=delete&id=<?= $prod['idproduit'] ?>" style="color: #3498db; text-decoration: underline;" onclick="return confirm('Êtes-vous sûr ?')">Supprimer</a>
+                <td>
+                  <div style="color: <?= $isExpiring ? '#ff6b6b' : 'inherit' ?>; font-weight: 500;">
+                    <?= $prod['date_expiration'] ?>
+                    <?php if($isExpiring): ?>
+                      <div style="font-size: 0.7rem; color: #ff6b6b; font-weight: 700;">PROCHE EXPIRATION</div>
+                    <?php endif; ?>
+                  </div>
+                </td>
+                <td>
+                  <span style="font-weight: 700; color: <?= $isLow ? '#ff922b' : 'var(--green)' ?>;">
+                    <?= $prod['quantite_stock'] ?>
+                  </span>
+                </td>
+                <td style="color: var(--muted);"><?= $prod['seuil_alerte'] ?></td>
+                <td>
+                  <span style="padding: 4px 10px; background: #f1f3f5; border-radius: 8px; font-size: 0.8rem; font-weight: 500;"><?= htmlspecialchars($prod['categorie']) ?></span>
+                </td>
+                <td>
+                  <?php if($prod['quantite_stock'] == 0): ?>
+                    <span class="status-pill danger">Rupture</span>
+                  <?php elseif($isLow): ?>
+                    <span class="status-pill warning">Bas</span>
+                  <?php else: ?>
+                    <span class="status-pill active">Actif</span>
+                  <?php endif; ?>
+                </td>
+                <td style="text-align: right; padding-right: 34px;">
+                  <div class="action-btns" style="justify-content: flex-end;">
+                    <a href="updateProduit.php?id=<?= $prod['idproduit'] ?>" class="btn-icon btn-edit" title="Modifier">
+                      <i data-feather="edit-2" style="width: 16px;"></i>
+                    </a>
+                    <a href="listProduit.php?action=delete&id=<?= $prod['idproduit'] ?>" class="btn-icon btn-delete" title="Supprimer" onclick="return confirm('Supprimer ce produit ?')">
+                      <i data-feather="trash-2" style="width: 16px;"></i>
+                    </a>
+                  </div>
                 </td>
               </tr>
               <?php endforeach; ?>
               <?php if(empty($produits)): ?>
-              <tr><td colspan="9" style="text-align:center">Aucun produit trouvé</td></tr>
+                <tr><td colspan="9" style="text-align:center; padding: 40px; color: var(--muted);">Aucun produit dans le catalogue.</td></tr>
               <?php endif; ?>
             </tbody>
           </table>
@@ -202,6 +221,10 @@ $produits = $produitController->getProduits();
       </section>
     </main>
   </div>
-  <script>feather.replace();</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        feather.replace();
+    });
+  </script>
 </body>
 </html>

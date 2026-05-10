@@ -1,0 +1,314 @@
+/* Complète ../view/front/assets/front.css — module Produits locaux (préfixe plu-) */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.plu-intro.section {
+  padding-top: 56px;
+  padding-bottom: 40px;
+}
+
+.plu-intro-inner {
+  background: #edf5eb;
+  border: 1px solid #b6d8b0;
+  border-radius: 34px;
+  padding: clamp(28px, 5vw, 48px);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .plu-intro-inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.plu-badge {
+  display: inline-block;
+  background: white;
+  color: var(--green-dark);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.plu-intro-inner h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.plu-intro-inner > div > p {
+  color: var(--muted);
+  max-width: 560px;
+  font-size: 1.02rem;
+}
+
+.plu-aside {
+  background: white;
+  border-radius: 26px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.plu-aside h2 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+  color: var(--green-dark);
+}
+
+.plu-aside ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.plu-aside li::before {
+  content: "✓ ";
+  color: var(--green);
+  font-weight: 700;
+}
+
+.plu-toolbar {
+  padding: 0 0 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plu-search-wrap {
+  flex: 1;
+  min-width: 220px;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid #dfe5dc;
+  border-radius: 999px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow);
+}
+
+.plu-search-wrap input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.plu-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.plu-filters a {
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  background: white;
+  border: 1px solid #dfe5dc;
+  color: var(--text);
+  transition: 0.2s ease;
+}
+
+.plu-filters a:hover,
+.plu-filters a.active {
+  background: var(--green-soft);
+  border-color: #b6d8b0;
+  color: var(--green-dark);
+}
+
+.plu-section-title {
+  margin-bottom: 22px;
+}
+
+.plu-section-title h2 {
+  font-size: 1.65rem;
+  margin-bottom: 8px;
+}
+
+.plu-section-title p {
+  color: var(--muted);
+}
+
+.plu-product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  padding-bottom: 80px;
+}
+
+@media (max-width: 1000px) {
+  .plu-product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .plu-product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.plu-product-card {
+  background: white;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid #e8eee6;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.plu-product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.1);
+}
+
+.plu-product-card-out {
+  opacity: 0.92;
+}
+
+.plu-product-visual {
+  height: 160px;
+  background: linear-gradient(145deg, var(--green-soft), #d4ecd0);
+  display: grid;
+  place-items: center;
+  font-size: 3rem;
+}
+
+.plu-product-body {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.plu-product-body h3 {
+  font-size: 1.15rem;
+  line-height: 1.25;
+}
+
+.plu-price {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--green-dark);
+}
+
+.plu-price small {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.plu-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.plu-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.plu-tag-stock-ok {
+  background: var(--green-soft);
+  color: var(--green-dark);
+}
+
+.plu-tag-stock-low {
+  background: #fff8e6;
+  color: #b45309;
+}
+
+.plu-tag-stock-out {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.plu-tag-waste {
+  background: linear-gradient(135deg, #fff4e0, #ffe0b2);
+  color: #a35a00;
+  border: 1px solid #f5c77a;
+}
+
+.plu-expire-line {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.plu-expire-line strong {
+  color: var(--text);
+}
+
+.plu-card-actions {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.plu-card-actions .btn-primary {
+  width: 100%;
+  text-align: center;
+  display: block;
+  padding: 12px;
+}
+
+.plu-btn-muted {
+  background: #e5e7eb !important;
+  color: #6b7280 !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+  transform: none !important;
+  pointer-events: none;
+}
+
+.plu-banner-waste {
+  background: linear-gradient(135deg, #fff9f0, #fff3e0);
+  border: 1px solid #f0cfa0;
+  border-radius: 22px;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.plu-banner-waste strong {
+  color: #9a5b00;
+}
+
+.plu-banner-waste p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-top: 4px;
+}

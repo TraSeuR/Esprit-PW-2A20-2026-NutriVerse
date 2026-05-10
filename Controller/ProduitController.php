@@ -178,8 +178,8 @@ class ProduitController {
 
             // 1. Stock Monitoring
             if ($prod['quantite_stock'] <= $prod['seuil_alerte']) {
-                $msg = "⚠️ Stock faible pour " . $prod['nom'] . " (" . $prod['quantite_stock'] . " restant)";
-                $notifController->addNotification(new Notification($msg, 'stock_low', $prod['idproduit']));
+                $msg = $prod['nom'] . " : " . $prod['quantite_stock'] . " unités restantes";
+                $notifController->addNotificationUnique(new Notification($msg, 'stock_low', $prod['idproduit']));
                 
                 // Email Alert
                 EmailService::sendAlert("manager@nutriverse.tn", "ALERTE STOCK: " . $prod['nom'], $msg);
@@ -208,14 +208,14 @@ class ProduitController {
                        ->execute(['prix' => $targetPrix, 'id' => $prod['idproduit']]);
 
                     if ($reduction > 0) {
-                        $msg = "📉 Promo Expire: " . $prod['nom'] . " est à " . $targetPrix . " TND (-" . ($reduction * 100) . "%)";
-                        $notifController->addNotification(new Notification($msg, 'price_drop', $prod['idproduit']));
+                        $msg = $prod['nom'] . " est à " . $targetPrix . " TND (-" . ($reduction * 100) . "%)";
+                        $notifController->addNotificationUnique(new Notification($msg, 'price_drop', $prod['idproduit']));
                         
                         // Email Alert
                         EmailService::sendAlert("user@nutriverse.tn", "PROMO: " . $prod['nom'], $msg);
                     } else {
-                        $msg = "🔄 Prix restauré pour " . $prod['nom'] . " (Expiration éloignée)";
-                        $notifController->addNotification(new Notification($msg, 'price_drop', $prod['idproduit']));
+                        $msg = $prod['nom'] . " (Prix normal rétabli)";
+                        $notifController->addNotificationUnique(new Notification($msg, 'price_drop', $prod['idproduit']));
                     }
                 }
             }
