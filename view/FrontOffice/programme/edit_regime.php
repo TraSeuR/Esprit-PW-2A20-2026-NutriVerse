@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../controller/RegimeC.php';
+require_once __DIR__ . '/../../../controller/RerégimeC.php';
 
 $id = $_GET['id'] ?? null;
 if (!$id) {
@@ -7,21 +7,21 @@ if (!$id) {
     exit();
 }
 
-$controller = new RegimeC();
-$regime = $controller->getRegime($id);
+$controller = new RerégimeC();
+$rerégime = $controller->getRerégime($id);
 
-if (!$regime) {
+if (!$rerégime) {
     header("Location: list_programmes.php");
     exit();
 }
 
 $message = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if ($controller->updateRegime($id, $_POST)) {
+    if ($controller->updateRerégime($id, $_POST)) {
         header("Location: list_programmes.php?success=update");
         exit();
     } else {
-        $message = "Une erreur est survenue lors de la mise � jour.";
+        $message = "Une erreur est survenue lors de la mise a  jour.";
     }
 }
 ?>
@@ -30,9 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NutriVerse - Modifier le R�gime</title>
+    <title>NutriVerse - Modifier le régime</title>
     <link rel="stylesheet" href="../assets/front.css">
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -44,21 +44,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- HERO VERT -->
     <section class="recipe-header fade-up">
         <div class="icons">
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
+    <span>🥗</span>
+    <span>🍎</span>
+    <span>🥑</span>
+    <span>🍉</span>
+    <span>🥦</span>
+    <span>🍓</span>
+    <span>🥕</span>
+    <span>🍋</span>
+    <span>🍇</span>
+    <span>🥝</span>
+    <span>🍍</span>
+    <span>🥬</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
@@ -71,8 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-container">
                 <div class="section-header">
                     <span class="section-tag">Modification</span>
-                    <h2>Modifier votre r�gime</h2>
-                    <p>Mettez � jour vos informations nutritionnelles.</p>
+                    <h2>Modifier votre régime</h2>
+                    <p>Mettez a jour vos informations nutritionnelles.</p>
                 </div>
 
                 <?php if ($message): ?>
@@ -81,44 +78,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <form id="editForm" method="POST" novalidate>
                     <div class="form-group">
-                        <label for="nom">Nom du R�gime</label>
-                        <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($regime->getNom()); ?>">
+                        <label for="nom">Nom du régime</label>
+                        <input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($rerégime->getNom()); ?>">
                         <span class="error-msg" id="error-nom">Veuillez entrer un nom valide.</span>
                     </div>
 
                     <div class="form-group">
-                        <label for="type">Type de R�gime</label>
+                        <label for="type">Type de régime</label>
                         <select id="type" name="type">
-                            <option value="perte_poids" <?php if($regime->getType() == 'perte_poids') echo 'selected'; ?>>Perte de poids</option>
-                            <option value="prise_masse" <?php if($regime->getType() == 'prise_masse') echo 'selected'; ?>>Prise de masse</option>
-                            <option value="equilibre" <?php if($regime->getType() == 'equilibre') echo 'selected'; ?>>�quilibre & Sant�</option>
-                            <option value="performance" <?php if($regime->getType() == 'performance') echo 'selected'; ?>>Performance Sportive</option>
+                            <option value="perte_poids" <?php if($rerégime->getType() == 'perte_poids') echo 'selected'; ?>>Perte de poids</option>
+                            <option value="prise_masse" <?php if($rerégime->getType() == 'prise_masse') echo 'selected'; ?>>Prise de masse</option>
+                            <option value="equilibre" <?php if($rerégime->getType() == 'equilibre') echo 'selected'; ?>>Equilibre & Santé</option>
+                            <option value="performance" <?php if($rerégime->getType() == 'performance') echo 'selected'; ?>>Performance Sportive</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="calorie_jour">Calories / jour</label>
-                        <input type="text" id="calorie_jour" name="calorie_jour" value="<?php echo htmlspecialchars($regime->getCalorieJour()); ?>">
+                        <input type="text" id="calorie_jour" name="calorie_jour" value="<?php echo htmlspecialchars($rerégime->getCalorieJour()); ?>">
                     </div>
 
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
                         <div class="form-group">
-                            <label>Prot�ines</label>
-                            <input type="text" name="proteine" id="proteine" value="<?php echo htmlspecialchars($regime->getProteine()); ?>">
+                            <label>Protéines</label>
+                            <input type="text" name="proteine" id="proteine" value="<?php echo htmlspecialchars($rerégime->getProteine()); ?>">
                         </div>
                         <div class="form-group">
                             <label>Glucides</label>
-                            <input type="text" name="glucide" id="glucide" value="<?php echo htmlspecialchars($regime->getGlucide()); ?>">
+                            <input type="text" name="glucide" id="glucide" value="<?php echo htmlspecialchars($rerégime->getGlucide()); ?>">
                         </div>
                         <div class="form-group">
                             <label>Lipides</label>
-                            <input type="text" name="lipides" id="lipides" value="<?php echo htmlspecialchars($regime->getLipides()); ?>">
+                            <input type="text" name="lipides" id="lipides" value="<?php echo htmlspecialchars($rerégime->getLipides()); ?>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="description">Description</label>
-                        <textarea id="description" name="description" rows="3"><?php echo htmlspecialchars($regime->getDescription()); ?></textarea>
+                        <textarea id="description" name="description" rows="3"><?php echo htmlspecialchars($rerégime->getDescription()); ?></textarea>
                     </div>
 
                     <button type="submit" class="btn-primary large" style="width:100%">Enregistrer les modifications</button>
@@ -132,3 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../assets/front_validation.js"></script>
 </body>
 </html>
+
+
+
+

@@ -1,4 +1,5 @@
 <?php
+if(session_status() === PHP_SESSION_NONE) session_start();
 require_once __DIR__.'/../../../Controller/ProduitController.php';
 require_once __DIR__.'/../../../Controller/NotificationController.php';
 require_once __DIR__.'/../../../service/MonitoringService.php';
@@ -30,106 +31,35 @@ $produits = $produitController->getProduitsActifs($search, $category, $sort);
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* Cart Sidebar Styles */
-    .cart-sidebar {
-      position: fixed; top: 0; right: -400px; width: 350px; height: 100vh;
-      background: #fff; box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-      z-index: 9999; transition: right 0.3s ease; display: flex; flex-direction: column;
-    }
-    .cart-sidebar.open { right: 0; }
-    .cart-header { padding: 20px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
-    .cart-header button { border: none; background: none; font-size: 20px; cursor: pointer; }
-    .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
-    .cart-item { display: flex; justify-content: space-between; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px;}
-    .cart-footer { padding: 20px; border-top: 1px solid #ddd; text-align: center;}
-    .cart-footer button { width: 100%; margin-top: 10px; }
+
     .plu-product-visual { padding: 0 !important; overflow: hidden; display:flex; align-items:center; justify-content:center; background:#f4f4f4;}
     .plu-product-visual img { width: 100%; height: 150px; object-fit: cover; }
-
-    /* Notification Dropdown Styles */
-    .notif-dropdown {
-      position: absolute; top: 100%; right: 0; width: 350px; max-height: 450px;
-      background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      z-index: 10000; overflow-y: auto; display: none; border: 1px solid #eee;
-    }
-    .notif-dropdown.show { display: block; animation: slideDown 0.3s ease; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .notif-item { padding: 12px 15px; border-bottom: 1px solid #f0f0f0; font-size: 13px; transition: background 0.2s; }
-    .notif-item:hover { background: #f9f9f9; }
-    .notif-item.unread { background: #f0f7ff; border-left: 3px solid #3498db; }
-    .notif-item-header { display: flex; justify-content: space-between; margin-bottom: 4px; color: #888; font-size: 11px; }
-    .notif-item-msg { color: #333; line-height: 1.4; font-weight: 500; }
-    .notif-footer { padding: 10px; text-align: center; background: #fafafa; }
-    .notif-footer a { font-size: 12px; color: #3498db; font-weight: 600; text-decoration: none; }
-    .notif-badge-ui { 
-        position: absolute; top: -8px; right: -8px; background: #e74c3c; color: white; 
-        border-radius: 50%; width: 20px; height: 20px; font-size: 11px; font-weight: bold;
-        display: flex; align-items: center; justify-content: center; border: 2px solid #fff;
-    }
   </style>
 </head>
 <body>
+  <?php 
+  $rel = "../";
 
-  <header class="header">
-    <div class="container nav">
-      <div class="logo">
-        <a href="../nutri_front.php">
-          <img src="../images/logo.png" alt="Logo NutriVerse" class="logo-img" />
-        </a>
+  include '../header.php'; 
+  ?>
+
+  <!-- LINK GLOBAL NUTRIVERSE STYLE -->
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <!-- LUXURY DECORATIVE ELEMENTS -->
+  <div class="luxury-bg-blob blob-1"></div>
+  <div class="luxury-bg-blob blob-2" style="background: var(--primary);"></div>
+
+  <!-- HERO SECTION -->
+  <section class="recipe-header fade-up" style="margin-top: 0;">
+      <div class="icons">
+          <span>🥗</span><span>🍎</span><span>🥑</span><span>🍉</span><span>🥦</span><span>🍓</span>
+          <span>🥕</span><span>🍋</span><span>🍇</span><span>🥝</span><span>🍍</span><span>🥬</span>
       </div>
-
-      <input type="checkbox" id="nav-toggle" hidden aria-hidden="true" />
-      <label for="nav-toggle" class="menu-toggle" aria-label="Ouvrir le menu">☰</label>
-      <nav class="navbar">
-        <a href="../nutri_front.php#hero">Accueil</a>
-        <a href="../nutri_front.php#categories">Marketplace</a>
-        <a href="../nutri_front.php#recipes">Recettes</a>
-        <a href="../nutri_front.php#programs">Programmes</a>
-        <a href="../nutri_front.php#suivi">Suivi</a>
-        <a href="listProduit.php" class="active">Produits locaux</a>
-        <a href="#" onclick="toggleCart(); return false;" class="cart-icon" title="Panier" style="position: relative;">
-            🛒
-        </a>
-        <a href="../../../shop.php?action=my_orders" class="cart-icon" title="Mes Commandes" style="margin-left: 5px;">
-            📋
-        </a>
-        <div style="position: relative; margin-left: 15px;">
-            <a href="javascript:void(0)" onclick="toggleNotifs()" class="notif-icon-front" style="font-size: 1.2rem; cursor: pointer;">
-                🔔
-                <?php if($unreadCount > 0): ?>
-                    <span class="notif-badge-ui"><?= $unreadCount ?></span>
-                <?php endif; ?>
-            </a>
-            <div id="notif-dropdown" class="notif-dropdown">
-                <div style="padding: 15px; border-bottom: 1px solid #eee; font-weight: 600; display:flex; justify-content: space-between;">
-                    Notifications
-                    <span style="font-size: 11px; color: #3498db; cursor: pointer;" onclick="markAllRead()">Tout marquer lu</span>
-                </div>
-                <div id="notif-content">
-                    <!-- Loaded via AJAX -->
-                    <p style="padding: 20px; text-align: center; color: #888;">Chargement...</p>
-                </div>
-                <div class="notif-footer" id="notif-footer">
-                    <a href="javascript:void(0)" onclick="loadNotifications(true)">Voir tout l'historique</a>
-                </div>
-            </div>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <section class="plu-intro section">
-    <div class="container">
-      <div class="plu-intro-inner">
-          <span class="plu-badge">Disponibilité en temps réel • Anti-gaspillage</span>
-          <h1>Produits locaux, frais et responsables</h1>
-          <p>
-            Consultez les produits proposés par nos partenaires locaux, voyez la disponibilité
-            mise à jour avec le stock, et repérez les dates courtes pour privilégier les achats
-            utiles à la planète et à votre panier.
-          </p>
+      <div class="header-content">
+          <h1 style="margin-bottom: 0;">NutriVerse</h1>
+          <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Produits Locaux</h2>
       </div>
-    </div>
   </section>
 
   <section class="container" id="catalogue" aria-labelledby="catalogue-title">
@@ -220,13 +150,11 @@ $produits = $produitController->getProduitsActifs($search, $category, $sort);
           <p class="plu-expire-line">À consommer avant le <strong><?= date("d/m/Y", strtotime($prod['date_expiration'])) ?></strong></p>
           <?php endif; ?>
 
-          <div class="plu-card-actions">
             <?php if($prod['quantite_stock'] > 0): ?>
-                <a href="#" onclick="addToCart(<?= $prod['idproduit'] ?>, '<?= htmlspecialchars($prod['nom'], ENT_QUOTES) ?>', <?= $prod['prix'] ?>); return false;" class="btn-primary">Ajouter au panier</a>
+                <span class="btn-primary" style="background: #ccc; cursor: default;">En stock</span>
             <?php else: ?>
                 <span class="btn-primary plu-btn-muted" aria-disabled="true">Indisponible</span>
             <?php endif; ?>
-          </div>
         </div>
       </article>
       <?php endforeach; ?>
@@ -244,76 +172,18 @@ $produits = $produitController->getProduitsActifs($search, $category, $sort);
       </div>
 
       <div class="footer-links">
-        <a href="../nutri_front.php#hero">Accueil</a>
-        <a href="../nutri_front.php#recipes">Recettes</a>
+        <a href="../index.php#hero">Accueil</a>
+        <a href="../index.php#recipes">Recettes</a>
         <a href="#catalogue">Produits locaux</a>
-        <a href="../nutri_front.php#programs">Programmes</a>
-        <a href="../nutri_front.php#suivi">Suivi</a>
+        <a href="../index.php#programs">Programmes</a>
+        <a href="../index.php#suivi">Suivi</a>
       </div>
     </div>
   </footer>
 
-  <!-- Cart Sidebar Overlay -->
-  <div id="cart-sidebar" class="cart-sidebar">
-      <div class="cart-header">
-          <h2>Votre Panier</h2>
-          <button onclick="toggleCart()">✕</button>
-      </div>
-      <div id="cart-items" class="cart-items">
-          <!-- Inject JavaScript Items -->
-      </div>
-      <div class="cart-footer">
-          <p>Total: <span id="cart-total">0</span> TND</p>
-          <button class="btn-primary" onclick="window.location.href='../../../shop.php?action=checkout'">Commander</button>
-      </div>
-  </div>
+
 
   <script>
-    function toggleCart() {
-        document.getElementById('cart-sidebar').classList.toggle('open');
-        if (document.getElementById('cart-sidebar').classList.contains('open')) {
-            updateCartUI();
-        }
-    }
-    function addToCart(id, nom, prix) {
-        let fd = new FormData();
-        fd.append('action', 'add');
-        fd.append('id', id);
-        fd.append('nom', nom);
-        fd.append('prix', prix);
-        fetch('cartHandler.php', {method: 'POST', body: fd})
-        .then(r => r.json()).then(res => {
-            updateCartUI();
-            document.getElementById('cart-sidebar').classList.add('open');
-        });
-    }
-    function removeFromCart(id) {
-        let fd = new FormData();
-        fd.append('action', 'remove');
-        fd.append('id', id);
-        fetch('cartHandler.php', {method: 'POST', body: fd})
-        .then(r => r.json()).then(res => updateCartUI());
-    }
-    function updateCartUI() {
-        fetch('cartHandler.php?action=get')
-        .then(r => r.json()).then(data => {
-            let html = '';
-            let total = 0;
-            data.forEach(item => {
-                html += `<div class="cart-item">
-                            <div>
-                                <h4>${item.nom}</h4>
-                                <p>${item.prix} TND x ${item.qte}</p>
-                            </div>
-                            <button onclick="removeFromCart(${item.id})" style="background:none;border:none;cursor:pointer;color:red;">🗑</button>
-                         </div>`;
-                total += item.prix * item.qte;
-            });
-            document.getElementById('cart-items').innerHTML = html || '<p>Votre panier est vide.</p>';
-            document.getElementById('cart-total').innerText = total.toFixed(2);
-        });
-    }
-
     // AJAX Filtering Logic
     function fetchProducts() {
         const search = document.getElementById('search-products').value;
@@ -343,50 +213,6 @@ $produits = $produitController->getProduitsActifs($search, $category, $sort);
             grid.style.opacity = '1';
         });
     }
-
-    // Notification Logic
-    function toggleNotifs() {
-        const dropdown = document.getElementById('notif-dropdown');
-        const isOpen = dropdown.classList.contains('show');
-        
-        // Close other dropdowns if any
-        dropdown.classList.toggle('show');
-        
-        if (!isOpen) {
-            loadNotifications();
-        }
-    }
-
-    function loadNotifications(showAll = false) {
-        let url = 'ajax_get_notifications.php';
-        if (showAll) {
-            url += '?show=all';
-            document.getElementById('notif-footer').style.display = 'none';
-        }
-        
-        fetch(url)
-        .then(r => r.text())
-        .then(html => {
-            document.getElementById('notif-content').innerHTML = html;
-        });
-    }
-
-    function markAllRead() {
-        fetch('ajax_get_notifications.php?action=read_all')
-        .then(() => {
-            loadNotifications();
-            // Update badge (simple removal for UI feedback)
-            const badge = document.querySelector('.notif-badge-ui');
-            if (badge) badge.remove();
-        });
-    }
-
-    // Close on outside click
-    window.addEventListener('click', function(e) {
-        if (!e.target.closest('.notif-icon-front') && !e.target.closest('.notif-dropdown')) {
-            document.getElementById('notif-dropdown').classList.remove('show');
-        }
-    });
   </script>
 </body>
 </html>

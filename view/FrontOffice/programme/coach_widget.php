@@ -1,11 +1,11 @@
 <?php
-$coachBasePath = (basename($_SERVER['PHP_SELF']) == 'nutri_front.php') ? 'assets/' : '../assets/';
+$coachBasePath = (basename($_SERVER['PHP_SELF']) == 'index.php') ? 'assets/' : '../assets/';
 ?>
 
 
 <button id="nutricoach-toggle" aria-label="Ouvrir le coach NutriVerse" title="Coach NutriVerse">
     <span class="coach-emoji-main">AI</span>
-    <span class="coach-close-icon">✕</span>
+    <span class="coach-close-icon">AI</span>
     <span id="nutricoach-badge" class="hidden" aria-label="Nouveau message">1</span>
 </button>
 
@@ -31,7 +31,7 @@ $coachBasePath = (basename($_SERVER['PHP_SELF']) == 'nutri_front.php') ? 'assets
     </div>
 
 
-    <div id="coach-typing" class="hidden" aria-label="Le coach rédige une réponse">
+    <div id="coach-typing" class="hidden" aria-label="Le coach réponds a vos questions">
         <div class="typing-avatar">AI</div>
         <div class="typing-bubble">
             <span class="typing-dot"></span>
@@ -60,10 +60,14 @@ $coachBasePath = (basename($_SERVER['PHP_SELF']) == 'nutri_front.php') ? 'assets
     </div>
 
 
-    <div id="coach-footer">Propulsé par Google Gemini • NutriVerse 2026</div>
+    <div id="coach-footer">AI</div>
 
 </div>
 
 
 <link rel="stylesheet" href="<?php echo $coachBasePath; ?>coach.css">
 <script src="<?php echo $coachBasePath; ?>coach.js" defer></script>
+
+
+
+

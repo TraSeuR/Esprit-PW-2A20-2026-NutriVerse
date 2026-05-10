@@ -28,7 +28,7 @@ $calories_regime = $regime->getCalorieJour();
 
     <!-- CSS -->
     <link rel="stylesheet" href="../assets/front.css">
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 
     <!-- Fonts -->
     <link
@@ -49,25 +49,22 @@ $calories_regime = $regime->getCalorieJour();
     <!-- HERO VERT -->
     <section class="recipe-header fade-up">
         <div class="icons">
-            <span>🥑</span>
-            <span>🥕</span>
-            <span>🥦</span>
-            <span>🍎</span>
-            <span>🍇</span>
-            <span>🥬</span>
-            <span>🍅</span>
-            <span>🍌</span>
-            <span>🍓</span>
-            <span>🥒</span>
-            <span>🌽</span>
-            <span>🍍</span>
-            <span>🥭</span>
-            <span>🍉</span>
-            <span>🥔</span>
+    <span>🥗</span>
+    <span>🍎</span>
+    <span>🥑</span>
+    <span>🍉</span>
+    <span>🥦</span>
+    <span>🍓</span>
+    <span>🥕</span>
+    <span>🍋</span>
+    <span>🍇</span>
+    <span>🥝</span>
+    <span>🍍</span>
+    <span>🥬</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
-            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Prédiction IA
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">Prrédiction IA
             </h2>
         </div>
     </section>
@@ -93,7 +90,7 @@ $calories_regime = $regime->getCalorieJour();
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Âge (années)</label>
+                    <label>Age (années)</label>
                     <input type="number" id="sim-age" value="25" min="15" max="100">
                 </div>
                 <div class="form-group">
@@ -117,13 +114,13 @@ $calories_regime = $regime->getCalorieJour();
                 <div id="ai-loading"
                     style="display:none; text-align:center; padding: 30px; font-weight:800; color:var(--primary-dark); background: rgba(89, 184, 77, 0.05); border-radius: 12px; border: 2px dashed var(--primary);">
                     <span
-                        style="font-size: 2rem; display:block; margin-bottom:10px; animation: bounce 1s infinite;">🤖</span>
+                        style="font-size: 2rem; display:block; margin-bottom:10px; animation: bounce 1s infinite;"></span>
                     L'IA de NutriVerse analyse vos données en temps réel...
                 </div>
 
                 <div class="result-box" id="ai-result-box"
                     style="display:none; background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(245,245,245,1) 100%); border-left: 5px solid #000; margin: 0; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-                    <h4 style="margin-bottom: 15px; font-weight: 800; font-size: 1.2rem;">🤖 Rapport du Coach IA</h4>
+                    <h4 style="margin-bottom: 15px; font-weight: 800; font-size: 1.2rem;"> Rapport du Coach IA</h4>
                     <p id="ai-result-text" style="font-size: 0.95rem; line-height: 1.8; color: #333;"></p>
                 </div>
 
@@ -152,7 +149,7 @@ $calories_regime = $regime->getCalorieJour();
                 return;
             }
 
-            // Calcul du Métabolisme de Base (Harris-Benedict)
+            // Calcul du MÃƒÆ’Ã‚Â©tabolisme de Base (Harris-Benedict)
             let bmr = 0;
             if (sexe === 'homme') {
                 bmr = 88.362 + (13.397 * poids) + (4.799 * taille) - (5.677 * age);
@@ -160,13 +157,13 @@ $calories_regime = $regime->getCalorieJour();
                 bmr = 447.593 + (9.247 * poids) + (3.098 * taille) - (4.330 * age);
             }
 
-            // Dépense Énergétique Journalière (Activité modérée : BMR * 1.55)
+            // DÃƒÆ’Ã‚Â©pense ÃƒÆ’Ã¢â‚¬Â°nergÃƒÆ’Ã‚Â©tique JournaliÃƒÆ’Ã‚Â¨re (ActivitÃƒÆ’Ã‚Â© modÃƒÆ’Ã‚Â©rÃƒÆ’Ã‚Â©e : BMR * 1.55)
             const tdee = bmr * 1.55;
 
-            // Déficit ou Surplus journalier
-            const dailyDiff = caloriesRegime - tdee;
+            // DÃƒÆ’Ã‚Â©ficit ou Surplus journalier
+            const dailyDiff = caloriesRerégime - tdee;
 
-            // 1 kg de masse corporelle correspond à environ 7700 kcal
+            // 1 kg de masse corporelle correspond ÃƒÆ’Ã‚Â  environ 7700 kcal
             const weeklyWeightDiff = (dailyDiff * 7) / 7700;
 
             // Projections sur 4 semaines
@@ -186,13 +183,13 @@ $calories_regime = $regime->getCalorieJour();
             } else if (weeklyWeightDiff > 0.1) {
                 message = `Avec ce régime de prise de masse, vous gagnerez environ <strong>${Math.abs((finalWeight - poids)).toFixed(1)} kg</strong> en 4 semaines pour atteindre <strong>${finalWeight} kg</strong>.`;
             } else {
-                message = `Ce régime correspond parfaitement à votre métabolisme de maintien. Votre poids restera stable autour de <strong>${finalWeight} kg</strong>.`;
+                message = `Ce régime correspond parfaitement a votre métabolisme de maintien. Votre poids restera stable autour de <strong>${finalWeight} kg</strong>.`;
             }
 
             document.getElementById('result-box').style.display = 'block';
             document.getElementById('result-text').innerHTML = message;
 
-            // --- Masquer le graphique et préparer le chargement IA ---
+            // --- Masquer le graphique et prÃƒÆ’Ã‚Â©parer le chargement IA ---
             document.getElementById('evolutionChart').style.display = 'none';
             document.getElementById('ai-result-box').style.display = 'none';
             document.getElementById('ai-loading').style.display = 'block';
@@ -219,7 +216,7 @@ $calories_regime = $regime->getCalorieJour();
                         document.getElementById('ai-result-box').style.display = 'block';
                         document.getElementById('ai-result-text').innerHTML = data.reply.replace(/\n/g, '<br>');
 
-                        // Dessiner le graphique de façon créative APRÈS le rapport
+                        // Dessiner le graphique de faÃƒÆ’Ã‚Â§on crÃƒÆ’Ã‚Â©ative APRÃƒÆ’Ã‹â€ S le rapport
                         document.getElementById('evolutionChart').style.display = 'block';
                         updateChart(labels, dataPoids, weeklyWeightDiff);
                     } else if (data.error) {
@@ -242,7 +239,7 @@ $calories_regime = $regime->getCalorieJour();
             const isLosing = weeklyDiff < 0;
             const lineColor = isLosing ? '#59b84d' : '#ff9f43';
 
-            // Création d'un gradient dynamique et créatif
+            // CrÃƒÆ’Ã‚Â©ation d'un gradient dynamique et crÃƒÆ’Ã‚Â©atif
             let gradient = ctx.createLinearGradient(0, 0, 0, 400);
             if (isLosing) {
                 gradient.addColorStop(0, 'rgba(89, 184, 77, 0.6)');
@@ -257,7 +254,7 @@ $calories_regime = $regime->getCalorieJour();
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Évolution du Poids (kg)',
+                        label: 'Evolution du Poids (kg)',
                         data: data,
                         borderColor: lineColor,
                         backgroundColor: gradient,
@@ -270,7 +267,7 @@ $calories_regime = $regime->getCalorieJour();
                         pointHoverBackgroundColor: lineColor,
                         pointHoverBorderColor: '#fff',
                         fill: true,
-                        tension: 0.5 // Courbe très fluide et esthétique
+                        tension: 0.5 // Courbe 
                     }]
                 },
                 options: {
@@ -317,3 +314,7 @@ $calories_regime = $regime->getCalorieJour();
 </body>
 
 </html>
+
+
+
+

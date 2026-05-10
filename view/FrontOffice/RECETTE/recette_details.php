@@ -1,91 +1,72 @@
 <?php
-
 include("../../../controller/recetteC.php");
 include("../../../controller/ingredientC.php");
 
 $ingredientC = new ingredientC();
-//appl  jointure
-$ingredients = $ingredientC->getIngredientsByRecette($_GET['id']);
+$ingredients = $ingredientC->getIngredientsByRecette($_GET['id'] ?? 0);
 
 $recetteC = new recetteC();
-
-// recup  recette
+$recette = [];
 if (isset($_GET['id'])) {
     $recette = $recetteC->getrecetteD($_GET['id']);
 }
+
+if (!$recette) {
+    die("Recette non trouvée.");
+}
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-
-<meta charset="UTF-8">
-<title>Détails Recette</title>
-<link rel="stylesheet" href="../assets/recette_details.css">
-
+    <meta charset="UTF-8">
+    <title><?= htmlspecialchars($recette['nom']) ?> - NutriVerse</title>
+    <link rel="stylesheet" href="../assets/recette_details.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
     
-<div class="header">
-  <div class="icons">
-     <span>🥑</span><span>🥕</span><span>🥦</span><span>🍎</span>
-     <span>🍇</span><span>🥬</span><span>🍅</span><span>🍌</span>
-     <span>🍓</span><span>🥒</span><span>🌽</span><span>🍍</span>
-     <span>🥭</span><span>🍉</span><span>🥔</span>
-  </div>
-
-  <div class="header-content">
-    <h1>NutriVerse</h1>
-    <p>Découvrez des recettes saines, gourmandes et durables</p>
-  </div>
-</div>
+<?php 
+$rel = "../";
+include '../header.php'; 
+?>
 
 <div class="details-container">
-
     <h1 class="details-title">
-        <?= $recette['nom'] ?>
+        <?= htmlspecialchars($recette['nom']) ?>
     </h1>
 
     <div class="details-grid">
-
-     
         <div class="details-info">
-
             <div class="details-section">
                 <h3>Description</h3>
-                <p><?= $recette['description'] ?></p>
+                <p><?= nl2br(htmlspecialchars($recette['description'])) ?></p>
             </div>
 
             <div class="details-section">
-                <h3>Étapes</h3>
-
+                <h3>Étapes de préparation</h3>
                 <ul class="details-steps">
                 <?php
                 $etapes = explode("\n", $recette['etapes']);
-
                 foreach ($etapes as $etape) {
-                    $etape = trim($etape);   //TRI TNAHI LES ESPACES ml louel w mlkhr
-                    if ($etape != "") {  //evite enou yetaffichew les lignes vides
-                        echo "<li>$etape</li>";
+                    $etape = trim($etape);
+                    if ($etape != "") {
+                        echo "<li>" . htmlspecialchars($etape) . "</li>";
                     }
                 }
                 ?>
                 </ul>
             </div>
 
-         
             <div class="details-section">
                 <h3>Ingrédients</h3>
-
                 <ul class="details-steps">
                 <?php
                 if (!empty($ingredients)) {
                     foreach ($ingredients as $ing) {
-                        echo "<li>" . $ing['nom'] . " (" . $ing['quantite'] . " " . $ing['unite'] . ")</li>";
+                        echo "<li>" . htmlspecialchars($ing['nom']) . " (" . htmlspecialchars($ing['quantite']) . " " . htmlspecialchars($ing['unite']) . ")</li>";
                     }
                 } else {
-                    echo "<li>Aucun ingrédient</li>";
+                    echo "<li>Aucun ingrédient répertorié</li>";
                 }
                 ?>
                 </ul>
@@ -93,32 +74,30 @@ if (isset($_GET['id'])) {
 
             <div class="details-section">
                 <h3>Temps de préparation</h3>
-                <?= $recette['temps_preparation'] ?>
+                <p>⏱️ <?= htmlspecialchars($recette['temps_preparation']) ?></p>
             </div>
 
-          
             <div class="details-section">
                 <h3>Catégorie</h3>
-                <p><?= $recette['categorie'] ?></p>
+                <span class="tag"><?= htmlspecialchars($recette['categorie']) ?></span>
             </div>
 
-            <a href="recettes.php" class="btn-retour">
-                Retour aux recettes
-            </a>
-</a>
-            <button onclick="exportPDF()" class="btn-export"> <!--yhz lpage okhra onclick-->
-    Exporter PDF
-</button>
+            <div style="display: flex; gap: 15px; margin-top: 30px;">
+                <a href="recettes.php" class="btn-retour" style="text-decoration: none;">
+                    ← Retour aux recettes
+                </a>
+                <button onclick="exportPDF()" class="btn-export">
+                    📄 Exporter PDF
+                </button>
+            </div>
         </div>
       
-        <img 
-    src="../../BackOffice/RECETTE/displayImage.php?id=<?= $recette['id_recette'] ?>"
-    class="details-image"
->
-
+        <div class="details-visual">
+            <img src="../../BackOffice/RECETTE/displayImage.php?id=<?= $recette['id_recette'] ?>" alt="<?= htmlspecialchars($recette['nom']) ?>" class="details-image">
+        </div>
     </div>
-
 </div>
+
 <script>
 function exportPDF() {
     window.print();

@@ -8,21 +8,13 @@
     --green: #59b84d;
     --green-dark: #3f9636;
     --green-soft: #edf7ec;
-    --green-gradient: linear-gradient(135deg, #59b84d 0%, #3f9636 100%);
-    --orange: #f5a000;
-    --orange-vibrant: #ff8a00;
-    --orange-soft: #fff4e0;
-    --orange-gradient: linear-gradient(135deg, #f5a000 0%, #ff8a00 100%);
     --text: #1c2733;
     --muted: #6f7680;
     --bg: #f8f8f6;
     --white: #ffffff;
-    --shadow: 0 12px 35px rgba(0, 0, 0, 0.06);
-    --shadow-hover: 0 18px 45px rgba(0, 0, 0, 0.12);
+    --orange: #f5a000;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
     --radius: 24px;
-    --radius-sm: 12px;
-    --glass: rgba(255, 255, 255, 0.8);
-    --glass-border: rgba(255, 255, 255, 0.5);
 }
 
 html {
@@ -166,38 +158,33 @@ a {
 }
 
 .btn-primary {
-    background: var(--green-gradient);
+    background: var(--green);
     color: white;
-    box-shadow: 0 8px 20px rgba(89, 184, 77, 0.25);
-    border: none;
+    box-shadow: var(--shadow);
 }
 
 .btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(89, 184, 77, 0.35);
+    background: var(--green-dark);
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
     background: white;
     color: var(--text);
     border: 1px solid #dfe5dc;
-    box-shadow: var(--shadow);
 }
 
 .btn-secondary:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
 }
 
 .btn-outline {
-    border: 2px solid var(--green);
+    border: 1.5px solid var(--green);
     color: var(--green-dark);
-    background: transparent;
 }
 
 .btn-outline:hover {
     background: var(--green-soft);
-    transform: translateY(-3px);
 }
 
 .large {
@@ -608,7 +595,7 @@ a {
         display: none;
     }
 
-    #nav-toggle:checked~.navbar {
+    #nav-toggle:checked ~ .navbar {
         display: flex;
     }
 
@@ -683,16 +670,3 @@ a {
         height: 50px;
     }
 }
-
-/* Animations Front Office */
-.fade-up {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-.fade-up.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-.delay-1 { transition-delay: 0.2s; }
-.delay-2 { transition-delay: 0.4s; }

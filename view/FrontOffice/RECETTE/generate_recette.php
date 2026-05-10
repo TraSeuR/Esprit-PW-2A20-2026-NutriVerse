@@ -18,7 +18,7 @@ Réponds UNIQUEMENT avec un objet JSON au format suivant :
   \"description\": \"...\",
   \"temps\": \"...\",
   \"ingredients\": [\"...\", \"...\"],
-  \"etapes\": [\"...\", \"...\"],
+  \"e�tapes\": [\"...\", \"...\"],
   \"conseils\": [\"...\", \"...\"],
   \"photo_keyword\": \"un seul mot en anglais décrivant le plat principal\"
 }
@@ -79,7 +79,7 @@ Préférences: $preferences";
     $keyword = $json['photo_keyword'] ?? 'food';
 
     $ingredientsList = implode(", ", $json['ingredients']);
-    $etapes = implode(" | ", $json['etapes']);
+    $e�tapes = implode(" | ", $json['e�tapes']);
     $conseils = implode(" | ", $json['conseils']);
 
     $pexelsKey = "";
@@ -100,7 +100,7 @@ Préférences: $preferences";
         . "&desc=" . urlencode($description)
         . "&temps=" . urlencode($temps)
         . "&ing=" . urlencode($ingredientsList)
-        . "&steps=" . urlencode($etapes)
+        . "&steps=" . urlencode($e�tapes)
         . "&tips=" . urlencode($conseils)
         . "&img=" . urlencode($image);
 
@@ -120,3 +120,4 @@ Préférences: $preferences";
     ';
 }
 ?>
+

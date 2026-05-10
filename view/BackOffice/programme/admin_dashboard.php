@@ -1,14 +1,18 @@
 <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+
 require_once __DIR__ . '/../../../controller/RegimeC.php';
 require_once __DIR__ . '/../../../controller/PlanningC.php';
 
 $regimeCtrl = new RegimeC();
-$regimes = $regimeCtrl->listRegimes(); // utilisé pour le tableau des Régimes (Étape 1)
+$regimes = $regimeCtrl->listRegimes(); // utilisÃ© pour le tableau des RÃ©gimes (Ã‰Étape 1)
 
 $planningCtrl = new PlanningC();
-// INNER JOIN : récupère les plannings avec le nom du régime associé en une seule requête
+// INNER JOIN : rÃ©cupÃ¨re les plannings avec le nom du rÃ©gime associÃ© en une seule requÃªte
 $planningsWithRegimes = $planningCtrl->listPlanningsWithRegimes();
-$plannings = $planningCtrl->listPlannings(); // utilisé uniquement pour les compteurs
+$plannings = $planningCtrl->listPlannings(); // utilisÃ© uniquement pour les compteurs
 
 $totalR = count($plannings);
 $pnd = 0;
@@ -25,7 +29,7 @@ if (isset($_GET['action'])) {
         $planningCtrl->updateStatut($_GET['id'], $_GET['s']);
     }
     if ($_GET['action'] == 'reject_p') {
-        // Le refus entraîne la suppression complète du dossier (Régime + Planning)
+        // Le refus entraÃ®ne la suppression complÃ¨te du dossier (RÃ©gime + Planning)
         $p = $planningCtrl->getPlanningById($_GET['id']);
         if ($p) {
             $regimeCtrl->deleteRegime($p->getIdRegime());
@@ -46,7 +50,7 @@ if (isset($_GET['action'])) {
     <!-- Nutrition styles -->
     <link rel="stylesheet" href="../assets/back.css">
     <!-- Existing programme styles for table -->
-    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -122,107 +126,32 @@ if (isset($_GET['action'])) {
             box-shadow: var(--shadow) !important;
         }
     </style>
-</head>
-
+<style>
+    .user-menu-container { position: relative; }
+    .user-dropdown {
+      position: absolute; top: 110%; right: 0; width: 220px;
+      background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 10001; display: none; border: 1px solid #eee; overflow: hidden;
+    }
+    .user-dropdown.show { display: block; animation: slideDownUser 0.2s ease; }
+    .user-dropdown a {
+      display: flex; align-items: center; gap: 10px; padding: 12px 20px;
+      color: #333; text-decoration: none; font-size: 14px; transition: 0.2s;
+      text-align: left;
+    }
+    .user-dropdown a:hover { background: #f9f9f9; color: #27ae60; }
+    .user-dropdown a.logout { color: #e74c3c; border-top: 1px solid #eee; }
+    .user-dropdown a.logout:hover { background: #fff5f5; }
+    .admin-box { cursor: pointer; transition: 0.2s; }
+    .admin-box:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    @keyframes slideDownUser { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 <body>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-top">
-            <div class="brand">
-                <img src="../images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
-                <div>
-                    <h2>NutriVerse</h2>
-                    <p>Back Office</p>
-                </div>
-            </div>
-        </div>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/sidebar.php'; ?>
 
-        <nav class="sidebar-menu">
-            <a href="../nutri_back.php" class="menu-item">
-                <i data-feather="grid"></i>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="../RECETTE/admin.php" class="menu-item">
-                <i data-feather="book-open"></i>
-                <span>Recettes</span>
-            </a>
-
-            <a href="../../../shop.php?action=admin_users" class="menu-item">
-                <i data-feather="users"></i>
-                <span>Utilisateurs</span>
-            </a>
-
-            <a href="../produit/listProduit.php" class="menu-item">
-                <i data-feather="package"></i>
-                <span>Produits</span>
-            </a>
-
-            <a href="../movement/listMovement.php" class="menu-item">
-                <i data-feather="activity"></i>
-                <span>Mouvements Stock</span>
-            </a>
-
-            <a href="../notifications/listNotifications.php" class="menu-item">
-                <i data-feather="bell"></i>
-                <span>Notifications</span>
-            </a>
-
-            <a href="../../../shop.php?action=admin_orders" class="menu-item">
-                <i data-feather="shopping-cart"></i>
-                <span>Commandes</span>
-            </a>
-
-            <a href="#" class="menu-item">
-                <i data-feather="activity"></i>
-                <span>Suivi Santé</span>
-            </a>
-
-            <a href="admin_dashboard.php" class="menu-item active">
-                <i data-feather="heart"></i>
-                <span>Programmes</span>
-            </a>
-        </nav>
-
-        <div class="sidebar-footer">
-            <a href="../../FrontOffice/nutri_front.php" class="menu-item" style="padding: 10px 0; font-size: 0.85rem; opacity: 0.7;">
-                <i data-feather="log-out" style="width: 16px;"></i>
-                <span>Quitter l'admin</span>
-            </a>
-            <p style="margin-top: 10px;">© 2026 NutriVerse</p>
-        </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
     <div class="main-content">
-
-        <header class="topbar">
-            <div class="topbar-left">
-                <div class="search-box" style="display: flex; gap: 10px; align-items: center; width: 100%;">
-                    <i data-feather="search"></i>
-                    <input type="text" id="adminSearchInput" placeholder="Rechercher des programmes..."
-                        style="flex: 1;">
-                    <select id="adminTypeFilter"
-                        style="background: white; border: 1px solid var(--border); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; color: var(--text); cursor: pointer; outline: none;">
-                        <option value="all">Filtrer par type</option>
-                        <option value="prise_masse">Prise de masse</option>
-                        <option value="perte_poids">Perte de poids</option>
-                        <option value="equilibre">Équilibre santé</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="topbar-right">
-                <div class="admin-box">
-                    <div class="admin-avatar">A</div>
-                    <div>
-                        <h4>Admin</h4>
-                        <p>Administrateur</p>
-                    </div>
-                </div>
-            </div>
-        </header>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/topbar.php'; ?>
 
         <main class="dashboard-content">
 
@@ -237,7 +166,7 @@ if (isset($_GET['action'])) {
                 <div style="display: flex; gap: 10px;">
                     <a href="add_regime.php" class="export-btn" style="text-decoration: none; background: #27ae60;">
                         <i data-feather="plus"></i>
-                        AJOUTER RÉGIME
+                        AJOUTER REGIME
                     </a>
                     <a href="add_programme_back.php" class="export-btn" style="text-decoration: none;">
                         <i data-feather="plus"></i>
@@ -251,33 +180,41 @@ if (isset($_GET['action'])) {
                 <div class="stat-card">
                     <div class="stat-info">
                         <p>Total Actifs</p>
-                        <h2><?php echo $totalR; ?></h2>
+                        <h2><?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $totalR; ?></h2>
                     </div>
                     <div class="stat-icon green"><i data-feather="bar-chart"></i></div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-info">
                         <p>En Attente</p>
-                        <h2><?php echo $pnd; ?></h2>
+                        <h2><?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $pnd; ?></h2>
                     </div>
                     <div class="stat-icon orange"><i data-feather="clock"></i></div>
                 </div>
             </section>
 
-            <!-- SECTION RÉGIMES -->
+            <!-- SECTION ReGIMES -->
             <div class="glass-card" style="padding: 40px; background: white; border-radius: 28px; margin-bottom: 40px;">
                 <div style="margin-bottom: 30px;">
                     <span class="section-badge" style="margin-bottom: 10px;">Étape 1</span>
                     <h1 style="font-size: 2.2rem; margin-bottom: 10px; color: var(--text);">Régimes Alimentaires</h1>
                     <p style="color: var(--muted); font-size: 0.95rem;">Profils nutritionnels et objectifs caloriques
-                        détaillés.</p>
+                        détailles.</p>
                 </div>
                 <div class="table-wrapper">
                     <table class="creative-table">
                         <thead>
                             <tr>
                                 <th style="font-size: 0.7rem;">ID</th>
-                                <th style="font-size: 0.7rem;">NOM DU RÉGIME</th>
+                                <th style="font-size: 0.7rem;">NOM DU REGIME</th>
                                 <th style="font-size: 0.7rem;">TYPE / OBJECTIF</th>
                                 <th style="font-size: 0.7rem;">KCAL</th>
                                 <th style="font-size: 0.7rem;">PROT (g)</th>
@@ -289,58 +226,142 @@ if (isset($_GET['action'])) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($regimes)): ?>
+                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ if (empty($regimes)): ?>
                                 <tr>
                                     <td colspan="9" style="text-align: center; padding: 20px;">Aucun régime trouvé.</td>
                                 </tr>
-                            <?php else: ?>
-                                <?php foreach ($regimes as $r):
+                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ else: ?>
+                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ foreach ($regimes as $r):
                                     $heures = json_decode($r->getHeuresSemaine(), true);
                                     ?>
                                     <tr>
-                                        <td style="font-weight: 700; color: var(--muted);">#<?php echo $r->getIdRegime(); ?>
+                                        <td style="font-weight: 700; color: var(--muted);">#<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $r->getIdRegime(); ?>
                                         </td>
                                         <td style="font-weight: 800; color: #222; font-size: 0.95rem;">
-                                            <?php echo htmlspecialchars($r->getNom()); ?></td>
+                                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($r->getNom()); ?></td>
                                         <td>
                                             <span
                                                 style="font-size: 0.65rem; color: #59b84d; font-weight: 800; text-transform: uppercase; background: rgba(89,184,77,0.1); padding: 4px 10px; border-radius: 6px;">
-                                                <?php echo str_replace('_', ' ', $r->getType()); ?>
+                                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo str_replace('_', ' ', $r->getType()); ?>
                                             </span>
                                         </td>
-                                        <td style="font-weight: 800; color: var(--text);"><?php echo $r->getCalorieJour(); ?>
+                                        <td style="font-weight: 800; color: var(--text);"><?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $r->getCalorieJour(); ?>
                                         </td>
-                                        <td style="color: #4361ee; font-weight: 700;"><?php echo $r->getProteine(); ?></td>
-                                        <td style="color: #ff9f1c; font-weight: 700;"><?php echo $r->getGlucide(); ?></td>
-                                        <td style="color: #2ec4b6; font-weight: 700;"><?php echo $r->getLipides(); ?></td>
+                                        <td style="color: #4361ee; font-weight: 700;"><?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $r->getProteine(); ?></td>
+                                        <td style="color: #ff9f1c; font-weight: 700;"><?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $r->getGlucide(); ?></td>
+                                        <td style="color: #2ec4b6; font-weight: 700;"><?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $r->getLipides(); ?></td>
                                         <td style="font-weight: 800; color: #222; font-size: 0.85rem; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                                            title="<?php echo htmlspecialchars($r->getDescription()); ?>">
-                                            <?php echo htmlspecialchars($r->getDescription()) ?: '-'; ?>
+                                            title="<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($r->getDescription()); ?>">
+                                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($r->getDescription()) ?: '-'; ?>
                                         </td>
                                         <td>
                                             <div style="display: flex; flex-wrap: wrap; gap: 4px; max-width: 250px;">
-                                                <?php if (is_array($heures)):
+                                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ if (is_array($heures)):
                                                     foreach ($heures as $j => $h):
                                                         if ($h !== 'Rest-day'): ?>
                                                             <span style="color: #8338ec; font-weight: 700; font-size: 0.85rem;"
-                                                                title="<?php echo $j; ?>">
-                                                                <?php echo mb_substr($j, 0, 1); ?>:<?php echo $h; ?>
+                                                                title="<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $j; ?>">
+                                                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo mb_substr($j, 0, 1); ?>:<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $h; ?>
                                                             </span>
-                                                        <?php endif; endforeach; endif; ?>
+                                                        <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ endif; endforeach; endif; ?>
                                             </div>
                                         </td>
                                         <td style="text-align: right;">
                                             <div style="display: flex; gap: 6px; justify-content: flex-end;">
-                                                <a href="add_regime.php?id_regime=<?php echo $r->getIdRegime(); ?>"
+                                                <a href="add_regime.php?id_regime=<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $r->getIdRegime(); ?>"
                                                     class="btn-action-text btn-mod">Mod</a>
-                                                <a href="../../FrontOffice/programme/delete_regime.php?id=<?php echo $r->getIdRegime(); ?>&redirect=../../BackOffice/programme/admin_dashboard.php"
-                                                    onclick="return confirm('Supprimer ce régime ?')"
+                                                <a href="../../FrontOffice/programme/delete_regime.php?id=<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $r->getIdRegime(); ?>&redirect=../../BackOffice/programme/admin_dashboard.php"
+                                                    onclick="return confirm('Supprimer ce rÃ©gime ?')"
                                                     class="btn-action-text btn-del">Supp</a>
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ endforeach; ?>
+                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -361,7 +382,7 @@ if (isset($_GET['action'])) {
                             <tr>
                                 <th style="font-size: 0.7rem;">ID</th>
                                 <th style="font-size: 0.7rem;">TITRE PLANNING</th>
-                                <th style="font-size: 0.7rem; width: 30%;">SPORT DÉTAILLÉ</th>
+                                <th style="font-size: 0.7rem; width: 30%;">SPORT DETAILLES</th>
                                 <th style="font-size: 0.7rem;">SOMMEIL</th>
                                 <th style="font-size: 0.7rem; width: 20%;">DESCRIPTION</th>
                                 <th style="font-size: 0.7rem;">STATUT</th>
@@ -369,26 +390,62 @@ if (isset($_GET['action'])) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if (empty($planningsWithRegimes)): ?>
+                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ if (empty($planningsWithRegimes)): ?>
                                 <tr>
                                     <td colspan="7" style="text-align: center; padding: 20px;">Aucun planning trouvé.</td>
                                 </tr>
-                            <?php else: ?>
-                                <?php foreach ($planningsWithRegimes as $p): ?>
+                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ else: ?>
+                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ foreach ($planningsWithRegimes as $p): ?>
                                     <tr class="planning-row"
-                                        data-title="<?php echo htmlspecialchars($p['titre_planning'] . ' ' . $p['nom_regime']); ?>"
-                                        data-type="<?php echo htmlspecialchars($p['regime_type']); ?>">
-                                        <td style="font-weight: 700; color: var(--muted);">#<?php echo $p['id_planning']; ?>
+                                        data-title="<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($p['titre_planning'] . ' ' . $p['nom_regime']); ?>"
+                                        data-type="<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($p['regime_type']); ?>">
+                                        <td style="font-weight: 700; color: var(--muted);">#<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $p['id_planning']; ?>
                                         </td>
                                         <td style="font-weight: 800; color: #222;">
-                                            <?php echo htmlspecialchars($p['titre_planning']); ?>
+                                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($p['titre_planning']); ?>
                                             <!-- nom_regime vient directement de l'INNER JOIN SQL -->
                                             <div style="font-size: 0.65rem; color: #4361ee; font-weight: 700; margin-top: 4px;">
-                                                RÉGIME: <?php echo htmlspecialchars($p['nom_regime']); ?></div>
+                                                RÃ‰GIME: <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($p['nom_regime']); ?></div>
                                         </td>
                                         <td>
                                             <div style="font-size: 0.8rem; color: #444; line-height: 1.4;">
                                                 <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+
                                                 $sport_text = htmlspecialchars(mb_strimwidth($p['programme_sport'], 0, 200, "..."));
                                                 $sport_text = preg_replace('/(Lundi|Mardi|Mercredi|Jeudi|Vendredi|Samedi|Dimanche)\s*:/i', '<strong style="color: #222; font-weight: 800;">$1:</strong>', $sport_text);
                                                 echo nl2br($sport_text);
@@ -396,41 +453,93 @@ if (isset($_GET['action'])) {
                                             </div>
                                         </td>
                                         <td style="font-weight: 700; color: #444; font-size: 0.85rem;">
-                                            <?php echo htmlspecialchars($p['sommeil']); ?>
+                                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars($p['sommeil']); ?>
                                         </td>
                                         <td>
                                             <div style="font-size: 0.75rem; color: var(--muted);">
-                                                <?php echo htmlspecialchars(mb_strimwidth($p['description'], 0, 100, "...")); ?>
+                                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo htmlspecialchars(mb_strimwidth($p['description'], 0, 100, "...")); ?>
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="status-badge status-<?php echo $p['statut']; ?>">
-                                                <?php echo strtoupper(str_replace('_', ' ', $p['statut'])); ?>
+                                            <span class="status-badge status-<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $p['statut']; ?>">
+                                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo strtoupper(str_replace('_', ' ', $p['statut'])); ?>
                                             </span>
                                         </td>
                                         <td style="text-align: right;">
                                             <div style="display: flex; gap: 6px; justify-content: flex-end;">
                                                 <a href="javascript:void(0)"
-                                                    onclick="printDirectPDF(<?php echo $p['id_regime']; ?>)"
+                                                    onclick="printDirectPDF(<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $p['id_regime']; ?>)"
                                                     class="btn-action-text" style="background: #000; color: #fff;"
-                                                    title="Générer PDF">PDF</a>
-                                                <?php if ($p['statut'] == 'en_attente'): ?>
-                                                    <a href="admin_dashboard.php?action=upd_s&s=accepte&id=<?php echo $p['id_planning']; ?>"
+                                                    title="GÃ©nÃ©rer PDF">PDF</a>
+                                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ if ($p['statut'] == 'en_attente'): ?>
+                                                    <a href="admin_dashboard.php?action=upd_s&s=accepte&id=<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $p['id_planning']; ?>"
                                                         class="btn-action-text btn-ok" title="Valider">Accepter</a>
-                                                    <a href="admin_dashboard.php?action=reject_p&id=<?php echo $p['id_planning']; ?>"
+                                                    <a href="admin_dashboard.php?action=reject_p&id=<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $p['id_planning']; ?>"
                                                         class="btn-action-text btn-no" title="Rejeter"
-                                                        onclick="return confirm('Refuser et supprimer définitivement ce dossier ?')">Refuser</a>
-                                                <?php endif; ?>
-                                                <a href="add_programme_back.php?id_planning=<?php echo $p['id_planning']; ?>"
+                                                        onclick="return confirm('Refuser et supprimer dÃ©finitivement ce dossier ?')">Refuser</a>
+                                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ endif; ?>
+                                                <a href="add_programme_back.php?id_planning=<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $p['id_planning']; ?>"
                                                     class="btn-action-text btn-mod">Mod</a>
-                                                <a href="admin_dashboard.php?action=del_p&id=<?php echo $p['id_planning']; ?>"
+                                                <a href="admin_dashboard.php?action=del_p&id=<?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ echo $p['id_planning']; ?>"
                                                     onclick="return confirm('Supprimer ce planning ?')"
                                                     class="btn-action-text btn-del">Supp</a>
                                             </div>
                                         </td>
                                     </tr>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
+                                <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ endforeach; ?>
+                            <?php
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Programmes']);
+
+ endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -492,3 +601,8 @@ if (isset($_GET['action'])) {
 </body>
 
 </html>
+
+
+
+
+

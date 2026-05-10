@@ -5,7 +5,7 @@ $id_regime = isset($_GET['id_regime']) ? $_GET['id_regime'] : null;
 
 $pCtrl = new PlanningC();
 
-// INNER JOIN : rÈcupËre le planning ET le rÈgime en une seule requÍte SQL
+// INNER JOIN : r√©cup√®re le planning ET le r√©gime en une seule requ√™te SQL
 $data = $pCtrl->getPlanningWithRegime($id_regime);
 
 if (!$data) {
@@ -28,7 +28,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
     <link rel="stylesheet" href="../assets/front.css">
     <link rel="stylesheet" href="../assets/technical_front.css">
     <!-- Existing programme styles -->
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,21 +48,18 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
     <!-- HERO VERT -->
     <section class="recipe-header fade-up">
         <div class="icons">
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
+            <span>ü•ó</span>
+            <span>üçé</span>
+            <span>ü•ë</span>
+            <span>üçâ</span>
+            <span>ü•¶</span>
+            <span>üçì</span>
+    <span>ü•ï</span>
+            <span>üçã</span>
+            <span>üçá</span>
+            <span>ü•ù</span>
+            <span>üçç</span>
+            <span>ü•¨</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
@@ -102,7 +99,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                     <div
                         style="background: rgba(255,255,255,0.4); padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.5);">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                            <span style="font-weight: 800; font-size: 0.8rem; color: #444;">APPORT …NERG…TIQUE
+                            <span style="font-weight: 800; font-size: 0.8rem; color: #444;">APPORT √âNERG√âTIQUE
                                 TOTAL</span>
                             <span
                                 style="font-weight: 900; color: var(--primary-dark);"><?php echo $data['calorie_jour']; ?>
@@ -114,21 +111,21 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                     </div>
 
                     <div class="macro-container">
-                        <div class="macro-label"><span>ProtÈines (Mass)</span>
+                        <div class="macro-label"><span>PROTEINES</span>
                             <span><?php echo $data['proteine']; ?>g</span></div>
                         <div class="macro-track">
                             <div class="macro-fill fill-p" style="width: <?php echo $p_perc; ?>%;"></div>
                         </div>
                     </div>
                     <div class="macro-container">
-                        <div class="macro-label"><span>Glucides (Energie)</span>
+                        <div class="macro-label"><span>GLUCIDES</span>
                             <span><?php echo $data['glucide']; ?>g</span></div>
                         <div class="macro-track">
                             <div class="macro-fill fill-g" style="width: <?php echo $g_perc; ?>%;"></div>
                         </div>
                     </div>
                     <div class="macro-container">
-                        <div class="macro-label"><span>Lipides (VitalitÈ)</span>
+                        <div class="macro-label"><span>LIPIDES</span>
                             <span><?php echo $data['lipides']; ?>g</span></div>
                         <div class="macro-track">
                             <div class="macro-fill fill-l" style="width: <?php echo $l_perc; ?>%;"></div>
@@ -138,13 +135,13 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                     <div style="margin-top: 40px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px;">
                         <strong
                             style="display: block; font-size: 0.7rem; margin-bottom: 10px; color: #666;">INSTRUCTIONS
-                            D…TAILL…ES</strong>
+                            D√âTAILL√âES</strong>
                         <p style="font-size: 0.95rem; line-height: 1.8; color: #222;">
                             <?php echo nl2br(htmlspecialchars($data['description'] ?? '')); ?></p>
                     </div>
                 </div>
 
-                <!-- COLONNE 2 : SYST»ME DE PERFORMANCE -->
+                <!-- COLONNE 2 : SYST√àME DE PERFORMANCE -->
                 <div class="report-col">
                     <h3
                         style="font-family: 'Playfair Display'; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 15px; margin-bottom: 30px;">
@@ -158,7 +155,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                             style="font-size: 1.4rem; margin-bottom: 10px; font-family: 'Playfair Display'; color: #000;">
                             <?php echo htmlspecialchars($data['titre_planning'] ?? 'Standard Plan'); ?></h4>
                         <p style="font-size: 0.95rem; line-height: 1.8; color: #333;">
-                            <?php echo isset($data['programme_sport']) ? nl2br(htmlspecialchars($data['programme_sport'])) : 'Consignes gÈnÈrales : 30min de marche quotidienne.'; ?>
+                            <?php echo isset($data['programme_sport']) ? nl2br(htmlspecialchars($data['programme_sport'])) : 'Consignes g√©n√©rales : 30min de marche quotidienne.'; ?>
                         </p>
                     </div>
 
@@ -185,7 +182,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                                 <?php endforeach; ?>
                             </div>
                         <?php else: ?>
-                            <p style="font-size: 0.85rem; color: #666;">Aucun horaire de sport dÈfini.</p>
+                            <p style="font-size: 0.85rem; color: #666;">Aucun horaire de sport d√©fini.</p>
                         <?php endif; ?>
                     </div>
 
@@ -195,7 +192,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                             <span
                                 style="display: block; font-size: 0.65rem; font-weight: 800; color: #666; margin-bottom: 10px;">CYCLE
                                 SOMMEIL</span>
-                            <div style="font-size: 1.1rem; font-weight: 900;">??
+                            <div style="font-size: 1.1rem; font-weight: 900;">üåô
                                 <?php echo htmlspecialchars($data['sommeil'] ?? '8h Cible'); ?></div>
                         </div>
                         <div
@@ -203,7 +200,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                             <span
                                 style="display: block; font-size: 0.65rem; font-weight: 800; color: #666; margin-bottom: 10px;">SESSION
                                 STATUS</span>
-                            <div style="font-size: 0.8rem; font-weight: 900; color: var(--primary-dark);">? ACTIF</div>
+                            <div style="font-size: 0.8rem; font-weight: 900; color: var(--primary-dark);">‚óè ACTIF</div>
                         </div>
                     </div>
                 </div>
@@ -227,7 +224,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
                             style="width: auto; padding: 12px 30px; font-size: 0.85rem; background: #e63946; font-weight: 800;">SUPPRIMER</a>
                     </div>
                     <a href="javascript:window.print()" class="btn-premium"
-                        style="width: auto; padding: 12px 30px; font-size: 0.85rem; background: #000; font-weight: 800;">T…L…CHARGER
+                        style="width: auto; padding: 12px 30px; font-size: 0.85rem; background: #000; font-weight: 800;">T√âL√âCHARGER
                         LE RAPPORT</a>
                 </footer>
             <?php endif; ?>
@@ -237,12 +234,12 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
 
     <script>
         function confirmDelete(id) {
-            if (confirm(" tes-vous s˚r de vouloir supprimer dÈfinitivement ce programme et toutes les donnÈes associÈes ?")) {
+            if (confirm("√ätes-vous s√ªr de vouloir supprimer d√©finitivement ce programme et toutes les donn√©es associ√©es ?")) {
                 window.location.href = "delete_programme_front.php?id_regime=" + id;
             }
         }
 
-        // DÈclenchement automatique du PDF si demandÈ (avec petit dÈlai pour le chargement CSS)
+        // D√©clenchement automatique du PDF si demand√© (avec petit d√©lai pour le chargement CSS)
         window.onload = function () {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('print') === '1') {
@@ -258,3 +255,7 @@ $l_perc = min(($data['lipides'] / 100) * 100, 100);
 </body>
 
 </html>
+
+
+
+

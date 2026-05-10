@@ -4,11 +4,11 @@ require_once __DIR__ . '/../../../controller/RegimeC.php';
 
 $id_regime = $_GET['id_regime'] ?? null;
 
-// Chargement du rÈgime pour le rÈcapitulatif
+// Chargement du r√©gime pour le r√©capitulatif
 $rCtrl = new RegimeC();
 $regime = $rCtrl->getRegime($id_regime);
 
-// Le contrÙleur gËre la logique de crÈation du planning (POST)
+// Le contr√¥leur g√®re la logique de cr√©ation du planning (POST)
 $pCtrl = new PlanningC();
 $pCtrl->handleRequest($id_regime);
 ?>
@@ -20,42 +20,42 @@ $pCtrl->handleRequest($id_regime);
     <title>NutriVerse - Votre Planning</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/front.css">
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 </head>
-<body style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh;">
+
+<body class="planning-orange-page"
+
+  >
 
     <?php include 'global_header.php'; ?>
 
     <!-- HERO VERT -->
-    <section class="recipe-header fade-up">
+    <section class="recipe-header planning-header fade-up">
         <div class="icons">
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
+    <span>ü•ó</span>
+    <span>üçé</span>
+    <span>ü•ë</span>
+    <span>üçâ</span>
+    <span>ü•¶</span>
+    <span>üçì</span>
+    <span>ü•ï</span>
+    <span>üçã</span>
+    <span>üçá</span>
+    <span>ü•ù</span>
+    <span>üçç</span>
+    <span>ü•¨</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
-            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">…tape 2</h2>
+            <h2 style="font-size: 2rem; opacity: 0.9; font-weight: 700; margin: 10px 0; color: white;">√âtape 2</h2>
         </div>
     </section>
 
     <div class="container fade-up" style="animation-delay: 0.2s; padding-bottom: 80px;">
         
-        <!-- R…CAPITULATIF R…GIME (GLASS STYLE) -->
+        <!-- R√âCAPITULATIF R√©gime (GLASS STYLE) -->
         <?php if ($regime): ?>
-        <div class="glass-card" style="margin-bottom: 30px; padding: 25px;">
+       <div class="glass-card planning-card" style="margin-bottom: 30px; padding: 25px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
                 <div>
                     <h3 style="font-family: 'Playfair Display'; font-weight: 900; color: var(--primary-dark); margin: 0; font-size: 1.3rem;">Planning : <?php echo htmlspecialchars($regime->getNom()); ?></h3>
@@ -75,7 +75,7 @@ $pCtrl->handleRequest($id_regime);
                 <div style="font-size: 0.72rem; font-family: 'Poppins'; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;">Calendrier sport de la semaine</div>
                 <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                     <?php foreach ($heures as $jour => $heure): ?>
-                        <?php if (!empty($heure)): ?>
+                        <?php if (!empty($heure) && $heure !== 'Rest-day'): ?>
                         <div style="background: rgba(0,200,83,0.1); border: 1px solid rgba(0,200,83,0.3); padding: 5px 12px; border-radius: 15px; display: flex; align-items: center; gap: 6px;">
                             <span style="font-family: 'Poppins'; font-weight: 700; font-size: 0.75rem; color: #444;"><?php echo mb_substr($jour, 0, 3); ?>.</span>
                             <span style="font-family: 'Playfair Display'; font-weight: 900; font-size: 0.9rem; color: var(--primary-dark);"><?php echo $heure; ?></span>
@@ -91,23 +91,23 @@ $pCtrl->handleRequest($id_regime);
         </div>
         <?php endif; ?>
 
-        <div class="glass-card">
+        <div class="glass-card planning-card">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <h2 class="form-title" style="font-family: 'Playfair Display'; margin-bottom: 0;">Planifier l'activitÈ</h2>
-                <a href="add_regime.php?id_regime=<?php echo htmlspecialchars($id_regime); ?>" class="btn-premium" style="width: auto; padding: 8px 20px; font-size: 0.8rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 600;">REVENIR ¿ L'…TAPE 1</a>
+                <h2 class="form-title" style="font-family: 'Playfair Display'; margin-bottom: 0;">Planifier l'activit√©</h2>
+                <a href="add_regime.php?id_regime=<?php echo htmlspecialchars($id_regime); ?>" class="btn-premium" style="width: auto; padding: 8px 20px; font-size: 0.8rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 12px; font-weight: 600;">REVENIR √Ä L'√âÔøΩtape 1</a>
             </div>
 
             <form id="planningForm" method="POST" novalidate>
                 <input type="hidden" name="id_regime" value="<?php echo htmlspecialchars($id_regime); ?>">
 
                 <div class="form-group">
-                    <label>Titre de l'ActivitÈ</label>
-                    <input type="text" name="titre_planning" id="titre_planning" placeholder="Ex: Routine VitalitÈ Pro">
+                    <label>Titre de l'Activit√©</label>
+                    <input type="text" name="titre_planning" id="titre_planning" placeholder="Ex: Routine Vitalit√© Pro">
                     <span id="error-titre" class="error-text" style="color: #e63946; font-size: 0.75rem; font-weight: 600; margin-top: 5px; display: block;"></span>
                 </div>
 
                 <div class="form-group">
-                    <label>DÈtails du Programme Sportif</label>
+                    <label>D√©tails du Programme Sportif</label>
                     
                     <div style="margin-bottom: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                         <button type="button" class="btn-premium" style="width: auto; padding: 8px 15px; font-size: 0.7rem; background: #eee; color: #333;" onclick="insertDay('Lundi')">LUNDI</button>
@@ -119,14 +119,14 @@ $pCtrl->handleRequest($id_regime);
                         <button type="button" class="btn-premium" style="width: auto; padding: 8px 15px; font-size: 0.7rem; background: #eee; color: #333;" onclick="insertDay('Dimanche')">DIMANCHE</button>
                     </div>
 
-                    <textarea name="programme_sport" id="programme_sport" rows="8" placeholder="Tapez votre sport. L'assistant vous aidera pour les jours suivants..."></textarea>
+                    <textarea name="programme_sport" id="programme_sport" rows="8" placeholder="ÔøΩtapez votre sport. L'assistant vous aidera pour les jours suivants..."></textarea>
                     <span id="error-sport" class="error-text" style="color: #e63946; font-size: 0.75rem; font-weight: 600; margin-top: 5px; display: block;"></span>
                 </div>
 
                 <div class="form-group">
                     <label>Objectif Sommeil</label>
                     <select name="sommeil" id="sommeil">
-                        <option value="">SÈlectionnez un cycle...</option>
+                        <option value="">S√©lectionnez un cycle...</option>
                         <option value="6-7h">6-7 heures</option>
                         <option value="7-8h">7-8 heures</option>
                         <option value="8-9h">8-9 heures</option>
@@ -143,5 +143,22 @@ $pCtrl->handleRequest($id_regime);
 
     <?php include 'coach_widget.php'; ?>
     <script src="../assets/front_validation.js"></script>
+    <script>
+        function insertDay(day) {
+            const textarea = document.getElementById('programme_sport');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            const dayStr = day + " : ";
+            textarea.value = text.substring(0, start) + dayStr + text.substring(end);
+            textarea.focus();
+            textarea.selectionStart = start + dayStr.length;
+            textarea.selectionEnd = start + dayStr.length;
+        }
+    </script>
 </body>
 </html>
+
+
+
+

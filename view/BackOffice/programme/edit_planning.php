@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'description'     => $_POST['description_planning'] ?? '',
             'statut'          => $_POST['statut']
         ]);
-        // Mise à jour du statut via le contrôleur
+        // Mise Ã  jour du statut via le contrÃ´leur
         $pCtrl->updateStatut($myPlanning->getIdPlanning(), $_POST['statut']);
     }
     header("Location: admin_dashboard.php?msg=updated");
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh; font-family: 'Poppins', sans-serif;">
 
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
         <header style="margin-bottom: 40px; text-align: center;">
             <h1 style="color: white; font-family: 'Playfair Display'; font-size: 2.8rem;">Modifier le Planning</h1>
-            <p style="color: rgba(255,255,255,0.7); font-family: 'Poppins'; font-weight: 500;">Édition administrative du Dossier #<?php echo $id_regime; ?></p>
+            <p style="color: rgba(255,255,255,0.7); font-family: 'Poppins'; font-weight: 500;">Ã‰dition administrative du Dossier #<?php echo $id_regime; ?></p>
         </header>
 
         <div class="glass-card" style="padding: 50px; background: rgba(255, 255, 255, 0.95);">
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label style="font-family: 'Poppins'; font-weight: 700;">Apport Calorique</label>
+                            <label style="font-family: 'Poppins'; font-weight: 700;">Apport Calorique (Kcal)</label>
                             <input type="text" name="calorie_jour" id="calorie_jour" value="<?php echo $regime->getCalorieJour(); ?>">
                             <span id="error-calorie_jour" class="error-text" style="color: #e63946; font-size: 0.75rem; font-weight: 600; margin-top: 5px; display: block;"></span>
                         </div>
@@ -78,8 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label style="font-family: 'Poppins'; font-weight: 700;">Statut de Validation</label>
                             <select name="statut" style="background: #fff; border: 1px solid #59b84d;">
                                 <option value="en_attente" <?php if($myPlanning && $myPlanning->getStatut() == 'en_attente') echo 'selected'; ?>>EN ATTENTE</option>
-                                <option value="accepte" <?php if($myPlanning && $myPlanning->getStatut() == 'accepte') echo 'selected'; ?>>ACCEPTÉ</option>
-                                <option value="refuse" <?php if($myPlanning && $myPlanning->getStatut() == 'refuse') echo 'selected'; ?>>REFUSÉ</option>
+                                <option value="accepte" <?php if($myPlanning && $myPlanning->getStatut() == 'accepte') echo 'selected'; ?>>ACCEPTÃ‰</option>
+                                <option value="refuse" <?php if($myPlanning && $myPlanning->getStatut() == 'refuse') echo 'selected'; ?>>REFUSÃ‰</option>
                             </select>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label style="font-family: 'Poppins'; font-weight: 700;">Détails de l'Activité (Smart Assistant)</label>
+                            <label style="font-family: 'Poppins'; font-weight: 700;">DÃ©tails de l'ActivitÃ© Sportive</label>
                             <textarea name="programme_sport" id="programme_sport" rows="11"><?php echo $myPlanning ? htmlspecialchars($myPlanning->getProgrammeSport()) : ''; ?></textarea>
                             <span id="error-programme_sport" class="error-text" style="color: #e63946; font-size: 0.75rem; font-weight: 600; margin-top: 5px; display: block;"></span>
                         </div>
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div style="margin-top: 40px; display: flex; gap: 20px; justify-content: flex-end;">
                     <a href="admin_dashboard.php" class="btn-premium" style="width: auto; background: #fff; color: #333; border: 1px solid #ddd; text-decoration: none;">ANNULER</a>
-                    <button type="submit" class="btn-premium" style="width: auto; padding: 15px 50px; font-weight: 700; border-radius: 12px; background: #59b84d;">ENREGISTRER LES MODIFICATIONS</button>
+                    <button type="submit" class="btn-premium" style="width: auto; padding: 15px 50px; font-weight: 700; border-radius: 12px; background: #59b84d; color: white;">ENREGISTRER LES MODIFICATIONS</button>
                 </div>
 
             </form>
@@ -123,3 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../assets/back_validation.js"></script>
 </body>
 </html>
+
+
+

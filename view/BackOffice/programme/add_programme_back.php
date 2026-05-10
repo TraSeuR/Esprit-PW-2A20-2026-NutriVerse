@@ -73,29 +73,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Ajouter un Planning </title>
+    <title>Admin - Ajouter un Planning Complet</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 </head>
 
-<body
-    style="background: linear-gradient(135deg, #59b84d 0%, #a8dba0 45%, #ffffff 100%); min-height: 100vh; font-family: 'Poppins', sans-serif;">
+<body class="planning-orange-page"
+
+  >
+<div class="orange-emojis">
+    <span>🥗</span>
+    <span>🍎</span>
+    <span>🥑</span>
+    <span>🍉</span>
+    <span>🥦</span>
+    <span>🍓</span>
+    <span>🥕</span>
+    <span>🍋</span>
+    <span>🍇</span>
+    <span>🥝</span>
+    <span>🍍</span>
+    <span>🥬</span>
+</div>
 
     <div class="container fade-up"
         style="max-width: 1100px; margin: 0 auto; padding: 60px 20px; position: relative; z-index: 1;">
 
         <header style="margin-bottom: 40px; text-align: center;">
             <h1 style="color: #1b4332; font-family: 'Playfair Display'; font-size: 2.8rem;">
-                <?php echo $planning ? 'Modifier le Planning Expert' : 'Ajouter un Planning'; ?>
+                <?php echo $planning ? 'Modifier le Planning Expert' : 'Ajouter un Planning Complet'; ?>
             </h1>
-
+            <p style="color: rgba(255,255,255,0.8); font-weight: 500;">Interface Administrative NutriVerse</p>
         </header>
 
-        <div class="glass-card" style="padding: 50px; background: rgba(255, 255, 255, 0.95);">
+        <div class="planning-orange-card" style="padding: 50px; background: rgba(255, 255, 255, 0.95);">
             <form id="adminForm"
                 action="add_programme_back.php<?php echo $id_planning ? '?id_planning=' . $id_planning : ''; ?>"
                 method="POST" novalidate>
@@ -151,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group" style="margin-top: 10px;">
-                            <label>Analyse Nutritionnelle </label>
+                            <label>Analyse Nutritionnelle</label>
                             <textarea name="description_regime" id="description_regime"
                                 rows="4"><?php echo $regime ? htmlspecialchars($regime->getDescription()) : ''; ?></textarea>
                         </div>
@@ -171,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     $saved_hours = json_decode($regime->getHeuresSemaine(), true);
                                 }
                                 foreach ($jours as $jour):
-                                    $current_val = $saved_hours[$jour] ?? 'Rest';
+                                    $current_val = $saved_hours[$jour] ?? 'Rest-day';
                                     ?>
                                     <div
                                         style="background: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center;">
@@ -179,7 +194,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             style="font-family: 'Poppins'; font-weight: 700; font-size: 0.75rem; color: #444; display: block; margin-bottom: 5px;"><?php echo mb_substr($jour, 0, 3); ?>.</label>
                                         <select name="heures_semaine[<?php echo $jour; ?>]"
                                             style="padding: 5px; border-radius: 6px; border: 1px solid #ccc; width: 100%; font-family: 'Poppins'; text-align: center; font-size: 0.75rem;">
-                                            <option value="Rest" <?php echo ($current_val == 'Rest' || $current_val == 'Rest-day') ? 'selected' : ''; ?>>Rest</option>
+                                            <option value="Rest-day" <?php echo ($current_val == 'Rest-day' || $current_val == 'Rest') ? 'selected' : ''; ?>>Repos</option>
                                             <?php for ($h = 5; $h <= 23; $h++):
                                                 $h1 = sprintf('%02d:00', $h);
                                                 $h2 = sprintf('%02d:30', $h);
@@ -258,7 +273,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <a href="admin_dashboard.php" class="btn-premium"
                         style="width: auto; background: #fff; color: #333; border: 1px solid #ddd; text-decoration: none;">ANNULER</a>
                     <button type="submit" class="btn-premium"
-                        style="width: auto; padding: 15px 50px; font-weight: 700; border-radius: 12px; background: #59b84d;">
+                        style="width: auto; padding: 15px 50px; font-weight: 700; border-radius: 12px; background: #59b84d; color: white;">
                         <?php echo $planning ? 'ENREGISTRER LES MODIFICATIONS' : 'AJOUTER LE PLANNING COMPLET'; ?>
                     </button>
                 </div>
@@ -267,7 +282,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
-    <script src="../assets/back_validation.js?v=<?php echo time(); ?>"></script>
+    <script>
+        function insertDay(day) {
+            const textarea = document.getElementById('programme_sport');
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            const dayStr = day + " : ";
+            textarea.value = text.substring(0, start) + dayStr + text.substring(end);
+            textarea.focus();
+            textarea.selectionStart = start + dayStr.length;
+            textarea.selectionEnd = start + dayStr.length;
+        }
+    </script>
 </body>
 
 </html>
+
+
+

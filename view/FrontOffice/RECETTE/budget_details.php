@@ -7,7 +7,7 @@ $temps = $_GET['temps'] ?? '';
 $image = $_GET['image'] ?? '';
 
 $ingredients = explode("|", $_GET['ingredients'] ?? '');
-$etapes = explode("|", $_GET['etapes'] ?? '');
+$e…tapes = explode("|", $_GET['e…tapes'] ?? '');
 
 $conseil = $_GET['conseil'] ?? '';
 
@@ -86,9 +86,9 @@ $reste = $budget_user - $budget_total;
             </div>
 
             <div class="ai-section">
-                <h3>√âtapes</h3>
+                <h3>√â…tapes</h3>
                 <ol class="ai-steps">
-                    <?php foreach ($etapes as $e): ?>
+                    <?php foreach ($e…tapes as $e): ?>
                         <?php if(trim($e)): ?>
                         <li><?= htmlspecialchars(trim($e)) ?></li>
                         <?php endif; ?>
@@ -123,3 +123,4 @@ $reste = $budget_user - $budget_total;
 
 </body>
 </html>
+
