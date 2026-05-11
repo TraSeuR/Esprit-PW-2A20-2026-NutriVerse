@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__.'/../../../Controller/NotificationController.php';
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable Produit']);
 $notifController = new NotificationController();
 
 if (isset($_GET['action']) && $_GET['action'] == 'read_all') {
@@ -62,84 +64,36 @@ $unreadCount = $notifController->getUnreadCount();
       .notif-date { font-size: 12px; color: #888; }
       .notif-actions { display: flex; gap: 10px; }
   </style>
+<style>
+    .user-menu-container { position: relative; }
+    .user-dropdown {
+      position: absolute; top: 110%; right: 0; width: 180px;
+      background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 10001; display: none; border: 1px solid #eee; overflow: hidden; padding: 8px;
+    }
+    .user-dropdown.show { display: block; animation: slideDownUser 0.2s ease; }
+    .user-dropdown a {
+      display: flex; align-items: center; gap: 10px; padding: 12px;
+      color: #e74c3c; text-decoration: none; font-size: 14px; transition: 0.2s;
+      text-align: left; font-weight: 600;
+    }
+    .user-dropdown a:hover { background: #fff5f5; }
+    .admin-box { cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 12px; background: white; padding: 6px 16px 6px 6px; border-radius: 20px; border: 1px solid #eee; }
+    .admin-box:hover { transform: translateY(-2px); }
+    .admin-avatar { width: 40px; height: 40px; border-radius: 50%; background: #27ae60; color: white; display: grid; place-items: center; font-weight: 700; }
+    .notif-badge-ui { 
+        position: absolute; top: 0; right: 0; background: #ff9800; 
+        border-radius: 50%; width: 10px; height: 10px; border: 2px solid #fff;
+    }
+    @keyframes slideDownUser { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 </head>
 <body>
 
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <div class="brand">
-        <img src="../images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
-        <div>
-          <h2>NutriVerse</h2>
-          <p>Back Office</p>
-        </div>
-      </div>
-    </div>
-    <nav class="sidebar-menu">
-      <a href="../nutri_back.php" class="menu-item">
-        <i data-feather="grid"></i>
-        <span>Dashboard</span>
-      </a>
-
-      <a href="../RECETTE/admin.php" class="menu-item">
-        <i data-feather="book-open"></i>
-        <span>Recettes</span>
-      </a>
-
-      <a href="../../../shop.php?action=admin_users" class="menu-item">
-        <i data-feather="users"></i>
-        <span>Utilisateurs</span>
-      </a>
-
-      <a href="../produit/listProduit.php" class="menu-item">
-        <i data-feather="package"></i>
-        <span>Produits</span>
-      </a>
-
-      <a href="../movement/listMovement.php" class="menu-item">
-        <i data-feather="activity"></i>
-        <span>Mouvements Stock</span>
-      </a>
-
-      <a href="listNotifications.php" class="menu-item active">
-        <i data-feather="bell"></i>
-        <span>Notifications</span>
-        <?php if(isset($unreadCount) && $unreadCount > 0): ?>
-            <span style="background: #e74c3c; color: white; border-radius: 10px; padding: 2px 8px; font-size: 10px; margin-left: auto;"><?= $unreadCount ?></span>
-        <?php endif; ?>
-      </a>
-
-      <a href="../../../shop.php?action=admin_orders" class="menu-item">
-        <i data-feather="shopping-cart"></i>
-        <span>Commandes</span>
-      </a>
-
-      <a href="../../../shop.php?action=admin_livraisons" class="menu-item">
-        <i data-feather="truck"></i>
-        <span>Livraisons</span>
-      </a>
-
-      <a href="#" class="menu-item">
-        <i data-feather="heart-pulse"></i>
-        <span>Suivi Santé</span>
-      </a>
-
-      <a href="../programme/admin_dashboard.php" class="menu-item">
-        <i data-feather="heart"></i>
-        <span>Programmes</span>
-      </a>
-    </nav>
-  </aside>
+  <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/sidebar.php'; ?>
 
   <div class="main-content">
-    <header class="topbar">
-      <div class="topbar-left">
-        <h2>Notifications & Alertes</h2>
-      </div>
-      <div class="topbar-right">
-          <a href="listNotifications.php?action=read_all" class="pl-btn-icon pl-btn-edit">Tout marquer comme lu</a>
-      </div>
-    </header>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/topbar.php'; ?>
 
     <main class="dashboard-content">
       <section class="page-header">

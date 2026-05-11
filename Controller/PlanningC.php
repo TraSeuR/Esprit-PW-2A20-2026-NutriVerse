@@ -150,7 +150,7 @@ class PlanningC
             $data['sommeil'],
             $data['titre_planning'],
             $data['description'] ?? '',
-            'en_attente',
+            'accepte',
             null
         ]);
     }

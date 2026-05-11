@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../../../controller/PlanningC.php';
 
 $pCtrl = new PlanningC();
-// INNER JOIN via le Contr�leur : plannings accept�s + donn�es nutritionnelles du r�gime
+// INNER JOIN via le Contrôleur : plannings acceptés + données nutritionnelles du régime
 $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../assets/front.css">
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 </head>
 
 <body
@@ -29,21 +29,18 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
     <!-- HERO VERT -->
     <section class="recipe-header fade-up">
         <div class="icons">
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
+            <span>🥗</span>
+            <span>🍎</span>
+            <span>🥑</span>
+            <span>🍉</span>
+            <span>🥦</span>
+            <span>🍓</span>
+    <span>🥕</span>
+    <span>🍋</span>
+    <span>🍇</span>
+    <span>🥝</span>
+    <span>🍍</span>
+    <span>🥬</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
@@ -63,7 +60,7 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
                 <option value="all">Filtrer</option>
                 <option value="prise_masse">Prise de masse</option>
                 <option value="perte_poids">Perte de poids</option>
-                <option value="equilibre">�quilibre sant�</option>
+                <option value="equilibre">Équilibre santé</option>
             </select>
         </div>
 
@@ -98,7 +95,7 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
 
                     <div style="padding: 30px; flex-grow: 1;">
                         <div
-                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 10px;">
+                            style="display: justify; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 10px;">
                             <span style="font-size: 0.75rem; font-weight: 800; color: #666;">APPORT</span>
                             <span
                                 style="font-size: 1.1rem; font-weight: 900; color: var(--primary-dark);"><?php echo $p['calorie_jour']; ?>
@@ -106,37 +103,37 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
                         </div>
 
                         <div class="macro-container">
-                            <div class="macro-label"><span>P</span> <span><?php echo $p['proteine']; ?>g</span></div>
+                            <div class="macro-label"><span>PROTEINES</span> <span><?php echo $p['proteine']; ?>g</span></div>
                             <div class="macro-track">
                                 <div class="macro-fill fill-p" style="width: <?php echo $p_perc; ?>%;"></div>
                             </div>
                         </div>
                         <div class="macro-container">
-                            <div class="macro-label"><span>G</span> <span><?php echo $p['glucide']; ?>g</span></div>
+                            <div class="macro-label"><span>GLUCIDES</span> <span><?php echo $p['glucide']; ?>g</span></div>
                             <div class="macro-track">
                                 <div class="macro-fill fill-g" style="width: <?php echo $g_perc; ?>%;"></div>
                             </div>
                         </div>
                         <div class="macro-container">
-                            <div class="macro-label"><span>L</span> <span><?php echo $p['lipides']; ?>g</span></div>
+                            <div class="macro-label"><span>LIPIDES</span> <span><?php echo $p['lipides']; ?>g</span></div>
                             <div class="macro-track">
                                 <div class="macro-fill fill-l" style="width: <?php echo $l_perc; ?>%;"></div>
                             </div>
                         </div>
 
-                        <!-- DONN�ES �TAPE 2 AJOUT�ES -->
+                        <!-- DONNÉES É�tape 2 AJOUTÉES -->
                         <div
                             style="margin-top: 25px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 15px;">
                             <div>
                                 <span
-                                    style="display: block; font-size: 0.6rem; font-weight: 800; color: #888; text-transform: uppercase;">??
+                                    style="display: block; font-size: 0.6rem; font-weight: 800; color: #888; text-transform: uppercase;">🌙
                                     SOMMEIL</span>
                                 <span
                                     style="font-size: 0.9rem; font-weight: 700; color: #333;"><?php echo htmlspecialchars($p['sommeil']); ?></span>
                             </div>
                             <div>
                                 <span
-                                    style="display: block; font-size: 0.6rem; font-weight: 800; color: #888; text-transform: uppercase;">??
+                                    style="display: block; font-size: 0.6rem; font-weight: 800; color: #888; text-transform: uppercase;">🔥
                                     FOCUS SPORT</span>
                                 <span
                                     style="font-size: 0.8rem; font-weight: 600; color: #333; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
@@ -159,7 +156,7 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
                                         echo '<div style="font-size: 0.65rem; background: rgba(0,0,0,0.03); padding: 4px 6px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.05);"><strong>' . substr($j, 0, 2) . '</strong> <span style="color:' . $col . '; font-weight: 800;">' . $v . '</span></div>';
                                     }
                                 } else {
-                                    echo '<span style="font-size: 0.7rem; color:#888;">Non d�fini</span>';
+                                    echo '<span style="font-size: 0.7rem; color:#888;">Non défini</span>';
                                 }
                                 ?>
                             </div>
@@ -168,15 +165,15 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
                     </div>
 
                     <a href="summary.php?id_regime=<?php echo $p['id_regime']; ?>" class="btn-premium"
-                        style="border-radius: 0; padding: 15px; text-align: center; text-decoration: none; font-size: 0.9rem;">D�TAILS
-                        DU PROGRAMME ?</a>
+                        style="border-radius: 0; padding: 15px; text-align: center; text-decoration: none; font-size: 0.9rem;">DÉTAILS
+                        DU PROGRAMME →</a>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <div style="text-align: center; margin-top: 60px;">
             <a href="mode_selection.php" class="btn-premium"
-                style="width: auto; padding: 12px 40px; background: #000;">? RETOUR AU MENU</a>
+                style="width: auto; padding: 12px 40px; background: #000;">← RETOUR AU MENU</a>
         </div>
     </div>
 
@@ -213,3 +210,7 @@ $plannings = $pCtrl->listAcceptedPlanningsWithRegimes();
 </body>
 
 </html>
+
+
+
+

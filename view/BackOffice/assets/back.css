@@ -1,6 +1,4 @@
-/* =========================
-   RESET
-========================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -42,10 +40,10 @@ body {
    SIDEBAR
 ========================= */
 .sidebar {
-  width: 290px;
+  width: 240px;
   background: linear-gradient(180deg, #0a913c 0%, #087532 100%);
   color: white;
-  padding: 22px 18px;
+  padding: 16px 14px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -54,6 +52,7 @@ body {
   left: 0;
   height: 100vh;
   z-index: 999;
+  overflow-y: auto;
   transition: 0.3s ease;
   box-shadow: 10px 0 40px rgba(0, 0, 0, 0.08);
 }
@@ -62,7 +61,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .brand {
@@ -72,39 +71,40 @@ body {
 }
 
 .brand-logo {
-  width: 58px;
-  height: 58px;
+  width: 46px;
+  height: 46px;
   object-fit: cover;
-  border-radius: 18px;
+  border-radius: 12px;
   background: white;
-  padding: 8px;
+  padding: 6px;
 }
 
 .brand h2 {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
 .brand p {
   color: rgba(255, 255, 255, 0.75);
-  font-size: 0.95rem;
+  font-size: 0.8rem;
 }
 
 .sidebar-menu {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 18px;
-  border-radius: 20px;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
   text-decoration: none;
   color: white;
   font-weight: 500;
+  font-size: 0.88rem;
   transition: 0.25s ease;
 }
 
@@ -140,8 +140,8 @@ body {
    MAIN LAYOUT
 ========================= */
 .main-content {
-  margin-left: 290px;
-  width: calc(100% - 290px);
+  margin-left: 240px;
+  width: calc(100% - 240px);
   min-height: 100vh;
 }
 
@@ -800,4 +800,20 @@ table tr:not(:last-child) td {
     flex-direction: column;
     align-items: start;
   }
+}
+
+/* ICON FOURCHETTE + COUTEAU DANS CADRE ORANGE */
+
+.stat-icon.orange{
+  position: relative;
+}
+
+.stat-icon.orange::before{
+  content: "🍴";
+  font-size: 34px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
 }

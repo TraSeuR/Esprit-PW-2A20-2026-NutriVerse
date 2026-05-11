@@ -61,13 +61,11 @@ foreach($produits as $prod):
       <p class="plu-expire-line">À consommer avant le <strong><?= date("d/m/Y", strtotime($prod['date_expiration'])) ?></strong></p>
       <?php endif; ?>
 
-      <div class="plu-card-actions">
         <?php if($prod['quantite_stock'] > 0): ?>
-            <a href="#" onclick="addToCart(<?= $prod['idproduit'] ?>, '<?= htmlspecialchars($prod['nom'], ENT_QUOTES) ?>', <?= $prod['prix'] ?>); return false;" class="btn-primary">Ajouter au panier</a>
+            <span class="btn-primary" style="background: #ccc; cursor: default;">En stock</span>
         <?php else: ?>
             <span class="btn-primary plu-btn-muted" aria-disabled="true">Indisponible</span>
         <?php endif; ?>
-      </div>
     </div>
 </article>
 <?php endforeach; ?>

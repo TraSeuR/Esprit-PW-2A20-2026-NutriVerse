@@ -1,6 +1,6 @@
 <?php
 include("../../../controller/recetteC.php");
-include("../../../controller/ingredientC.php");
+
 
 if (isset($_POST['query'])) {
 
@@ -40,3 +40,4 @@ if (isset($_POST['query'])) {
     }
 }
 ?>
+

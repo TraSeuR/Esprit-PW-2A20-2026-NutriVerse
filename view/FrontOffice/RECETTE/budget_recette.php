@@ -41,7 +41,7 @@ Réponds STRICTEMENT en JSON avec ce format :
       \"ingredients\": [
         {\"nom\":\"Tomate\",\"quantite\":\"500g\",\"prix\":1}
       ],
-      \"etapes\": [\"...\",\"...\"],
+      \"e�tapes\": [\"...\",\"...\"],
       \"conseil\": \"...\"
     }
   ]
@@ -123,3 +123,4 @@ Réponds STRICTEMENT en JSON avec ce format :
     echo json_encode($json, JSON_UNESCAPED_UNICODE);
 }
 ?>
+

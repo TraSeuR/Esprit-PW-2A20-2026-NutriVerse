@@ -10,10 +10,10 @@ $regime = $rCtrl->getRegime($id_regime);
 $myPlanning = $pCtrl->getPlanningByRegime($id_regime);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Mise � jour du r�gime
+    // Mise à jour du régime
     $rCtrl->updateRegime($id_regime, $_POST);
 
-    // Mise � jour du planning
+    // Mise à jour du planning
     if ($myPlanning) {
         $pCtrl->updatePlanning($myPlanning->getIdPlanning(), [
             'programme_sport' => $_POST['programme_sport'],
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../assets/front.css">
-    <link rel="stylesheet" href="../../assets/style.css?v=1.3">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 </head>
 
 <body
@@ -51,21 +51,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- HERO VERT -->
     <section class="recipe-header fade-up">
         <div class="icons">
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
-            <span>??</span>
+    <span>🥗</span>
+    <span>🍎</span>
+    <span>🥑</span>
+    <span>🍉</span>
+    <span>🥦</span>
+    <span>🍓</span>
+    <span>🥕</span>
+    <span>🍋</span>
+    <span>🍇</span>
+    <span>🥝</span>
+    <span>🍍</span>
+    <span>🥬</span>
         </div>
         <div class="header-content">
             <h1 style="margin-bottom: 0;">NutriVerse</h1>
@@ -80,14 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
 
-                    <!-- SECTION R�GIME -->
+                    <!-- SECTION Régime -->
                     <div>
                         <h3
                             style="margin-bottom: 25px; border-bottom: 2px solid var(--primary); padding-bottom: 10px; color: var(--primary);">
-                            1. VOS DONN�ES NUTRITION</h3>
+                            1. VOS DONNÉES NUTRITION</h3>
 
                         <div class="form-group">
-                            <label>Nom du R�gime</label>
+                            <label>Nom du Régime</label>
                             <input type="text" name="nom" value="<?php echo htmlspecialchars($regime->getNom()); ?>">
                         </div>
 
@@ -100,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     echo 'selected'; ?>>Prise de masse</option>
                                 <option value="equilibre" <?php if ($regime->getType() == 'equilibre')
                                     echo 'selected'; ?>>
-                                    �quilibre Sant�</option>
+                                    Équilibre Santé</option>
                             </select>
                         </div>
 
@@ -129,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div>
                         <h3
                             style="margin-bottom: 25px; border-bottom: 2px solid #59b84d; padding-bottom: 10px; color: #1b4332; font-family: 'Playfair Display';">
-                            2. VOS DONN�ES SPORT</h3>
+                            2. VOS DONNÉES SPORT</h3>
 
                         <div class="form-group">
                             <label>Titre du Planning</label>
@@ -138,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label>Programme d'activit�</label>
+                            <label>Programme d'activité</label>
                             <textarea name="programme_sport"
                                 rows="5"><?php echo $myPlanning ? htmlspecialchars($myPlanning->getProgrammeSport()) : ''; ?></textarea>
                         </div>
@@ -201,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div style="margin-top: 40px; display: flex; gap: 20px;">
                     <a href="summary.php?id_regime=<?php echo $id_regime; ?>" class="btn-premium"
                         style="background: #fff; color: #000; text-decoration: none; text-align: center; border: 1px solid #ddd;">ANNULER</a>
-                    <button type="submit" class="btn-premium">ENREGISTRER LES MODIFICATIONS ?</button>
+                    <button type="submit" class="btn-premium">ENREGISTRER LES MODIFICATIONS</button>
                 </div>
 
             </form>
@@ -213,3 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 
 </html>
+
+
+
+

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/front.css">
     <link rel="stylesheet" href="../assets/recette.css">
     <!-- Existing programme styles -->
-    <link rel="stylesheet" href="../../assets/style.css">
+    <link rel="stylesheet" href="../../assets/style.css?v=1.5">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,6 +52,7 @@
                         radial-gradient(circle at bottom left, rgba(89, 184, 77, 0.05), transparent);
             z-index: -1;
         }
+
     </style>
 </head>
 <body class="recipe-page">
@@ -59,17 +60,37 @@
     <?php include 'global_header.php'; ?>
 
     <div class="page-bg-subtle"></div>
-
-    <section class="recipe-header fade-up">
+ <!-- HERO VERT -->
+    <section class="recipe-header ">
         <div class="icons">
-            <span>🥗</span><span>🏃‍♂️</span><span>💧</span><span>📊</span><span>💪</span>
-            <span>🍏</span><span>🔋</span><span>🥬</span><span>🧘‍♀️</span><span>👟</span>
-            <span>🍳</span><span>🥑</span><span>🍋</span><span>🥣</span><span>🥛</span>
+    <span>🥗</span>
+    <span>🍎</span>
+    <span>🥑</span>
+    <span>🍉</span>
+    <span>🥦</span>
+    <span>🍓</span>
+    <span>🥕</span>
+    <span>🍋</span>
+    <span>🍇</span>
+    <span>🥝</span>
+    <span>🍍</span>
+    <span>🥬</span>
         </div>
-        <div class="header-content">
-            <h1>Nos Solutions</h1>
-            <p>Choisissez votre approche pour transformer votre santé.</p>
-        </div>
+      <div class="header-content">
+    <h1 style="margin-bottom: 0; font-size: 4.2rem;">
+        Nos solutions
+    </h1>
+
+    <h2 style="
+        font-size: 1.35rem;
+        opacity: 0.95;
+        font-weight: 600;
+        margin: 8px 0 0;
+        color: white;
+    ">
+        Choisissez votre approche pour transformer votre santé
+    </h2>
+</div>
     </section>
 
     <div class="container" style="max-width: 1200px; padding-bottom: 80px;">
@@ -77,7 +98,7 @@
             
             <!-- PROPOSITION 1 : MANUEL -->
             <a href="add_regime.php?action=new" class="choice-card">
-                <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&q=80&w=800" alt="Plat sain" class="choice-img">
+                <img src="https://thumbs.dreamstime.com/b/comptage-des-calories-r%C3%A9gime-alimentaire-contr%C3%B4le-aliments-et-perte-de-poids-tablette-avec-application-compteur-calorique-%C3%A0-l-157093707.jpg" alt="Plat sain" class="choice-img">
                 <div class="choice-overlay">
                     <p style="text-transform: uppercase; font-weight: 800; font-size: 0.7rem; color: #59b84d; margin-bottom: 5px;">Suivi Manuel</p>
                     <h2>Gérer mon Régime</h2>
@@ -87,7 +108,7 @@
 
             <!-- PROPOSITION 2 : EXPERTS -->
             <a href="view_ready_plannings.php" class="choice-card">
-                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800" alt="Sport high-end" class="choice-img">
+                <img src="https://img.freepik.com/photos-gratuite/nature-morte-du-rouleau-mousse_23-2151817470.jpg?semt=ais_hybrid&w=740&q=80" alt="Sport high-end" class="choice-img">
                 <div class="choice-overlay">
                     <p style="text-transform: uppercase; font-weight: 800; font-size: 0.7rem; color: #59b84d; margin-bottom: 5px;">Collection Experts</p>
                     <h2>Plannings Complets</h2>
@@ -98,7 +119,7 @@
         </div>
 
         <div style="text-align: center; margin-top: 60px;" class="fade-up">
-            <a href="../nutri_front.php" style="color: #1c2733; font-weight: 600; text-decoration: none; border-bottom: 2px solid #59b84d; padding-bottom: 5px; transition: 0.3s;">← Retour au portail NutriVerse</a>
+            <a href="../index.php" style="color: #1c2733; font-weight: 600; text-decoration: none; border-bottom: 2px solid #59b84d; padding-bottom: 5px; transition: 0.3s;">← Retour au portail NutriVerse</a>
         </div>
     </div>
 
@@ -107,3 +128,7 @@
 
 </body>
 </html>
+
+
+
+

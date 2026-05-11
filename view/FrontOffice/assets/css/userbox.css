@@ -1,0 +1,133 @@
+/* User Menu Box */
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.user-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.user-btn:hover {
+  background-color: #27ae60;
+}
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 10px;
+  background-color: #ffffff;
+  min-width: 180px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  z-index: 1000;
+  overflow: hidden;
+  border: 1px solid #eee;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.user-dropdown.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.user-dropdown a {
+  color: #333 !important;
+  padding: 12px 20px !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  transition: background-color 0.2s !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #f5f5f5;
+  font-weight: 500 !important;
+}
+
+.user-dropdown a:last-child {
+  border-bottom: none;
+}
+
+.user-dropdown a:hover {
+  background-color: #f8f9fa !important;
+  color: #2ecc71 !important;
+}
+
+.user-dropdown a.logout {
+  color: #dc3545 !important;
+}
+
+.user-dropdown a.logout:hover {
+  background-color: #fff5f5 !important;
+  color: #c82333 !important;
+}
+
+/* User Box (matching back.php Admin Box) */
+.user-menu.admin-box-style {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 10px 16px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.user-btn.transparent-btn {
+  background-color: transparent !important;
+  color: #333 !important;
+  padding: 5px !important;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-btn.transparent-btn:hover {
+  background-color: transparent !important;
+  opacity: 0.8;
+}
+
+.user-avatar-circle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0b8f3c, #2ecc71);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.user-info-text {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info-text h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #1a2433;
+}
+
+.user-info-text p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #6e7782;
+}
