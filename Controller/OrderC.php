@@ -18,13 +18,19 @@ class OrderController
     // Cette fonction affiche le formulaire pour passer une commande (adresse, nom, etc.).
     public function showForm()
     {
+        if (!isset($_SESSION['id_user'])) {
+            $_SESSION['redirect_after_login'] = 'shop.php?action=checkout';
+            header('Location: view/FrontOffice/utilisateur/login.php');
+            exit();
+        }
+
         // On récupère les articles du panier et le total.
         $cartItems = CartModel::getCartItems($this->db);
         $total = array_sum(array_column($cartItems, 'sous_total'));
         
         // Si le panier est vide, on renvoie vers la liste des produits.
         if (empty($cartItems)) {
-            header('Location: shop.php?action=products');
+            header('Location: view/FrontOffice/produit/listProduit.php');
             exit();
         }
         
@@ -95,7 +101,12 @@ class OrderController
             }
         }
 
-        $userId = $_SESSION['user_id'] ?? null;
+        if (!isset($_SESSION['id_user'])) {
+            header('Location: view/FrontOffice/utilisateur/login.php');
+            exit();
+        }
+
+        $userId = $_SESSION['id_user'] ?? null;
         $methodePaiement = $_POST['paiement'] ?? 'livraison';
         $statutCommande = 'en attente'; // Statut initial
 
@@ -172,8 +183,12 @@ class OrderController
     // Cette fonction affiche la liste de toutes les commandes de l'utilisateur.
     public function myOrders()
     {
-        // On simule un utilisateur connecté.
-        $userId = $_SESSION['user_id'] ?? 1; 
+        if (!isset($_SESSION['id_user'])) {
+            header('Location: view/FrontOffice/utilisateur/login.php');
+            exit();
+        }
+        // On récupère l'identifiant.
+        $userId = $_SESSION['id_user']; 
         
         // On récupère toutes les commandes.
         $stmt = $this->db->prepare("SELECT * FROM commande ORDER BY date_commande DESC"); 

@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NutriVerse - Détail Commande #<?= $order['id_commande'] ?></title>
 
-  <link rel="stylesheet" href="view/BackOffice/assets/back.css" />
-  <link rel="stylesheet" href="view/BackOffice/assets/comb.css" />
+  <link rel="stylesheet" href="../assets/back.css" />
+  <link rel="stylesheet" href="../assets/comb.css" />
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -118,97 +118,13 @@
   <div class="dashboard">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <div class="brand">
-          <img src="view/BackOffice/images/logo.png" alt="Logo NutriVerse" class="brand-logo" onerror="this.style.display='none'">
-          <div>
-            <h2>NutriVerse</h2>
-            <p>Back Office</p>
-          </div>
-        </div>
-        <button class="close-sidebar" id="closeSidebar">✕</button>
-      </div>
-
-      <nav class="sidebar-menu">
-        <a href="view/BackOffice/nutri_back.php" class="menu-item">
-          <i data-feather="grid"></i>
-          <span>Dashboard</span>
-        </a>
-
-        <a href="view/BackOffice/RECETTE/admin.php" class="menu-item">
-          <i data-feather="book-open"></i>
-          <span>Recettes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="users"></i>
-          <span>Utilisateurs</span>
-        </a>
-
-        <a href="shop.php?action=admin_dashboard" class="menu-item">
-          <i data-feather="shopping-bag"></i>
-          <span>Boutique</span>
-        </a>
-
-        <a href="shop.php?action=admin_orders" class="menu-item active">
-          <i data-feather="shopping-cart"></i>
-          <span>Commandes</span>
-        </a>
-
-        <a href="shop.php?action=admin_livraisons" class="menu-item">
-          <i data-feather="truck"></i>
-          <span>Livraisons</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="activity"></i>
-          <span>Suivi Santé</span>
-        </a>
-
-        <a href="view/BackOffice/programme/admin_dashboard.php" class="menu-item">
-          <i data-feather="heart"></i>
-          <span>Programmes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="settings"></i>
-          <span>Paramètres</span>
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <p>© 2026 NutriVerse</p>
-      </div>
-    </aside>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/sidebar.php'; ?>
 
     <!-- MAIN -->
-    <main class="main-content">
+    <main class="main-content dashboard-content">
 
       <!-- TOPBAR -->
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="menu-btn" id="menuBtn">
-            <i data-feather="menu"></i>
-          </button>
-        </div>
-
-        <div class="topbar-right">
-          <a href="shop.php?action=front" style="margin-right:20px; color:#59b84d; text-decoration:none; font-weight:600;">← Retour au site</a>
-          <button class="notif-btn">
-            <i data-feather="bell"></i>
-            <span class="notif-dot"></span>
-          </button>
-
-          <div class="admin-box">
-            <div class="admin-avatar">A</div>
-            <div>
-              <h4>Admin</h4>
-              <p>Administrateur</p>
-            </div>
-          </div>
-        </div>
-      </header>
+      <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/topbar.php'; ?>
 
       <!-- PAGE HEADER -->
       <section class="page-header fade-up" style="display: flex; justify-content: space-between; align-items: center;">
@@ -303,7 +219,7 @@
     </main>
   </div>
 
-  <script src="view/BackOffice/commande/comb.js"></script>
+  <script src="comb.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script>
     feather.replace();

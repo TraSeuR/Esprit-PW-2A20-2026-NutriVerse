@@ -1,352 +1,206 @@
+<?php
+require_once __DIR__ . '/../../Controller/ProduitController.php';
+require_once __DIR__ . '/../../Controller/NotificationController.php';
+
+$produitController = new ProduitController();
+$notifController = new NotificationController();
+
+// --- BUSINESS STATS ---
+$db = config::getConnexion();
+$totalOrders = $db->query("SELECT COUNT(*) FROM commande")->fetchColumn();
+$totalRevenue = $db->query("SELECT SUM(montant_total) FROM commande")->fetchColumn() ?: 0;
+$totalProducts = $db->query("SELECT COUNT(*) FROM produit")->fetchColumn();
+$totalUsers = $db->query("SELECT COUNT(*) FROM user")->fetchColumn();
+
+// Recent Activity
+$recentOrders = $db->query("SELECT * FROM commande ORDER BY date_commande DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+$recentUsers = $db->query("SELECT * FROM user ORDER BY id_user DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+
+// Chart Data (Monthly Growth)
+$stmtChart = $db->query("SELECT MONTH(date_commande) as mois, COUNT(*) as nb FROM commande WHERE YEAR(date_commande) = YEAR(CURDATE()) GROUP BY MONTH(date_commande)");
+$chartData = array_fill(1, 12, 0);
+while ($row = $stmtChart->fetch(PDO::FETCH_ASSOC)) {
+    $chartData[(int)$row['mois']] = (int)$row['nb'];
+}
+$chartJson = json_encode(array_values($chartData));
+?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NutriVerse - Dashboard Back Office</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="view/BackOffice/assets/back.css" />
-  <link rel="stylesheet" href="view/BackOffice/assets/comb.css" />
-
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
-    rel="stylesheet" />
-
-  <!-- Chart.js -->
+  <title>NutriVerse - Dashboard Administration</title>
+  <link rel="stylesheet" href="assets/back.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
-</head>
+  <style>
+    :root { --p-green: #21b66f; --p-orange: #ff922b; --p-blue: #339af0; --p-red: #ff6b6b; --p-purple: #7950f2; }
+    .dashboard-content { padding: 30px; }
+    .main-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 34px; }
+    .glass-card { background: rgba(255, 255, 255, 0.95); border-radius: 28px; box-shadow: var(--shadow); padding: 24px; transition: 0.3s ease; border: 1px solid rgba(255, 255, 255, 0.2); }
+    .glass-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+    .stat-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .stat-val { font-size: 2rem; font-weight: 800; color: var(--text); margin: 0; }
+    .stat-label { color: var(--muted); font-size: 0.9rem; font-weight: 500; }
+    .stat-icon-wrap { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; }
+    .icon-green { background: #eaf8ef; color: var(--p-green); }
+    .icon-blue { background: #e7f5ff; color: var(--p-blue); }
+    .icon-orange { background: #fff4e6; color: var(--p-orange); }
+    .icon-purple { background: #f3f0ff; color: var(--p-purple); }
 
+    .charts-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; margin-bottom: 34px; }
+    .chart-box { padding: 24px; }
+    .chart-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; }
+    
+    .activity-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+    .table-mini th { text-align: left; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; padding: 12px; }
+    .table-mini td { padding: 12px; font-size: 0.9rem; border-top: 1px solid #f1f3f5; }
+    .badge-pill { padding: 4px 10px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; }
+    .badge-success { background: #eaf8ef; color: #21b66f; }
+
+    .fade-up { animation: fadeUp 0.6s ease forwards; opacity: 0; transform: translateY(20px); }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
 <body>
 
-  <div class="dashboard">
+  <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/sidebar.php'; ?>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <div class="brand">
-          <img src="view/BackOffice/images/logo.png" alt="Logo NutriVerse" class="brand-logo" onerror="this.style.display='none'">
-          <div>
-            <h2>NutriVerse</h2>
-            <p>Back Office</p>
-          </div>
-        </div>
-        <button class="close-sidebar" id="closeSidebar">✕</button>
-      </div>
+  <div class="main-content">
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/topbar.php'; ?>
 
-      <nav class="sidebar-menu">
-        <a href="view/BackOffice/nutri_back.php" class="menu-item">
-          <i data-feather="grid"></i>
-          <span>Dashboard</span>
-        </a>
-
-        <a href="view/BackOffice/RECETTE/admin.php" class="menu-item">
-          <i data-feather="book-open"></i>
-          <span>Recettes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="users"></i>
-          <span>Utilisateurs</span>
-        </a>
-
-        <a href="shop.php?action=admin_dashboard" class="menu-item active">
-          <i data-feather="shopping-bag"></i>
-          <span>Boutique</span>
-        </a>
-
-        <a href="shop.php?action=admin_orders" class="menu-item">
-          <i data-feather="shopping-cart"></i>
-          <span>Commandes</span>
-        </a>
-
-        <a href="shop.php?action=admin_livraisons" class="menu-item">
-          <i data-feather="truck"></i>
-          <span>Livraisons</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="activity"></i>
-          <span>Suivi Santé</span>
-        </a>
-
-        <a href="view/BackOffice/programme/admin_dashboard.php" class="menu-item">
-          <i data-feather="heart"></i>
-          <span>Programmes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="settings"></i>
-          <span>Paramètres</span>
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <p>© 2026 NutriVerse</p>
-      </div>
-    </aside>
-
-    <!-- MAIN CONTENT -->
-    <main class="main-content">
-
-      <!-- TOPBAR -->
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="menu-btn" id="menuBtn">
-            <i data-feather="menu"></i>
-          </button>
-        </div>
-
-        <div class="topbar-right">
-          <div class="search-box">
-            <i data-feather="search" style="color: var(--muted);"></i>
-            <input type="text" placeholder="Rechercher une commande..." />
-          </div>
-          <button class="notif-btn">
-            <i data-feather="bell"></i>
-            <span class="notif-dot"></span>
-          </button>
-          <div class="admin-box">
-            <div class="admin-avatar">A</div>
-          </div>
-        </div>
-      </header>
-
-    <!-- DASHBOARD CONTENT -->
     <main class="dashboard-content">
-
-      <!-- PAGE HEADER -->
       <section class="page-header fade-up">
         <div>
-          <span class="section-badge">Vue globale</span>
+          <span class="section-badge">Administration</span>
           <h1>Dashboard NutriVerse</h1>
-          <p>
-            Vue d’ensemble intelligente de votre plateforme santé, nutrition et commandes.
-          </p>
+          <p>Vue d’ensemble de votre plateforme santé, nutrition et commerce.</p>
         </div>
-
-        <button class="export-btn">
-          <i data-feather="download"></i>
-          Exporter le rapport
+        <button class="export-btn" style="background: var(--green); color: white; border: none; border-radius: 12px; padding: 10px 20px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+          <i data-feather="download"></i> Exporter Rapport
         </button>
       </section>
 
-      <!-- =========================
-           STATS PLACEHOLDER
-      ========================== -->
-      <section class="stats-grid">
-
-        <div class="stat-card">
-          <div class="stat-top">
-            <div>
-              <p class="stat-title">Utilisateurs</p>
-              <h2><?= $totalUsers ?></h2>
-            </div>
-            <div class="stat-icon green">
-              <i data-feather="users"></i>
-            </div>
+      <!-- Stats Grid -->
+      <section class="main-stats-grid fade-up">
+        <div class="glass-card">
+          <div class="stat-header">
+            <span class="stat-label">Utilisateurs</span>
+            <div class="stat-icon-wrap icon-blue"><i data-feather="users"></i></div>
           </div>
-          <p class="stat-subtitle">Total des inscrits</p>
+          <h2 class="stat-val"><?= $totalUsers ?></h2>
+          <p style="font-size: 0.75rem; color: var(--muted); margin-top: 8px;">Total inscrits</p>
         </div>
-
-        <div class="stat-card">
-          <div class="stat-top">
-            <div>
-              <p class="stat-title">Revenu Total</p>
-              <h2 style="font-size: 1.5rem;"><?= number_format($totalRevenue, 2) ?> DT</h2>
-            </div>
-            <div class="stat-icon orange">
-              <i data-feather="dollar-sign"></i>
-            </div>
+        <div class="glass-card">
+          <div class="stat-header">
+            <span class="stat-label">Revenu Total</span>
+            <div class="stat-icon-wrap icon-green"><i data-feather="dollar-sign"></i></div>
           </div>
-          <p class="stat-subtitle">Chiffre d'affaires global</p>
+          <h2 class="stat-val"><?= number_format($totalRevenue, 2) ?> <small style="font-size: 0.9rem;">DT</small></h2>
+          <p style="font-size: 0.75rem; color: var(--muted); margin-top: 8px;">Ventes shop</p>
         </div>
-
-        <div class="stat-card">
-          <div class="stat-top">
-            <div>
-              <p class="stat-title">Produits</p>
-              <h2><?= $totalProducts ?></h2>
-            </div>
-            <div class="stat-icon blue">
-              <i data-feather="package"></i>
-            </div>
+        <div class="glass-card">
+          <div class="stat-header">
+            <span class="stat-label">Produits</span>
+            <div class="stat-icon-wrap icon-orange"><i data-feather="package"></i></div>
           </div>
-          <p class="stat-subtitle">Produits en catalogue</p>
+          <h2 class="stat-val"><?= $totalProducts ?></h2>
+          <p style="font-size: 0.75rem; color: var(--muted); margin-top: 8px;">Articles en catalogue</p>
         </div>
-
-        <div class="stat-card">
-          <div class="stat-top">
-            <div>
-              <p class="stat-title">Commandes</p>
-              <h2><?= $totalOrders ?></h2>
-            </div>
-            <div class="stat-icon purple">
-              <i data-feather="shopping-cart"></i>
-            </div>
+        <div class="glass-card">
+          <div class="stat-header">
+            <span class="stat-label">Commandes</span>
+            <div class="stat-icon-wrap icon-purple"><i data-feather="shopping-bag"></i></div>
           </div>
-          <p class="stat-subtitle">Total des ventes</p>
+          <h2 class="stat-val"><?= $totalOrders ?></h2>
+          <p style="font-size: 0.75rem; color: var(--muted); margin-top: 8px;">Transactions totales</p>
         </div>
-
       </section>
 
-      <!-- =========================
-           CHARTS PLACEHOLDERS
-      ========================== -->
-      <section class="charts-section">
-
-        <!-- Bloc 1 -->
-        <div class="chart-card placeholder-card">
-          <div class="chart-header">
-            <div>
-              <h3>Croissance Mensuelle</h3>
-              <p>Évolution de l’activité de la plateforme</p>
-            </div>
-            <button class="chart-badge">Mensuel</button>
-          </div>
-
-          <div class="chart-content" style="height: 250px; padding: 20px;">
-            <canvas id="ordersChart"></canvas>
-          </div>
-          <script>
-            document.addEventListener('DOMContentLoaded', function() {
-              const ctx = document.getElementById('ordersChart').getContext('2d');
-              new Chart(ctx, {
-                type: 'line',
-                data: {
-                  labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
-                  datasets: [{
-                    label: 'Commandes',
-                    data: <?= $chartJson ?>,
-                    borderColor: '#59b84d',
-                    backgroundColor: 'rgba(89, 184, 77, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: { legend: { display: false } },
-                  scales: {
-                    y: { beginAtZero: true, grid: { display: false } },
-                    x: { grid: { display: false } }
-                  }
-                }
-              });
-            });
-          </script>
+      <!-- Charts -->
+      <section class="charts-row fade-up">
+        <div class="glass-card chart-box">
+          <h3 class="chart-title">Croissance des Ventes</h3>
+          <div style="height: 300px;"><canvas id="ordersChart"></canvas></div>
         </div>
-
-        <!-- Bloc 2 -->
-        <div class="chart-card placeholder-card">
-          <div class="chart-header">
-            <div>
-              <h3>Répartition des Recettes</h3>
-              <p>Catégories principales les plus populaires</p>
-            </div>
-            <button class="chart-badge">2026</button>
-          </div>
-
-          <div class="chart-placeholder">
-            <div class="placeholder-icon"></div>
-            <h4>Le graphique apparaîtra ici</h4>
-            <p>
-              Cette section affichera plus tard la répartition
-              des catégories selon les recettes enregistrées.
-            </p>
-          </div>
+        <div class="glass-card" style="display:flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+          <div class="stat-icon-wrap icon-green" style="width: 80px; height: 80px; margin-bottom: 20px;"><i data-feather="trending-up" style="width: 40px; height: 40px;"></i></div>
+          <h3 style="margin-bottom: 10px;">Activité Positive</h3>
+          <p style="color: var(--muted); max-width: 200px;">Votre plateforme connaît une croissance stable ce mois-ci.</p>
         </div>
-
       </section>
 
-      <!-- =========================
-           TABLES / LISTES PLACEHOLDER
-      ========================== -->
-      <section class="bottom-section">
-
-        <!-- Commandes Récentes -->
-        <div class="table-card" style="flex: 2;">
-          <div class="card-header" style="padding: 25px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border);">
-            <div>
-              <h3 style="margin: 0; color: var(--text);">📦 Commandes Récentes</h3>
-              <p style="margin: 5px 0 0; color: var(--muted); font-size: 0.85rem;">Les 5 dernières transactions</p>
-            </div>
-            <a href="shop.php?action=admin_orders" class="view-all" style="color: var(--green); font-weight: 600; font-size: 0.9rem;">Voir tout →</a>
+      <!-- Bottom Grid -->
+      <section class="activity-grid fade-up">
+        <div class="glass-card">
+          <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 class="chart-title" style="margin:0;">📦 Commandes Récentes</h3>
+            <a href="/integ/view/BackOffice/commande/commandes.php" style="font-size: 0.8rem; color: var(--p-blue); font-weight: 600;">Tout voir</a>
           </div>
-
-          <div class="table-wrapper" style="padding: 0 20px 20px;">
-            <table style="width: 100%; border-collapse: collapse;">
-              <thead>
-                <tr style="text-align: left; border-bottom: 2px solid #f0f0f0; color: #6f7680;">
-                  <th style="padding: 12px 0;">ID</th>
-                  <th>Client</th>
-                  <th>Total</th>
-                  <th>Statut</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach($recentOrders as $order): ?>
-                <tr style="border-bottom: 1px solid #f9f9f9;">
-                  <td style="padding: 12px 0; font-weight: 600;">#<?= $order['id_commande'] ?></td>
-                  <td><?= htmlspecialchars($order['nom_client']) ?></td>
-                  <td style="font-weight: 600; color: #59b84d;"><?= number_format($order['montant_total'], 2) ?> DT</td>
-                  <td>
-                    <span style="font-size: 11px; padding: 4px 10px; border-radius: 20px; background: #edf7ec; color: #3f9636; font-weight: 600;">
-                      <?= $order['statut_commande'] ?>
-                    </span>
-                  </td>
-                  <td>
-                    <a href="shop.php?action=admin_order_view&id=<?= $order['id_commande'] ?>" style="color: #6f7680;"><i data-feather="eye" style="width: 16px;"></i></a>
-                  </td>
-                </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
+          <table class="table-mini" style="width: 100%;">
+            <thead><tr><th>Client</th><th>Total</th><th>Statut</th></tr></thead>
+            <tbody>
+              <?php foreach($recentOrders as $order): ?>
+              <tr>
+                <td style="font-weight: 500;"><?= htmlspecialchars($order['nom_client']) ?></td>
+                <td style="font-weight: 700; color: var(--p-green);"><?= number_format($order['montant_total'], 2) ?> DT</td>
+                <td><span class="badge-pill badge-success"><?= $order['statut_commande'] ?></span></td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div>
 
-        <!-- Nouveaux Utilisateurs -->
-        <div class="users-card" style="flex: 1; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);">
-          <div class="card-header" style="padding: 25px; border-bottom: 1px solid var(--border);">
-            <h3 style="margin: 0; color: var(--text);">👥 Nouveaux Membres</h3>
-            <p style="margin: 5px 0 0; color: var(--muted); font-size: 0.85rem;">Dernières inscriptions</p>
-          </div>
-
-          <div class="users-list" style="padding: 25px;">
+        <div class="glass-card">
+          <h3 class="chart-title" style="margin-bottom: 20px;">👥 Nouveaux Membres</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
             <?php foreach($recentUsers as $user): ?>
-            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border);">
-              <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--green-gradient); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.2);">
+            <div style="display: flex; align-items: center; gap: 14px;">
+              <div style="width: 40px; height: 40px; border-radius: 12px; background: #f1f3f5; display: grid; place-items: center; font-weight: 800; color: var(--p-blue);">
                 <?= strtoupper(substr($user['nom'] ?? 'U', 0, 1)) ?>
               </div>
-              <div style="flex: 1;">
-                <h5 style="margin: 0; color: var(--text); font-size: 0.95rem;"><?= htmlspecialchars($user['nom'] ?? 'Anonyme') ?></h5>
-                <p style="margin: 3px 0 0; font-size: 0.8rem; color: var(--muted);"><?= htmlspecialchars($user['email'] ?? '') ?></p>
+              <div>
+                <div style="font-size: 0.9rem; font-weight: 600;"><?= htmlspecialchars(($user['prenom'] ?? '') . ' ' . ($user['nom'] ?? '')) ?></div>
+                <div style="font-size: 0.75rem; color: var(--muted);"><?= htmlspecialchars($user['email']) ?></div>
               </div>
-              <div style="font-size: 0.75rem; color: var(--muted);">Nouveau</div>
             </div>
             <?php endforeach; ?>
           </div>
         </div>
-
       </section>
-
     </main>
   </div>
 
-  <!-- JS -->
-  <script src="view/BackOffice/commande/comb.js"></script>
   <script>
-    feather.replace();
+    document.addEventListener('DOMContentLoaded', function() {
+      feather.replace();
+
+      const ctxOrders = document.getElementById('ordersChart').getContext('2d');
+      const gradient = ctxOrders.createLinearGradient(0, 0, 0, 300);
+      gradient.addColorStop(0, 'rgba(33, 182, 111, 0.2)');
+      gradient.addColorStop(1, 'rgba(33, 182, 111, 0)');
+
+      new Chart(ctxOrders, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
+          datasets: [{
+            label: 'Commandes',
+            data: <?= $chartJson ?>,
+            borderColor: '#21b66f',
+            borderWidth: 3,
+            backgroundColor: gradient,
+            tension: 0.4,
+            fill: true,
+            pointRadius: 4,
+            pointBackgroundColor: '#fff',
+            pointBorderWidth: 2
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#f1f3f5' } }, x: { grid: { display: false } } } }
+      });
+    });
   </script>
 </body>
-
 </html>

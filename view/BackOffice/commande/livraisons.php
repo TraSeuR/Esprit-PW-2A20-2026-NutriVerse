@@ -1,3 +1,32 @@
+<?php
+require_once __DIR__ . '/../../../config/config.php';
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable commande', 'Livreur']);
+
+$db = config::getConnexion();
+
+// Handle update action
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_livraison'])) {
+    $db->prepare("UPDATE livraison SET nom_livreur = ?, statut_livraison = ? WHERE id_livraison = ?")
+       ->execute([$_POST['nom_livreur'], $_POST['status_livraison'], (int)$_POST['id_livraison']]);
+    header('Location: livraisons.php');
+    exit;
+}
+
+// Handle delete action
+if (isset($_GET['action']) && $_GET['action'] === 'admin_livraison_delete' && isset($_GET['id'])) {
+    $db->prepare("DELETE FROM livraison WHERE id_livraison = ?")->execute([(int)$_GET['id']]);
+    header('Location: livraisons.php');
+    exit;
+}
+
+// Load livraisons with join
+$sql = "SELECT l.*, c.nom_client, c.montant_total
+        FROM livraison l
+        JOIN commande c ON l.id_commande = c.id_commande
+        ORDER BY l.date_livraison DESC";
+$livraisons = $db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,8 +34,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NutriVerse - Back Office Livraisons</title>
 
-  <link rel="stylesheet" href="view/BackOffice/assets/back.css" />
-  <link rel="stylesheet" href="view/BackOffice/assets/comb.css" />
+  <link rel="stylesheet" href="../assets/back.css" />
+  <style>
+    .dashboard { display: flex; min-height: 100vh; }
+    .dashboard-content { padding: 30px; }
+    .filter-bar { background: white; padding: 18px; border-radius: 24px; box-shadow: var(--shadow); display: flex; gap: 18px; margin-bottom: 22px; align-items: center; }
+    .table-search { flex:1; display:flex; align-items:center; gap:12px; border:1px solid var(--border); border-radius:16px; padding:14px 16px; }
+    .table-search input { border:none; outline:none; width:100%; font-size:0.95rem; font-family:inherit; }
+    .filter-bar select { border:1px solid var(--border); border-radius:16px; padding:14px 16px; outline:none; background:white; }
+  </style>
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +55,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
+    .dashboard { display: flex; min-height: 100vh; }
+    .main-content { flex: 1; display: flex; flex-direction: column; overflow-x: hidden; }
+    .dashboard-content { padding: 30px; }
+    .filter-bar { background: white; padding: 18px; border-radius: 24px; box-shadow: var(--shadow); display: flex; gap: 18px; margin-bottom: 22px; align-items: center; }
+    .table-search { flex:1; display:flex; align-items:center; gap:12px; border:1px solid var(--border); border-radius:16px; padding:14px 16px; }
+    .table-search input { border:none; outline:none; width:100%; font-size:0.95rem; font-family:inherit; }
+    .filter-bar select { border:1px solid var(--border); border-radius:16px; padding:14px 16px; outline:none; background:white; }
+    
     /* Modal styles pour l'assignation du livreur */
     .modal {
       display: none;
@@ -91,110 +135,21 @@
   <div class="dashboard">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <div class="brand">
-          <img src="view/BackOffice/images/logo.png" alt="Logo NutriVerse" class="brand-logo" onerror="this.style.display='none'">
-          <div>
-            <h2>NutriVerse</h2>
-            <p>Back Office</p>
-          </div>
-        </div>
-        <button class="close-sidebar" id="closeSidebar">✕</button>
-      </div>
-
-      <nav class="sidebar-menu">
-        <a href="view/BackOffice/nutri_back.php" class="menu-item">
-          <i data-feather="grid"></i>
-          <span>Dashboard</span>
-        </a>
-
-        <a href="view/BackOffice/RECETTE/admin.php" class="menu-item">
-          <i data-feather="book-open"></i>
-          <span>Recettes</span>
-        </a>
-
-        <a href="shop.php?action=admin_users" class="menu-item">
-          <i data-feather="users"></i>
-          <span>Utilisateurs</span>
-        </a>
-
-        <a href="view/BackOffice/produit/listProduit.php" class="menu-item">
-          <i data-feather="package"></i>
-          <span>Produits</span>
-        </a>
-
-        <a href="view/BackOffice/movement/listMovement.php" class="menu-item">
-          <i data-feather="activity"></i>
-          <span>Mouvements Stock</span>
-        </a>
-
-        <a href="view/BackOffice/notifications/listNotifications.php" class="menu-item">
-          <i data-feather="bell"></i>
-          <span>Notifications</span>
-        </a>
-
-        <a href="shop.php?action=admin_orders" class="menu-item">
-          <i data-feather="shopping-cart"></i>
-          <span>Commandes</span>
-        </a>
-
-        <a href="shop.php?action=admin_livraisons" class="menu-item active">
-          <i data-feather="truck"></i>
-          <span>Livraisons</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="heart-pulse"></i>
-          <span>Suivi Santé</span>
-        </a>
-
-        <a href="view/BackOffice/programme/admin_dashboard.php" class="menu-item">
-          <i data-feather="heart"></i>
-          <span>Programmes</span>
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <p>© 2026 NutriVerse</p>
-      </div>
-    </aside>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/sidebar.php'; ?>
 
     <!-- MAIN -->
-    <main class="main-content">
-
-      <!-- TOPBAR -->
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="menu-btn" id="menuBtn">
-            <i data-feather="menu"></i>
-          </button>
-          <button id="exportBtn" style="background: var(--orange, #ff8a00); color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; margin-left:15px; box-shadow: 0 4px 12px rgba(255, 138, 0, 0.2);">
-            <i data-feather="file-text"></i> Exporter
-          </button>
-        </div>
-
-        <div class="topbar-right">
-          <a href="shop.php?action=front" style="margin-right:20px; color:#59b84d; text-decoration:none; font-weight:600;">← Retour au site</a>
-          <button class="notif-btn">
-            <i data-feather="bell"></i>
-            <span class="notif-dot"></span>
-          </button>
-
-          <div class="admin-box">
-            <div class="admin-avatar">A</div>
-            <div>
-              <h4>Admin</h4>
-              <p>Administrateur</p>
-            </div>
-          </div>
-        </div>
-      </header>
+    <main class="main-content dashboard-content">
+      <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/topbar.php'; ?>
 
       <!-- PAGE HEADER -->
-      <section class="page-header fade-up">
-        <h1>Suivi des Livraisons</h1>
-        <p>Gérez l'assignation des livreurs et le statut des expéditions (Jointure Commande ↔ Livraison intégrée)</p>
+      <section class="page-header fade-up" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h1>Suivi des Livraisons</h1>
+          <p>Gérez l'assignation des livreurs et le statut des expéditions (Jointure Commande ↔ Livraison intégrée)</p>
+        </div>
+        <button id="exportBtn" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);" onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">
+          <i data-feather="download"></i> Exporter PDF
+        </button>
       </section>
 
       <!-- FILTER BAR -->
@@ -291,7 +246,7 @@
         <h3 style="margin:0; color:#1c2733;"><i data-feather="edit" style="width:18px;height:18px;vertical-align:middle;margin-right:8px;"></i> Mettre à jour la livraison</h3>
         <i data-feather="x" class="close-modal" onclick="closeModal()"></i>
       </div>
-      <form action="shop.php?action=admin_livraison_update" method="POST" class="modal-form">
+      <form action="" method="POST" class="modal-form">
         <input type="hidden" name="id_livraison" id="modal_id_livraison">
         
         <label for="nom_livreur">Nom du Livreur</label>
@@ -310,9 +265,17 @@
     </div>
   </div>
 
-  <script src="view/BackOffice/commande/comb.js"></script>
+  <script src="comb.js"></script>
   <script>
-    feather.replace();
+    document.addEventListener('DOMContentLoaded', function() {
+      feather.replace();
+
+      // Trigger fade-up animations
+      document.querySelectorAll('.fade-up').forEach((el, index) => {
+        setTimeout(() => el.classList.add('show'), 100 + (index * 100));
+      });
+    });
+
     
     function openModal(id, livreur, statut) {
         document.getElementById('modal_id_livraison').value = id;
@@ -359,7 +322,7 @@
         element.style.padding = '20px';
         
         const title = document.createElement('h1');
-        title.innerText = 'Les Livraisons - NutriVerse';
+        title.innerText = 'liste des livraisons NutriVerse';
         title.style.textAlign = 'center';
         title.style.color = '#0b8d34';
         title.style.marginBottom = '20px';
@@ -400,3 +363,4 @@
   </script>
 </body>
 </html>
+

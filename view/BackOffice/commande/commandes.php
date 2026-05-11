@@ -1,3 +1,45 @@
+<?php
+require_once __DIR__ . '/../../../config/config.php';
+require_once __DIR__ . '/../../../Controller/OrderC.php';
+require_once __DIR__ . '/../../../Controller/rbac_guard.php';
+rbac_check(['Responsable commande']);
+
+$db = config::getConnexion();
+$stmt = $db->query("SELECT * FROM commande ORDER BY date_commande DESC");
+$orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Handle delete action
+if (isset($_GET['action']) && $_GET['action'] === 'admin_order_delete' && isset($_GET['id'])) {
+    $db->prepare("DELETE FROM commande WHERE id_commande = ?")->execute([(int)$_GET['id']]);
+    header('Location: commandes.php');
+    exit;
+}
+if (isset($_GET['action'])) {
+    if ($_GET['action'] === 'admin_order_view' && isset($_GET['id'])) {
+        $orderId = (int)$_GET['id'];
+        $stmt = $db->prepare("SELECT * FROM commande WHERE id_commande = ?");
+        $stmt->execute([$orderId]);
+        $order = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($order) {
+            $stmtLines = $db->prepare("SELECT l.*, p.nom FROM ligne_commande l JOIN produit p ON l.id_produit = p.idproduit WHERE l.id_commande = ?");
+            $stmtLines->execute([$orderId]);
+            $lines = $stmtLines->fetchAll(PDO::FETCH_ASSOC);
+
+            require __DIR__ . '/commande_detail.php';
+            exit;
+        }
+    }
+    
+    if ($_GET['action'] === 'admin_order_edit' && isset($_POST['id']) && isset($_POST['statut'])) {
+        $orderId = (int)$_POST['id'];
+        $statut = $_POST['statut'];
+        $db->prepare("UPDATE commande SET statut_commande = ? WHERE id_commande = ?")->execute([$statut, $orderId]);
+        header('Location: commandes.php?action=admin_order_view&id=' . $orderId);
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -5,8 +47,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NutriVerse - Back Office Commandes</title>
 
-  <link rel="stylesheet" href="view/BackOffice/assets/back.css" />
-  <link rel="stylesheet" href="view/BackOffice/assets/comb.css" />
+  <link rel="stylesheet" href="../assets/back.css" />
+  <style>
+    .dashboard { display: flex; min-height: 100vh; }
+    .dashboard-content { padding: 30px; }
+    .filter-bar { background: white; padding: 18px; border-radius: 24px; box-shadow: var(--shadow); display: flex; gap: 18px; margin-bottom: 22px; align-items: center; }
+    .table-search { flex:1; display:flex; align-items:center; gap:12px; border:1px solid var(--border); border-radius:16px; padding:14px 16px; }
+    .table-search input { border:none; outline:none; width:100%; font-size:0.95rem; font-family:inherit; }
+    .filter-bar select { border:1px solid var(--border); border-radius:16px; padding:14px 16px; outline:none; background:white; }
+  </style>
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,106 +72,21 @@
   <div class="dashboard">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <div class="brand">
-          <img src="view/BackOffice/images/logo.png" alt="Logo NutriVerse" class="brand-logo" onerror="this.style.display='none'">
-          <div>
-            <h2>NutriVerse</h2>
-            <p>Back Office</p>
-          </div>
-        </div>
-        <button class="close-sidebar" id="closeSidebar">✕</button>
-      </div>
-
-      <nav class="sidebar-menu">
-        <a href="view/BackOffice/nutri_back.php" class="menu-item">
-          <i data-feather="grid"></i>
-          <span>Dashboard</span>
-        </a>
-
-        <a href="view/BackOffice/RECETTE/admin.php" class="menu-item">
-          <i data-feather="book-open"></i>
-          <span>Recettes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="users"></i>
-          <span>Utilisateurs</span>
-        </a>
-
-        <a href="shop.php?action=admin_dashboard" class="menu-item">
-          <i data-feather="shopping-bag"></i>
-          <span>Boutique</span>
-        </a>
-
-        <a href="shop.php?action=admin_orders" class="menu-item active">
-          <i data-feather="shopping-cart"></i>
-          <span>Commandes</span>
-        </a>
-
-        <a href="shop.php?action=admin_livraisons" class="menu-item">
-          <i data-feather="truck"></i>
-          <span>Livraisons</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="activity"></i>
-          <span>Suivi Santé</span>
-        </a>
-
-        <a href="view/BackOffice/programme/admin_dashboard.php" class="menu-item">
-          <i data-feather="heart"></i>
-          <span>Programmes</span>
-        </a>
-
-        <a href="#" class="menu-item">
-          <i data-feather="settings"></i>
-          <span>Paramètres</span>
-        </a>
-      </nav>
-
-      <div class="sidebar-footer">
-        <p>© 2026 NutriVerse</p>
-      </div>
-    </aside>
+    <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/sidebar.php'; ?>
 
     <!-- MAIN -->
-    <main class="main-content">
-
-      <!-- TOPBAR -->
-      <header class="topbar">
-        <div class="topbar-left">
-          <button class="menu-btn" id="menuBtn">
-            <i data-feather="menu"></i>
-          </button>
-
-          <button id="exportBtn" class="export-btn">
-            <i data-feather="file-text"></i> Exporter PDF
-          </button>
-        </div>
-
-        <div class="topbar-right">
-          <a href="shop.php?action=front" style="margin-right:20px; color:var(--green); text-decoration:none; font-weight:600;">← Retour au site</a>
-          <button class="icon-btn">
-            <i data-feather="bell"></i>
-            <span class="notif-dot"></span>
-          </button>
-
-          <div class="admin-box">
-            <div class="admin-avatar">A</div>
-            <div>
-              <h4>Admin</h4>
-              <p>Administrateur</p>
-            </div>
-          </div>
-        </div>
-      </header>
+    <main class="main-content dashboard-content">
+      <?php include $_SERVER['DOCUMENT_ROOT'] . '/integ/view/BackOffice/topbar.php'; ?>
 
       <!-- PAGE HEADER -->
-      <section class="page-header fade-up">
-        <h1>Gestion des Commandes</h1>
-        <p>Suivez et gérez les commandes de vos clients</p>
+      <section class="page-header fade-up" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h1>Gestion des Commandes</h1>
+          <p>Suivez et gérez les commandes de vos clients</p>
+        </div>
+        <button id="exportBtn" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);" onmouseover="this.style.background='#c0392b'" onmouseout="this.style.background='#e74c3c'">
+          <i data-feather="download"></i> Exporter PDF
+        </button>
       </section>
 
       <?php
@@ -262,8 +226,13 @@
     </main>
   </div>
 
-  <script src="view/BackOffice/commande/comb.js"></script>
+  <script src="comb.js"></script>
   <script>
+    // Trigger fade-up animations
+    document.querySelectorAll('.fade-up').forEach(el => {
+      setTimeout(() => el.classList.add('show'), 50);
+    });
+
     feather.replace();
 
     const orderSearch = document.getElementById('orderSearch');
@@ -301,7 +270,7 @@
         
         // Add a title
         const title = document.createElement('h1');
-        title.innerText = 'Les Commandes - NutriVerse';
+        title.innerText = 'liste des commandes NutriVerse';
         title.style.textAlign = 'center';
         title.style.color = '#0b8d34';
         title.style.marginBottom = '20px';
@@ -348,3 +317,5 @@
   </script>
 </body>
 </html>
+
+

@@ -2,10 +2,7 @@
 ob_start();
 session_start();
 
-// Simulation d'un utilisateur connecté (id=1 doit exister dans la table user)
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = 1;
-}
+
 
 // Requirements
 require_once __DIR__ . '/config/config.php';
