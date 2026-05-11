@@ -5,7 +5,9 @@
             <p>Nutrition intelligente</p>
         </div>
         <div class="footer-links">
-            <a href="#">Accueil</a> <a href="#">Recettes</a> <a href="#">Produits</a>
+            <a href="shop.php?action=front">Accueil</a>
+            <a href="RECETTE/recettes.php">Recettes</a>
+            <a href="view/FrontOffice/produit/listProduit.php">Produits</a>
         </div>
     </div>
 </footer>

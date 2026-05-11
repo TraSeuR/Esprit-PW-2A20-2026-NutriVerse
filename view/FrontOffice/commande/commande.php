@@ -1,251 +1,296 @@
-<section class="container my-orders">
-    <div class="page-header fade-up">
-        <h1>🛍️ Finaliser la commande</h1>
-        <p>Veuillez remplir vos informations de livraison.</p>
-    </div>
-
-    <div class="commande-wrapper fade-up delay-1">
-        <form method="post" action="shop.php?action=place_order" id="orderForm" class="commande-form">
-            
-            <div class="checkout-layout">
-                <!-- LEfT COLUMN (Carte Bancaire Details) -->
-                <div class="checkout-left" id="cardDetailsSection" style="display: none;">
-                    <h3>💳 Détails de la carte</h3>
-                    <div class="form-group">
-                        <label for="nom_carte">Nom sur la carte <span class="required">*</span></label>
-                        <input type="text" id="nom_carte" name="nom_carte" placeholder="Ex: Foulen Ben Foulen">
-                        <span class="error-msg" id="error-nom-carte">Veuillez entrer un nom valide.</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="numero_carte">Numéro de carte <span class="required">*</span></label>
-                        <input type="text" id="numero_carte" name="numero_carte" placeholder="0000 0000 0000 0000" maxlength="19">
-                        <span class="error-msg" id="error-numero-carte">Numéro de carte invalide.</span>
-                    </div>
-                    <div style="display: flex; gap: 15px;">
-                        <div class="form-group" style="flex: 1;">
-                            <label for="date_expiration">Expiration <span class="required">*</span></label>
-                            <input type="text" id="date_expiration" name="date_expiration" placeholder="MM/AA" maxlength="5">
-                            <span class="error-msg" id="error-date-exp">Date invalide.</span>
-                        </div>
-                        <div class="form-group" style="flex: 1;">
-                            <label for="cvv_carte">CVV <span class="required">*</span></label>
-                            <input type="password" id="cvv_carte" name="cvv_carte" placeholder="123" maxlength="3">
-                            <span class="error-msg" id="error-cvv">CVV invalide.</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- RIGHT COLUMN (Standard Form) -->
-                <div class="checkout-right">
-                    <div class="form-group">
-                        <label for="nom">Nom complet <span class="required">*</span></label>
-                        <input type="text" id="nom" name="nom" placeholder="Ex: Foulen Ben Foulen">
-                        <span class="error-msg" id="error-nom">Veuillez entrer un nom valide (lettres uniquement, min 3 caractères).</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="adresse">Adresse de livraison <span class="required">*</span></label>
-                        <textarea id="adresse" name="adresse" placeholder="Ex: 123 Rue de la République, Tunis"></textarea>
-                        <span class="error-msg" id="error-adresse">L'adresse doit contenir au moins 10 caractères.</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="telephone">Téléphone <span class="required">*</span></label>
-                        <input type="text" id="telephone" name="telephone" placeholder="Ex: 22123456">
-                        <span class="error-msg" id="error-telephone">Le numéro de téléphone doit contenir exactement 8 chiffres.</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Mode de paiement</label>
-                        <div class="payment-methods">
-                            <button type="button" class="btn-payment active" data-method="livraison">Paiement à la livraison</button>
-                            <button type="button" class="btn-payment" data-method="carte">Carte bancaire</button>
-                        </div>
-                        <input type="hidden" name="paiement" id="paiement" value="livraison">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="code_promo">Code promo</label>
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" id="code_promo" name="code_promo" placeholder="Ex: NUTRI20">
-                            <button type="button" id="btnApplyPromo" style="background: var(--orange, #ff8a00); color: white; border: none; padding: 0 20px; border-radius: 12px; cursor: pointer; font-weight: 600; white-space: nowrap;">Appliquer</button>
-                        </div>
-                        <span id="promoMsg" style="font-size: 0.85rem; margin-top: 5px; display: none;"></span>
-                    </div>
-
-                    <div class="total-summary">
-                        <div class="total-line final">
-                            <span>Total à payer</span>
-                            <span class="total-amount"><?= number_format($total, 2) ?> DT</span>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="confirm-btn">Confirmer la commande</button>
+<section class="container checkout-page">
+    <div class="checkout-container fade-up">
+        <!-- LEFT COLUMN: Intro -->
+        <div class="checkout-intro">
+            <div class="page-title">
+                <span class="bag-icon">🛍️</span>
+                <div>
+                    <h1>Finaliser la commande</h1>
+                    <p>Veuillez remplir vos informations de livraison.</p>
                 </div>
             </div>
-        </form>
+            
+            <!-- Optional: Cart Summary can go here if needed later -->
+            <div class="checkout-image-placeholder">
+                <!-- Illustration or extra info -->
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Form Card -->
+        <div class="checkout-card fade-up delay-1">
+            <form method="post" action="shop.php?action=place_order" id="orderForm">
+                
+                <div class="form-group">
+                    <label for="nom">Nom complet <span class="required">*</span></label>
+                    <input type="text" id="nom" name="nom" placeholder="Ex: Foulen Ben Foulen">
+                    <span class="error-msg" id="error-nom">Veuillez entrer un nom valide.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="adresse">Adresse de livraison <span class="required">*</span></label>
+                    <textarea id="adresse" name="adresse" placeholder="Ex: 123 Rue de la République, Tunis"></textarea>
+                    <span class="error-msg" id="error-adresse">L'adresse est trop courte.</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="telephone">Téléphone <span class="required">*</span></label>
+                    <input type="text" id="telephone" name="telephone" placeholder="Ex: 22123456">
+                    <span class="error-msg" id="error-telephone">Numéro invalide (8 chiffres).</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Mode de paiement</label>
+                    <div class="payment-selector">
+                        <div class="payment-option active" data-method="livraison">
+                            <span class="dot"></span>
+                            <span>Paiement à la livraison</span>
+                        </div>
+                        <div class="payment-option" data-method="carte">
+                            <span class="dot"></span>
+                            <span>Carte bancaire</span>
+                        </div>
+                    </div>
+                    <input type="hidden" name="paiement" id="paiement" value="livraison">
+                </div>
+
+                <!-- Section Carte (S'affiche si 'carte' est choisi) -->
+                <div id="cardDetailsSection" style="display: none; background: #f9fbfd; padding: 20px; border-radius: 12px; border: 1px solid #e1e8ef; margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label for="numero_carte">Numéro de carte</label>
+                        <input type="text" id="numero_carte" name="numero_carte" placeholder="0000 0000 0000 0000" maxlength="19">
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="date_expiration" name="date_expiration" placeholder="MM/AA" maxlength="5" style="flex:1;">
+                        <input type="password" id="cvv_carte" name="cvv_carte" placeholder="CVV" maxlength="3" style="flex:1;">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="code_promo">Code promo</label>
+                    <div class="promo-box">
+                        <input type="text" id="code_promo" name="code_promo" placeholder="Ex: NUTRI20">
+                        <button type="button" id="btnApplyPromo">Appliquer</button>
+                    </div>
+                    <span id="promoMsg" class="promo-feedback"></span>
+                </div>
+
+                <div class="checkout-footer">
+                    <div class="total-display">
+                        <span>Total à payer:</span>
+                        <span class="total-amount"><?= number_format($total, 2) ?> DT</span>
+                    </div>
+                    <button type="submit" class="confirm-btn">Confirmer la commande</button>
+                </div>
+            </form>
+        </div>
     </div>
+</section>
 </section>
 
 <style>
-    /* Styles spécifiques pour le formulaire de commande */
-    .commande-wrapper {
-        background: #ffffff;
-        border-radius: 24px;
-        padding: 3rem;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-        max-width: 1000px;
+    .checkout-page {
+        padding: 60px 0;
+        background: #fcfdfe;
+        min-height: 80vh;
+    }
+
+    .checkout-container {
+        display: flex;
+        gap: 60px;
+        align-items: flex-start;
+        max-width: 1100px;
         margin: 0 auto;
     }
-    
-    .checkout-layout {
-        display: flex;
-        gap: 40px;
-        flex-wrap: wrap;
-    }
 
-    .checkout-left, .checkout-right {
+    .checkout-intro {
         flex: 1;
-        min-width: 300px;
+        padding-top: 20px;
     }
 
-    .checkout-left {
-        background: #f8fafc;
-        padding: 2rem;
-        border-radius: 16px;
-        border: 1px solid #e5e9eb;
-    }
-
-    .checkout-left h3 {
-        margin-top: 0;
-        margin-bottom: 1.5rem;
-        color: #1c2733;
-    }
-
-    .payment-methods {
+    .page-title {
         display: flex;
-        flex-direction: column;
-        gap: 10px;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 30px;
     }
 
-    .btn-payment {
-        padding: 1rem;
-        border: 2px solid #e5e9eb;
-        border-radius: 12px;
-        background: white;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 1rem;
+    .bag-icon {
+        font-size: 2.5rem;
+        background: #eaf4ff;
+        padding: 15px;
+        border-radius: 18px;
+    }
+
+    .page-title h1 {
+        font-size: 2.2rem;
+        color: #1c2733;
+        margin-bottom: 8px;
+        font-weight: 800;
+    }
+
+    .page-title p {
         color: #6f7680;
-        transition: all 0.3s;
-        text-align: left;
+        font-size: 1.1rem;
     }
 
-    .btn-payment.active {
-        border-color: var(--green, #59b84d);
-        background: var(--green-soft, #edf7ec);
-        color: var(--green-dark, #3f9636);
+    .checkout-card {
+        flex: 1;
+        background: white;
+        border-radius: 28px;
+        padding: 40px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+        border: 1px solid #f0f3f5;
     }
 
     .form-group {
-        margin-bottom: 1.5rem;
+        margin-bottom: 22px;
     }
 
     .form-group label {
         display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-        color: var(--text, #1c2733);
+        font-weight: 600;
+        color: #1c2733;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
     }
 
-    .form-group .required {
-        color: #e74c3c;
-    }
-
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
+    .form-group input, .form-group textarea {
         width: 100%;
-        padding: 1rem;
-        border: 2px solid #e5e9eb;
-        border-radius: 12px;
+        padding: 14px 18px;
+        border: 1px solid #e1e8ef;
+        border-radius: 14px;
         font-size: 1rem;
-        font-family: inherit;
-        transition: border-color 0.3s;
+        transition: all 0.3s;
+        background: #fcfdfe;
     }
 
-    .form-group input:focus,
-    .form-group textarea:focus,
-    .form-group select:focus {
+    .form-group input:focus, .form-group textarea:focus {
+        border-color: #59b84d;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(89, 184, 77, 0.1);
         outline: none;
-        border-color: var(--green, #59b84d);
     }
 
     .form-group textarea {
-        height: 120px;
-        resize: vertical;
+        height: 100px;
+        resize: none;
     }
 
-    .error-msg {
-        display: none;
-        color: #e74c3c;
-        font-size: 0.85rem;
-        margin-top: 0.5rem;
+    .required { color: #e74c3c; margin-left: 4px; }
+
+    /* Payment Selector */
+    .payment-selector {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
     }
 
-    .error-msg.visible {
-        display: block;
+    .payment-option {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 16px;
+        border: 1px solid #e1e8ef;
+        border-radius: 14px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+        color: #6f7680;
     }
 
-    .total-summary {
-        background: var(--green-soft, #edf7ec);
-        padding: 1.5rem;
-        border-radius: 16px;
-        margin: 2rem 0;
+    .payment-option.active {
+        border-color: #59b84d;
+        background: #f2f9f1;
+        color: #2d6a24;
     }
 
-    .total-line.final {
+    .dot {
+        width: 12px;
+        height: 12px;
+        border: 2px solid #e1e8ef;
+        border-radius: 50%;
+        transition: all 0.3s;
+    }
+
+    .payment-option.active .dot {
+        border-color: #59b84d;
+        background: #59b84d;
+    }
+
+    /* Promo Box */
+    .promo-box {
+        display: flex;
+        gap: 10px;
+    }
+
+    .promo-box input { flex: 1; }
+
+    .promo-box button {
+        background: #ff8a00;
+        color: white;
+        border: none;
+        padding: 0 25px;
+        border-radius: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .promo-box button:hover { background: #e67e00; }
+
+    .checkout-footer {
+        margin-top: 30px;
+        padding-top: 25px;
+        border-top: 1px dashed #e1e8ef;
+    }
+
+    .total-display {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 1.25rem;
+        margin-bottom: 20px;
         font-weight: 700;
-        color: var(--green-dark, #3f9636);
     }
 
-    .total-amount {
-        font-size: 1.5rem;
-    }
+    .total-display span:first-child { color: #6f7680; font-size: 1.1rem; }
+
+    .total-amount { font-size: 1.8rem; color: #1c2733; }
 
     .confirm-btn {
         width: 100%;
-        padding: 1.2rem;
-        background: var(--green, #59b84d);
+        padding: 18px;
+        background: #59b84d;
         color: white;
         border: none;
-        border-radius: 999px;
+        border-radius: 16px;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 700;
         cursor: pointer;
-        transition: background 0.3s, transform 0.2s;
-        box-shadow: 0 8px 20px rgba(89, 184, 77, 0.3);
+        box-shadow: 0 8px 20px rgba(89, 184, 77, 0.25);
+        transition: all 0.3s;
     }
 
-    .confirm-btn:hover {
-        background: var(--green-dark, #3f9636);
-        transform: translateY(-2px);
+    .confirm-btn:hover { background: #4ca142; transform: translateY(-2px); }
+
+    .error-msg { color: #e74c3c; font-size: 0.85rem; margin-top: 6px; display: none; }
+    .error-msg.visible { display: block; }
+
+    @media (max-width: 900px) {
+        .checkout-container { flex-direction: column; gap: 40px; padding: 20px; }
+        .checkout-intro { text-align: center; }
+        .page-title { flex-direction: column; align-items: center; }
     }
 </style>
 
 <script>
     // Toggle Payment Method
-    const btnPayments = document.querySelectorAll('.btn-payment');
+    const paymentOptions = document.querySelectorAll('.payment-option');
     const inputPaiement = document.getElementById('paiement');
     const cardSection = document.getElementById('cardDetailsSection');
 
-    btnPayments.forEach(btn => {
-        btn.addEventListener('click', function() {
-            btnPayments.forEach(b => b.classList.remove('active'));
+    paymentOptions.forEach(opt => {
+        opt.addEventListener('click', function() {
+            paymentOptions.forEach(o => o.classList.remove('active'));
             this.classList.add('active');
             
             const method = this.getAttribute('data-method');
@@ -260,39 +305,42 @@
     });
 
     // Formatting Card Number
-    document.getElementById('numero_carte').addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\D/g, '');
-        let formattedValue = '';
-        for (let i = 0; i < value.length; i++) {
-            if (i > 0 && i % 4 === 0) formattedValue += ' ';
-            formattedValue += value[i];
-        }
-        e.target.value = formattedValue;
-    });
+    if(document.getElementById('numero_carte')) {
+        document.getElementById('numero_carte').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            let formattedValue = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) formattedValue += ' ';
+                formattedValue += value[i];
+            }
+            e.target.value = formattedValue;
+        });
+    }
 
     // Formatting Expiration Date
-    document.getElementById('date_expiration').addEventListener('input', function (e) {
-        let value = e.target.value.replace(/\D/g, '');
-        if (value.length > 2) {
-            value = value.substring(0, 2) + '/' + value.substring(2, 4);
-        }
-        e.target.value = value;
-    });
+    if(document.getElementById('date_expiration')) {
+        document.getElementById('date_expiration').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+    }
 
     document.getElementById('orderForm').addEventListener('submit', function(e) {
         let isValid = true;
 
-        // Validation Nom (Lettres et espaces, min 3 chars)
+        // Validation Nom
         const nom = document.getElementById('nom').value.trim();
-        const nomRegex = /^[a-zA-ZÀ-ÿ\s]{3,}$/;
-        if (!nomRegex.test(nom)) {
+        if (nom.length < 3) {
             document.getElementById('error-nom').classList.add('visible');
             isValid = false;
         } else {
             document.getElementById('error-nom').classList.remove('visible');
         }
 
-        // Validation Adresse (Min 10 chars)
+        // Validation Adresse
         const adresse = document.getElementById('adresse').value.trim();
         if (adresse.length < 10) {
             document.getElementById('error-adresse').classList.add('visible');
@@ -301,57 +349,19 @@
             document.getElementById('error-adresse').classList.remove('visible');
         }
 
-        // Validation Téléphone (Exactement 8 chiffres)
+        // Validation Téléphone
         const telephone = document.getElementById('telephone').value.trim();
-        const telRegex = /^[0-9]{8}$/;
-        if (!telRegex.test(telephone)) {
+        if (!/^[0-9]{8}$/.test(telephone)) {
             document.getElementById('error-telephone').classList.add('visible');
             isValid = false;
         } else {
             document.getElementById('error-telephone').classList.remove('visible');
         }
 
-        // Validation Carte Bancaire si selectionnée
-        if (inputPaiement.value === 'carte') {
-            const nomCarte = document.getElementById('nom_carte').value.trim();
-            if (nomCarte.length < 3) {
-                document.getElementById('error-nom-carte').classList.add('visible');
-                isValid = false;
-            } else {
-                document.getElementById('error-nom-carte').classList.remove('visible');
-            }
-
-            const numCarte = document.getElementById('numero_carte').value.replace(/\s/g, '');
-            if (numCarte.length !== 16) {
-                document.getElementById('error-numero-carte').classList.add('visible');
-                isValid = false;
-            } else {
-                document.getElementById('error-numero-carte').classList.remove('visible');
-            }
-
-            const expDate = document.getElementById('date_expiration').value;
-            if (!/^\d{2}\/\d{2}$/.test(expDate)) {
-                document.getElementById('error-date-exp').classList.add('visible');
-                isValid = false;
-            } else {
-                document.getElementById('error-date-exp').classList.remove('visible');
-            }
-
-            const cvv = document.getElementById('cvv_carte').value;
-            if (!/^\d{3}$/.test(cvv)) {
-                document.getElementById('error-cvv').classList.add('visible');
-                isValid = false;
-            } else {
-                document.getElementById('error-cvv').classList.remove('visible');
-            }
-        }
-
-        if (!isValid) {
-            e.preventDefault(); // Empêche l'envoi du formulaire
-        }
+        if (!isValid) e.preventDefault();
     });
 
-    // Simulation Code Promo REELLE
+    // Promo Validation
     document.getElementById('btnApplyPromo').addEventListener('click', function() {
         const code = document.getElementById('code_promo').value.trim();
         const msg = document.getElementById('promoMsg');
@@ -359,43 +369,22 @@
         
         if (code === "") return;
 
-        // Appel AJAX au contrôleur
         fetch(`shop.php?action=validate_promo&code=${code}`)
-            .then(response => {
-                if (!response.ok) throw new Error("Erreur serveur (" + response.status + ")");
-                return response.text(); // On récupère d'abord en texte pour vérifier
-            })
-            .then(text => {
-                try {
-                    const data = JSON.parse(text);
-                    msg.style.display = 'block';
-                    if (data.success) {
-                        msg.innerText = `✅ Code appliqué ! -${data.discount}% sur votre commande.`;
-                        msg.style.color = "#27ae60";
-                        this.style.background = "#27ae60";
-                        this.innerText = "Appliqué";
-                        this.disabled = true;
-                        document.getElementById('code_promo').readOnly = true;
-
-                        let currentTotal = parseFloat(totalAmountEl.innerText.replace(' DT', ''));
-                        let newTotal = currentTotal * (1 - data.discount / 100);
-                        totalAmountEl.innerText = newTotal.toFixed(2) + " DT";
-                    } else {
-                        msg.innerText = "❌ " + data.message;
-                        msg.style.color = "#e74c3c";
-                    }
-                } catch (e) {
-                    console.error("Réponse non-JSON reçue :", text);
-                    msg.style.display = 'block';
-                    msg.innerText = "❌ Réponse invalide du serveur.";
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    msg.innerText = `✅ -${data.discount}% appliqué`;
+                    msg.style.color = "#27ae60";
+                    this.innerText = "OK";
+                    this.disabled = true;
+                    
+                    let currentTotal = parseFloat(totalAmountEl.innerText.replace(' DT', ''));
+                    let newTotal = currentTotal * (1 - data.discount / 100);
+                    totalAmountEl.innerText = newTotal.toFixed(2) + " DT";
+                } else {
+                    msg.innerText = "❌ Code invalide";
                     msg.style.color = "#e74c3c";
                 }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                msg.style.display = 'block';
-                msg.innerText = "❌ Impossible de contacter le serveur.";
-                msg.style.color = "#e74c3c";
             });
     });
 </script>

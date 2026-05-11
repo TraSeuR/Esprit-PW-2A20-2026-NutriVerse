@@ -130,7 +130,7 @@ if (isset($_GET['action'])) {
     <aside class="sidebar">
         <div class="sidebar-top">
             <div class="brand">
-                <img src="../view/BackOffice/images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
+                <img src="../images/logo.png" alt="Logo NutriVerse" class="brand-logo" />
                 <div>
                     <h2>NutriVerse</h2>
                     <p>Back Office</p>
@@ -149,17 +149,27 @@ if (isset($_GET['action'])) {
                 <span>Recettes</span>
             </a>
 
-            <a href="#" class="menu-item">
+            <a href="../../../shop.php?action=admin_users" class="menu-item">
                 <i data-feather="users"></i>
                 <span>Utilisateurs</span>
             </a>
 
-            <a href="#" class="menu-item">
+            <a href="../produit/listProduit.php" class="menu-item">
                 <i data-feather="package"></i>
                 <span>Produits</span>
             </a>
 
-            <a href="#" class="menu-item">
+            <a href="../movement/listMovement.php" class="menu-item">
+                <i data-feather="activity"></i>
+                <span>Mouvements Stock</span>
+            </a>
+
+            <a href="../notifications/listNotifications.php" class="menu-item">
+                <i data-feather="bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <a href="../../../shop.php?action=admin_orders" class="menu-item">
                 <i data-feather="shopping-cart"></i>
                 <span>Commandes</span>
             </a>
@@ -172,11 +182,6 @@ if (isset($_GET['action'])) {
             <a href="admin_dashboard.php" class="menu-item active">
                 <i data-feather="heart"></i>
                 <span>Programmes</span>
-            </a>
-
-            <a href="#" class="menu-item">
-                <i data-feather="settings"></i>
-                <span>Paramètres</span>
             </a>
         </nav>
 

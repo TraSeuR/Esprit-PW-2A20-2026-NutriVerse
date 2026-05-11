@@ -13,5 +13,5 @@
             <p>Un email de confirmation vous a été envoyé (simulation).</p>
         <?php endif; ?>
         
-        <a href="shop.php?action=products" class="btn-primary" style="margin-top: 20px; display: inline-block;">Continuer mes achats</a>
+        <a href="view/FrontOffice/produit/listProduit.php" class="btn-primary" style="margin-top: 20px; display: inline-block;">Continuer mes achats</a>
 </section>
